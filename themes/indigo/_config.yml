@@ -20,6 +20,9 @@ menu:
   th-list:
     text: 分类
     url: /categories
+  th-list:
+    text: 网址导航
+    url: /nav
   github:
     url: https://github.com/ShawDanon
     target: _blank
