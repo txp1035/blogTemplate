@@ -20,8 +20,8 @@ menu:
   th-list:
     text: 分类
     url: /categories
-  th-list:
-    text: 网址导航
+  folder:
+    text: 常用网址
     url: /nav
   github:
     url: https://github.com/ShawDanon
