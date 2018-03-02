@@ -15,4 +15,5 @@ date: 2018-01-31 13:48:15
 <a href="https://trello.com/" style="margin:10px;"><div style="width:50px;height:50px;background:url(../img/nav/trello.jpg);"></div></a>
 <a href="http://www.iconfont.cn/" style="margin:10px;"><div style="width:50px;height:50px;background:url(../img/nav/iconfont.jpg);"></div></a>
 <a href="http://react-china.org/" style="margin:10px;"><div style="width:50px;height:50px;background:url(../img/nav/reactChina.png);background-size:50px;"></div></a>
-</div>
+<a href="https://cnodejs.org/" style="margin:10px;"><div style="width:50px;height:50px;background:url(../img/nav/cnode.png);background-size:50px;"></div></a>
+</div>  
