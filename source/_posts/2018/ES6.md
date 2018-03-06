@@ -2,7 +2,7 @@
 title:  "ES6总结"
 category: 技术
 tags: 服务器
-date: 2018-03-07
+date: 2018-03-04
 ---
 ### let和const
 let的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效。
