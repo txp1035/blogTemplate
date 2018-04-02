@@ -1,11 +1,11 @@
 ---
-title:  "vue-cli项目实践——webIm"
+title:  "vue-cli环境搭建"
 category: 技术
 tags: 前端
 date: 2018-01-24
 updated: 2018-01-23
 ---
-使用vue-cli写一个基于环信的web即时通讯。
+vue-cli环境搭建。
 <!-- more -->
 # 安装node
 因为需要npm来装vue-cli，所以需要先装node，没有装的同学移步[node](../node)进行安装。
