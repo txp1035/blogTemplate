@@ -137,6 +137,13 @@ getTimezoneOffset()：返回本地时间与UTC时间相差的分钟数。例如�
 i：执行对大小写不敏感的匹配。  
 g：执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。  
 m：执行多行匹配。  
+RegExp构造函数属性  
+input($_):最近一次要匹配的字符串。Opera未实现此属性。  
+lastMatch($&):最近一次的匹配项。Opera未实现此属性。  
+lastParen($+):最近一次匹配的捕获组。Opera未实现此属性。  
+leftContext($):input字符串中lastMatch之前的文本。  
+multiline($*):布尔值，表示是否所有表达式都使用多行模式。IE和Opera未实现此属性。  
+rightContext($'):Input字符串中lastMatch之后的文本。  
 #### 属性
 global：布尔值，表示是否设置了g标志。  
 ignoreCase：布尔值，表示是否设置了i标志。  
@@ -148,6 +155,7 @@ exec()：检索字符串中指定的值。返回找到的值，并确定其位�
 test()：检索字符串中指定的值。返回true或false。
 ### Function
 #### 属性
+
 #### 方法
 ### 基本包装类型
 #### 属性
