@@ -14,3 +14,5 @@ CSDN：中国最大的IT社区和服务平台。
 npm：一个NodeJS包管理和分发工具，已经成为了非官方的发布Node模块（包）的标准。   
 bootstrap：来自 Twitter，目前很受欢迎的前端框架。  
 W3School：因特网上最大的 WEB 开发者资源。  
+### NPM报错：Unexpected end of JSON input while parsing near '...":"0.5.x","raw-loader'
+清楚缓存：npm cache clean --force
