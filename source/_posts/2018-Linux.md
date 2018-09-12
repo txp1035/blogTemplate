@@ -1,7 +1,7 @@
 ---
 title: "Linux"
-category: 生活
-tags: 说说
+category: 技术
+tags: 系统
 date: 2018-09-11
 ---
 
