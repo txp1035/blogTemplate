@@ -1,14 +1,19 @@
 ---
-title:  "webpack总结"
+title: "webpack总结"
 category: 技术
 tags: 前端
 date: 2018-08-01
 updated: 2018-08-01
 ---
+
 # 版本：4.16.3
-使用webpack所需要的包：webpack、webpack-cli（此工具用于在命令行中运行 webpack），webpack4之后将webpack-cli从webpack中分离的出来。  
-## webpack基本配置
+
+使用 webpack 所需要的包：webpack、webpack-cli（此工具用于在命令行中运行 webpack），webpack4 之后将 webpack-cli 从 webpack 中分离的出来。
+
+## webpack 基本配置
+
 webpack.config.js
+
 ```
 const path = require('path');//导入node.js的path模块
 const HtmlWebpackPlugin = require('html-webpack-plugin');//导入自动生成HTML插件
@@ -64,13 +69,16 @@ const config = {
 
 module.exports = config;//导出配置文件
 ```
+
 运行配置：  
 npx webpack --config webpack.config.js  
-在package.js中script设置，"build":“webpack --config webpack.config.js”  
-PS：--config webpack.config.js用于设置运行文件名，不设置默认运行webpack.config.js
+在 package.js 中 script 设置，"build":“webpack --config webpack.config.js”  
+PS：--config webpack.config.js 用于设置运行文件名，不设置默认运行 webpack.config.js
 
 ## source map
+
 webpack.config.js
+
 ```
 const path = require('path');
 
@@ -91,9 +99,13 @@ module.exports = {
     devtool: 'inline-source-map'
 };
 ```
+
 ## 模块热替换
-### webpack设置方法
+
+### webpack 设置方法
+
 webpack.config.js
+
 ```
 const path = require('path');
 const webpack = require('webpack');
@@ -121,12 +133,16 @@ module.exports = {
     }
 };
 ```
+
 运行配置：  
 npx webpack-dev-server --open --config webpack.config.js
-在package.js中script设置，"start":“webpack-dev-server --open --config webpack.config.js”  
-PS：--config webpack.config.js用于设置运行文件名，不设置默认运行webpack.config.js
-### node设置方法
+在 package.js 中 script 设置，"start":“webpack-dev-server --open --config webpack.config.js”  
+PS：--config webpack.config.js 用于设置运行文件名，不设置默认运行 webpack.config.js
+
+### node 设置方法
+
 dev-server.js
+
 ```
 const webpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
@@ -146,6 +162,7 @@ server.listen(5000, 'localhost', () => {
   console.log('dev server listening on port 5000');
 });
 ```
+
 运行配置：  
 node dev-server.js
-在package.js中script设置，"start":“node dev-server.js”
+在 package.js 中 script 设置，"start":“node dev-server.js”

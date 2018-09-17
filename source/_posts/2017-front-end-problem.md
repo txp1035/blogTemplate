@@ -1,17 +1,18 @@
 ---
 title: "前端问题"
-category: 技术
+category444: 技术
 tags: 前端
 date: 2017-09-22
+updated: 2018-09-17
 ---
 
-前端遇到的一些问题汇总。
+前端遇到的一些问题汇总...
 
 <!-- more -->
 
-### 跨页面传值问题
+# 跨页面传值问题
 
-#### 一、地址栏传值方式
+## 一、地址栏传值方式
 
 原理是把参数放入跳转页面的 url 里，跳转页面后读取当前页面的 url 就可以获得上一个页面传过来的参数。  
 下面代码是通过 JS 跳转到 www.tangxiaoping.top/search 页面，传入`?a=1&b=1`字符串。通常我们使用`?`来隔断 url 和需要传入的字符串，用`&`隔断不同的参数，用`=`隔断参数和参数对应的值。
@@ -37,13 +38,13 @@ function parseURL(url) {
 }//解析url的方法
 ```
 
-#### 二、session
+## 二、session
 
-#### 三、Cookies
+## 三、Cookies
 
-#### 四、Application
+## 四、Application
 
-### 在 js 中引入其他 js
+# 在 js 中引入其他 js
 
 使用场景：多个页面需要引入多个相同的 js 时、多个页面引入 js 的 src 需要频繁更改时  
 一、如下代码所示，在公共 js 中使用 document.write 来同步引入其他 js。  
@@ -78,7 +79,7 @@ js.src = ""; //给标签src赋值，src自行填写
 document.head.appendChild(js); //将标签动态加入head里
 ```
 
-### ready()用法
+# ready()用法
 
 当 DOM（文档对象模型） 已经加载，并且页面（包括图像）已经完全呈现时，会发生 ready 事件。  
 由于该事件在文档就绪后发生，因此把所有其他的 jQuery 事件和函数置于该事件中是非常好的做法。正如上面的例子中那样。  
@@ -103,6 +104,10 @@ $().ready(function)
 $(function)
 ```
 
-### JavaScript 刷新页面
+# JavaScript 刷新页面
 
 `location.reload()`
+
+# NPM 报错：Unexpected end of JSON input while parsing near '...":"0.5.x","raw-loader'
+
+清楚缓存：npm cache clean --force

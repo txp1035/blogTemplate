@@ -3,15 +3,16 @@ title: "前端基础"
 category: 技术
 tags: 前端
 date: 2017-12-01
+updated: 2017-12-01
 ---
 
-2017 腾讯前端大会前端基础总结。
+2017 腾讯前端大会前端基础总结...
 
 <!-- more -->
 
-## **HTML**
+# **HTML**
 
-### 常用的 meta 头
+## 常用的 meta 头
 
 ```
 <!DOCTYPE html> <!-- 使用 HTML5 doctype，不区分大小写 -->
@@ -62,7 +63,7 @@ date: 2017-12-01
 </head>
 ```
 
-#### 基本标签
+### 基本标签
 
 使用 HTML5 doctype，不区分大小写。
 
@@ -104,7 +105,7 @@ date: 2017-12-01
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> <!-- 优先使用 IE 最新版本和 Chrome -->
 ```
 
-#### SEO 优化
+### SEO 优化
 
 页面描述  
 每个网页都应有一个不超过 150 个字符且能准确反映网页内容的描述标签。
@@ -137,7 +138,7 @@ date: 2017-12-01
 <meta name="robots" content="index,follow" /> <!-- 搜索引擎抓取 -->
 ```
 
-#### 可选标签
+### 可选标签
 
 **为移动设备添加**
 
@@ -268,7 +269,7 @@ iPhone 5/iPod Touch 5 竖屏 640x1136 (Retina)
 <meta name="apple-itunes-app" content="app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL"> <!-- 添加智能 App 广告条 Smart App Banner（iOS 6+ Safari） -->
 ```
 
-#### Android
+### Android
 
 Android Lollipop 中的 Chrome 39 增加 theme-color meta 标签，用来控制选项卡颜色。
 
@@ -276,7 +277,7 @@ Android Lollipop 中的 Chrome 39 增加 theme-color meta 标签，用来控制�
 <meta name="theme-color" content="#db5945">
 ```
 
-#### Windows 8
+### Windows 8
 
 Windows 8 磁贴颜色
 
@@ -290,7 +291,7 @@ Windows 8 磁贴图标
 <meta name="msapplication-TileImage" content="icon.png"/> <!-- Windows 8 磁贴图标 -->
 ```
 
-#### 其他
+### 其他
 
 添加 RSS 订阅
 
@@ -310,13 +311,13 @@ Windows 8 磁贴图标
 <meta name="google" value="notranslate">
 ```
 
-### 语义化
+## 语义化
 
 语义化是指用合理 HTML 标记以及其特有的属性去格式化文档内容。通俗地讲,语义化就是对数据和信息进行处理,使得机器可以理解.  
 语义化的(X)HTML 文档有助于提升你的网站对访客的易用性，比如使用 PDA、文字浏览器以及残障人士将从中受益。对于搜索引擎或者爬虫软件来说，则有助于它们建立索引，并可能给予一个较高的权值。  
 事实上 SEO 最有效的一种办法，就是对网页的 HTML 结构进行重构，实质上就是语义化。
 
-### HTML5 新增功能
+## HTML5 新增功能
 
 1、用于绘画的 canvas 元素  
 2、用于媒介回放的 video 和 audio 元素  
@@ -324,7 +325,7 @@ Windows 8 磁贴图标
 4、语意化更好的内容元素，比如 article、footer、header、nav、section  
 5、新的表单控件，比如 calendar、date、time、email、url、search
 
-### HTML 渲染解析知识
+## HTML 渲染解析知识
 
 1、解析 HTML  
 2、构建 DOM 树  
@@ -332,9 +333,9 @@ Windows 8 磁贴图标
 4、布局  
 5、绘制
 
-## **CSS**
+# **CSS**
 
-### 可读规范的 CSS 代码
+## 可读规范的 CSS 代码
 
 1、使用 Reset 但并非全局 Reset  
 不同浏览器元素的默认属性有所不同，使用 Reset 可重置浏览器元素的一些默认属性，以达到浏览器的兼容。但需要注意的是，请不要使用全局 Reset：
@@ -367,7 +368,7 @@ em{font-style:normal;}
 /** 重置列表元素 **/
 ul, ol { list-style: none; }
 /** 重置超链接元素 **/
-a { text-decoration: none; color:#333;}
+a { text-decoration: none; color:###;}
 a:hover { text-decoration: underline; color:#F40; }
 /** 重置图片元素 **/
 img{ border:0px;}
@@ -588,63 +589,63 @@ background-color: expression( (new Date()).getHours()%2 ? "#B8D4FF" : "#F08A00" 
 当你决定把网站项目部署到网络上，那你就要考虑对 CSS 进行压缩，出去注释和空格，以使得网页加载得更快。压缩您的代码，可以采用一些工具  
 利用它可精简 CSS 代码，减少文件大小，以获得更高的加载速度。
 
-### 盒模型
+## 盒模型
 
 网页设计中常听的属性名：内容(content)、填充(padding)、边框(border)、边界(margin)， CSS 盒子模式都具备这些属性。  
 这些属性我们可以用日常生活中的常见事物——盒子作一个比喻来理解，所以叫它盒子模式。  
 CSS 盒子模型就是在网页设计中经常用到的 CSS 技术所使用的一种思维模型。
 
-### CSS3 特性：动画、弹性布局等
+## CSS3 特性：动画、弹性布局等
 
-## **JavaScript**
+# **JavaScript**
 
-### 事件模型
+## 事件模型
 
-### 闭包和内存泄露
+## 闭包和内存泄露
 
-### 原型链
+## 原型链
 
-### 渲染树、重排重绘、分层渲染等（进阶）
+## 渲染树、重排重绘、分层渲染等（进阶）
 
-## **HTTP**
+# **HTTP**
 
-### 常见 HTTP 状态码
+## 常见 HTTP 状态码
 
-### 不同请求类型的区别
+## 不同请求类型的区别
 
-### 如何缓存
+## 如何缓存
 
-### HTTP2
+## HTTP2
 
-## **调试**
+# **调试**
 
-### 如何抓包
+## 如何抓包
 
 打开“开发者工具【F12】”，选择 Network，在浏览器上输入需要抓包的网址
 
-### 如何 debug 程序问题
+## 如何 debug 程序问题
 
 打开“开发者工具【F12】”，选择 sources，可以在 js 文件中打断点调试
 
-### 如何做移动端调试
+## 如何做移动端调试
 
 打开“开发者工具【F12】”，选择 toggle device toolbar【Ctrl+shift+M】，浏览器就会变成移动设备适配
 
-### 如何发现页面问题
+## 如何发现页面问题
 
-## **移动 Web 开发**
+# **移动 Web 开发**
 
-### 移动 Web 开发和 PC Web 开发的区别
+## 移动 Web 开发和 PC Web 开发的区别
 
-### 响应式布局
+## 响应式布局
 
-### 移动端的手势和事件
+## 移动端的手势和事件
 
-### 怎么提高移动页面的渲染性能
+## 怎么提高移动页面的渲染性能
 
-## **综合知识**
+# **综合知识**
 
-### 用户从输入 url 到最终页面展示，这个过程中发生了什么？
+## 用户从输入 url 到最终页面展示，这个过程中发生了什么？
 
 当在浏览器地址栏输入网址，如：www.baidu.com 后浏览器是怎么把最终的页面呈现出来的呢？这个过程可以大致分为两个部分：网络通信和页面渲染。  
 一、网络通信  
@@ -673,6 +674,6 @@ IP 协议的作用是把 TCP 分割好的各种数据包传送给接收方。而
 DOM 树是由 HTML 文件中的标签排列组成，渲染树是在 DOM 树中加入 CSS 或 HTML 中的 style 样式而形成。渲染树只包含需要显示在页面中的 DOM 元素，像`<head>`元素或 display 属性值为 none 的元素都不在渲染树中。  
 在浏览器还没接收到完整的 HTML 文件时，它就开始渲染页面了，在遇到外部链入的脚本标签或样式标签或图片时，会再次发送 HTTP 请求重复上述的步骤。在收到 CSS 文件后会对已经渲染的页面重新渲染，加入它们应有的样式，图片文件加载完立刻显示在相应位置。在这一过程中可能会触发页面的重绘或重排。
 
-### 老板反馈页面打开白屏，而你手机上是正常的，怎么办？
+## 老板反馈页面打开白屏，而你手机上是正常的，怎么办？
 
-### 我页面上有个动画一卡一卡的性能不行，怎么优化？
+## 我页面上有个动画一卡一卡的性能不行，怎么优化？
