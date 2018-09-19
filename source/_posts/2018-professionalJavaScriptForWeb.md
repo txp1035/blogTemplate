@@ -3,6 +3,7 @@ title: "JavaScript高级程序设计总结"
 category: 技术
 tags: 前端
 date: 2018-07-27
+updated: 2018-07-27
 ---
 
 ## JavaScript 组成
