@@ -62,7 +62,7 @@ share: true
 
 # 是否开启打赏，关闭 reward: false
 reward:
-  title: 谢谢大爷~
+  title: 赞助
   wechat: /img/wechat.jpg     #微信，关闭设为 false
   alipay: /img/alipay.jpg     #支付宝，关闭设为 false
 
@@ -114,7 +114,7 @@ gitment: false
 
 # Valine Comment system. https://valine.js.org
 valine:
-  enable: true # 如果你想使用valine，请将值设置为 true
+  enable: false # 如果你想使用valine，请将值设置为 true
   appId: dWbb6B3Ee7mJklqqrL1GeytA-gzGzoHsz # your leancloud appId
   appKey: PmGwy3VkukFwq7C4XAGLSUzB # your leancloud appKey
   notify: false # Mail notify
