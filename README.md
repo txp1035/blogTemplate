@@ -2,9 +2,12 @@
 
 我的 hexo 博客
 
-## 博客
+## Hexo常用命令
 
 离线运行博客：hexo server
+生成静态页面：hexo g
+发布到github上：hexo d
+清除缓存的页面：hexo clean
 
 ## 博客命名
 
