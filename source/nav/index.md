@@ -1,12 +1,14 @@
 ---
-layout: page      # 必须
-title: 网址导航  # 必须，页面名称
-description: 一些常用网址       # 页面二级标题，描述性文字
-comments: false     # 禁用评论，可选，默认开启
-reward: false       # 禁用打赏，可选，默认开启
+layout: page # 必须
+title: 网址导航 # 必须，页面名称
+description: 一些常用网址 # 页面二级标题，描述性文字
+comments: false # 禁用评论，可选，默认开启
+reward: false # 禁用打赏，可选，默认开启
 date: 2018-01-31 13:48:15
 ---
-# 常用 
+
+# 常用
+
 <div class="flex-row">
 <a href="https://github.com/" style="margin:10px;"><div style="width:50px;height:50px;background:url(../img/nav/github.jpg);"></div></a>
 <a href="https://stackoverflow.com/" style="margin:10px;"><div style="width:50px;height:50px;background:url(../img/nav/stackoverflow.jpg);"></div></a>
@@ -16,4 +18,4 @@ date: 2018-01-31 13:48:15
 <a href="http://www.iconfont.cn/" style="margin:10px;"><div style="width:50px;height:50px;background:url(../img/nav/iconfont.jpg);"></div></a>
 <a href="http://react-china.org/" style="margin:10px;"><div style="width:50px;height:50px;background:url(../img/nav/reactChina.png);background-size:50px;"></div></a>
 <a href="https://cnodejs.org/" style="margin:10px;"><div style="width:50px;height:50px;background:url(../img/nav/cnode.png);background-size:50px;"></div></a>
-</div>  
+</div>
