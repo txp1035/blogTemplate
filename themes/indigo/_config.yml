@@ -7,6 +7,7 @@
 #    text: About       菜单显示的文字，如果省略即默认与图标一致，首字母会转大写
 #    url: /about       链接，绝对或相对路径，必须。
 #    target: _blank    是否跳出，省略则在当前页面打开
+#PS:fontawesome图标[https://fontawesome.com/icons?from=io]
 menu:
   home:
     text: 主页
@@ -23,6 +24,9 @@ menu:
   folder:
     text: 常用网址
     url: /nav
+  times:
+    text: 倒计时
+    url: /time
   github:
     url: https://github.com/ShawDanon
     target: _blank
@@ -62,7 +66,7 @@ share: true
 
 # 是否开启打赏，关闭 reward: false
 reward:
-  title: 谢谢大爷~
+  title: 赞助
   wechat: /img/wechat.jpg     #微信，关闭设为 false
   alipay: /img/alipay.jpg     #支付宝，关闭设为 false
 
@@ -114,7 +118,7 @@ gitment: false
 
 # Valine Comment system. https://valine.js.org
 valine:
-  enable: true # 如果你想使用valine，请将值设置为 true
+  enable: false # 如果你想使用valine，请将值设置为 true
   appId: dWbb6B3Ee7mJklqqrL1GeytA-gzGzoHsz # your leancloud appId
   appKey: PmGwy3VkukFwq7C4XAGLSUzB # your leancloud appKey
   notify: false # Mail notify
