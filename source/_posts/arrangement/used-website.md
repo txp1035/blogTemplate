@@ -1,7 +1,7 @@
 ---
-title: "程序员常用的网站"
+title: '程序员常用的网站'
 category: 技术
-tags: 笔记
+tags: [整理, 笔记]
 date: 2016-09-18
 updated: 2016-09-18
 ---

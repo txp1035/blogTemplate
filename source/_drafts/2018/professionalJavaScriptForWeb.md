@@ -1,5 +1,5 @@
 ---
-title: "JavaScript高级程序设计总结"
+title: 'JavaScript高级程序设计总结'
 category: 技术
 tags: 前端
 date: 2018-07-27

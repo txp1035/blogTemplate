@@ -1,7 +1,7 @@
 ---
-title: "vue-cli环境搭建"
+title: 'vue-cli环境搭建'
 category: 技术
-tags: 前端
+tags: [前端]
 date: 2018-01-24
 updated: 2018-01-23
 ---

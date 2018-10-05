@@ -1,7 +1,7 @@
 ---
 title: '前端开发人员面试问题'
-category: 生活
-tags: 说说
+category: 前端
+tags: [面试]
 date: 2018-10-05
 updated: 2018-10-05
 ---
