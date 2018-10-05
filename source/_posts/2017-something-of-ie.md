@@ -5,6 +5,10 @@ tags: 前端
 date: 2017-08-14
 updated: 2017-08-14
 ---
+
+IE那些事...
+
+<!-- more -->
 经常用一些框架会看到类似注释一样的语句，例如bootstrap里的：
 ```
 <!--[if lt IE 9]>
@@ -12,6 +16,7 @@ updated: 2017-08-14
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 ```
+
 写了这个代码就能兼容IE8了。那么这些代码是什么意思呢？我们来看下面例子：
 ``` 
 <!--[if !IE]>除IE外都可识别 <![endif]-->
