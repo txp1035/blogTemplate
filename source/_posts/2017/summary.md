@@ -1,5 +1,5 @@
 ---
-title: "2017总结"
+title: '2017总结'
 category: 生活
 tags: 总结
 date: 2017-12-31

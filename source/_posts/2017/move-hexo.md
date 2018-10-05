@@ -1,5 +1,5 @@
 ---
-title: "hexo"
+title: '搬入hexo'
 category: 技术
 tags: [前端, 博客搭建]
 date: 2017-12-13

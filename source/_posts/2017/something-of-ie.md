@@ -1,7 +1,7 @@
 ---
-title:  "判断IE版本的HTML语句"
+title: '判断IE版本的HTML语句'
 category: 技术
-tags: 前端
+tags: [前端]
 date: 2017-08-14
 updated: 2017-08-14
 ---

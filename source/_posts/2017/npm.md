@@ -1,12 +1,12 @@
 ---
-title: "npm"
+title: 'npm常用命令'
 category: 工具
-tags: 包管理器
+tags: [包管理器]
 date: 2017-12-12
 updated: 2017-12-12
 ---
 
-npm 使用总结...
+npm 常用命令...
 
 <!-- more -->
 

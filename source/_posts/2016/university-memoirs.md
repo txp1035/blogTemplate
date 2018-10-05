@@ -1,7 +1,7 @@
 ---
-title: "大学回忆录"
+title: '大学回忆录'
 category: 生活
-tags: 总结
+tags: [总结]
 date: 2016-07-03
 updated: 2016-07-03
 ---

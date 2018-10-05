@@ -1,7 +1,7 @@
 ---
-title: "建博之初"
+title: '建博之初'
 category: 生活
-tags: 说说
+tags: [说说]
 date: 2016-04-22
 updated: 2016-04-22
 ---

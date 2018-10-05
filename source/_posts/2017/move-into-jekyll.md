@@ -1,7 +1,7 @@
 ---
-title: "搬入jekyll"
+title: '搬入jekyll'
 category: 生活
-tags: 说说
+tags: [说说]
 date: 2017-08-09
 updated: 2017-08-09
 ---
