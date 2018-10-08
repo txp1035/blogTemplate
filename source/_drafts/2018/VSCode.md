@@ -56,8 +56,6 @@ vscode-icons(图标主题)
 
 ```
 {
-  // "apicloud.port": "23450", // 开启apicloud在vscode中的wifi真机同步
-  // "apicloud.subdirectories": "/apiclouduser", // 设置apicloud在vscode中的wifi真机同步根目录
   /*编辑器*/
   //每行字数 防止{} []换行
   "editor.cursorBlinking": "smooth",
@@ -70,7 +68,9 @@ vscode-icons(图标主题)
   //保存时设置文件的格式。格式化程序必须可用，不能自动保存文件，并且不能关闭编辑器。
   "editor.formatOnSave": true,
   //控制行高。使用 0 通过字号计算行高。
-  "editor.lineHeight": 24,
+  "editor.lineHeight": 25,
+  //控制是否显示 minimap
+  "editor.minimap.enabled": false,
   //在通过鼠标添加多个光标时使用的修改键。
   "editor.multiCursorModifier": "ctrlCmd",
   //控制编辑器应如何呈现当前行突出显示，可能为“无”、“装订线”、“线”和“全部”。
@@ -82,6 +82,8 @@ vscode-icons(图标主题)
   //一个制表符等于的空格数
   "editor.tabSize": 2,
   /*工作台*/
+  //控制工作台中活动栏的可见性。
+  "workbench.activityBar.visible": false,
   //指定在工作台中使用的图标主题，或指定 "null" 以不显示任何文件图标。
   "workbench.iconTheme": "vscode-icons",
   //在未能恢复上一会话信息的情况下，控制启动时显示的编辑器。
@@ -126,6 +128,9 @@ vscode-icons(图标主题)
   /*TypeScript*/
   //在 VS Code 中重命名或移动文件时启用或禁用自动更新 import 语句的路径。
   "javascript.updateImportsOnFileMove.enabled": "always",
+  /*集成终端*/
+  //控制终端的行高，此数字乘上终端字号得到实际行高(以像素为单位)。
+  "terminal.integrated.lineHeight": 1.8,
   /*ESLint*/
   //文件保存时，是否自动根据 eslint 进行格式化
   "eslint.autoFixOnSave": false,
