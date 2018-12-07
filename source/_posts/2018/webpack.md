@@ -14,10 +14,10 @@ updated: 2018-08-01
 
 webpack.config.js
 
-```
-const path = require('path');//导入node.js的path模块
-const HtmlWebpackPlugin = require('html-webpack-plugin');//导入自动生成HTML插件
-const CleanWebpackPlugin = require('clean-webpack-plugin');//导入清理文件夹插件
+```js
+const path = require('path'); //导入node.js的path模块
+const HtmlWebpackPlugin = require('html-webpack-plugin'); //导入自动生成HTML插件
+const CleanWebpackPlugin = require('clean-webpack-plugin'); //导入清理文件夹插件
 
 const config = {
   /**
@@ -60,43 +60,43 @@ const config = {
    *添加插件需要先导入再实例化。
    */
   plugins: [
-    new CleanWebpackPlugin(['dist']),//用于清理dist文件夹
+    new CleanWebpackPlugin(['dist']), //用于清理dist文件夹
     new HtmlWebpackPlugin({
       title: 'Output Management'
-    })//用于自动生成HTML
+    }) //用于自动生成HTML
   ]
-};//定义配置文件
+}; //定义配置文件
 
-module.exports = config;//导出配置文件
+module.exports = config; //导出配置文件
 ```
 
-运行配置：  
-npx webpack --config webpack.config.js  
-在 package.js 中 script 设置，"build":“webpack --config webpack.config.js”  
+运行配置：
+npx webpack --config webpack.config.js
+在 package.js 中 script 设置，"build":“webpack --config webpack.config.js”
 PS：--config webpack.config.js 用于设置运行文件名，不设置默认运行 webpack.config.js
 
 ## source map
 
 webpack.config.js
 
-```
+```js
 const path = require('path');
 
 module.exports = {
-    entry: {
-        app: './src/index.js',
-        print: './src/print.js'
-    },
-    output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist')
-    },
-    /**
-     *用于追踪错误和警告在源代码中的原始位置。
-     *不设置：显示打包后的代码。（用于生产环境）
-     *inline-source-map：显示原始源代码。
-     */
-    devtool: 'inline-source-map'
+  entry: {
+    app: './src/index.js',
+    print: './src/print.js'
+  },
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
+  /**
+   *用于追踪错误和警告在源代码中的原始位置。
+   *不设置：显示打包后的代码。（用于生产环境）
+   *inline-source-map：显示原始源代码。
+   */
+  devtool: 'inline-source-map'
 };
 ```
 
@@ -106,44 +106,44 @@ module.exports = {
 
 webpack.config.js
 
-```
+```js
 const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: {
-        app: './src/index.js'
-    },
-    /**
-     *设置webpack-dev-server，用于提供服务器。
-     *contentBase用于设置服务器目录。
-     *hot表示是否启用webpack的模块热替换特性。
-     */
-    devServer: {
-        contentBase: './dist',
-        hot: true
-    },
-    plugins: [
-        new webpack.NamedModulesPlugin(),//当开启HMR的时候使用该插件会显示模块的相对路径。
-        new webpack.HotModuleReplacementPlugin()//模块热替换插件。
-    ],
-    output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist')
-    }
+  entry: {
+    app: './src/index.js'
+  },
+  /**
+   *设置webpack-dev-server，用于提供服务器。
+   *contentBase用于设置服务器目录。
+   *hot表示是否启用webpack的模块热替换特性。
+   */
+  devServer: {
+    contentBase: './dist',
+    hot: true
+  },
+  plugins: [
+    new webpack.NamedModulesPlugin(), //当开启HMR的时候使用该插件会显示模块的相对路径。
+    new webpack.HotModuleReplacementPlugin() //模块热替换插件。
+  ],
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  }
 };
 ```
 
-运行配置：  
+运行配置：
 npx webpack-dev-server --open --config webpack.config.js
-在 package.js 中 script 设置，"start":“webpack-dev-server --open --config webpack.config.js”  
+在 package.js 中 script 设置，"start":“webpack-dev-server --open --config webpack.config.js”
 PS：--config webpack.config.js 用于设置运行文件名，不设置默认运行 webpack.config.js
 
 ### node 设置方法
 
 dev-server.js
 
-```
+```js
 const webpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 
@@ -163,6 +163,6 @@ server.listen(5000, 'localhost', () => {
 });
 ```
 
-运行配置：  
+运行配置：
 node dev-server.js
 在 package.js 中 script 设置，"start":“node dev-server.js”

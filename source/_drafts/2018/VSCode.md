@@ -54,7 +54,7 @@ vscode-icons(图标主题)
 
 ## 整个配置
 
-```
+```js
 {
   /*编辑器*/
   //每行字数 防止{} []换行
@@ -205,7 +205,7 @@ vscode-icons(图标主题)
 
 # 快捷键
 
-```
+```js
 {
 "key": "cmd+h",
 "command": "workbench.action.terminal.toggleTerminal"

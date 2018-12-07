@@ -31,7 +31,7 @@ updated: 2017-12-13
 新建仓库
 打开\_config.yml,进行基础配置
 
-```
+```yml
 deploy:
   type: git
   repo: https://github.com/...... 仓库地址
@@ -39,12 +39,12 @@ deploy:
 
 安装 hexo-deployer-git 自动部署发布工具
 
-```
+```txt
 npm install hexo-deployer-git  --save
 ```
 
 发布到 Github
 
-```
+```txt
 hexo clean && hexo g && hexo d
 ```

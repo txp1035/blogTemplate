@@ -10,7 +10,8 @@ IE那些事...
 
 <!-- more -->
 经常用一些框架会看到类似注释一样的语句，例如bootstrap里的：
-```
+
+```html
 <!--[if lt IE 9]>
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -18,7 +19,8 @@ IE那些事...
 ```
 
 写了这个代码就能兼容IE8了。那么这些代码是什么意思呢？我们来看下面例子：
-``` 
+
+```html
 <!--[if !IE]>除IE外都可识别 <![endif]-->
 <!--[if IE]> 所有的IE可识别 <![endif]-->
 <!--[if IE 6]> 仅IE6可识别 <![endif]-->

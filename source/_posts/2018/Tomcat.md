@@ -14,7 +14,7 @@ updated: 2018-01-05
 
 在系统环境变量中配置名字为 JAVA_HOME 路径为你的 jdk 路径，名字为 CATALINA_HOME 路径为你的 Tomcat 路径。如下示例：
 
-```
+```txt
 JAVA_HOME=C:\Program Files (x86)\Java\jdk1.7.0_71
 CATALINA_HOME=C:\Program Files (x86)\Java\apache-tomcat-7.0.82
 ```
