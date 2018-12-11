@@ -3,7 +3,7 @@ title: 'VSCode'
 category: 技术
 tags: [工具]
 date: 2018-08-12
-updated: 2018-08-12
+updated: 2018-12-11
 ---
 
 工欲善其事必先利其器...
@@ -15,16 +15,20 @@ updated: 2018-08-12
 Add jsdoc comments(快速添加 jsdoc 插件)
 Atom One Dark Theme(Atom 颜色主题)
 Bracket Pair Colorizer(每一对括号用不同颜色区别)
+Chinese (Simplified) Language Pack for Visual Studio Code(简体中文)
 cssrem(px 转 rem)
 Debugger for Chrome(在编辑器里面 debug)
+Easy LESS（less 文件转 css）
+ES7 React/Redux/GraphQL/React-Native snippets（react 常用代码片段）
 ESLint(代码检查)
 Git History(图形化 git 历史记录)
-GitLens — Git supercharged(显示每行代码作者|日期|提交备注)
+GitLens — Git supercharged(git 管理利器)
 HTML CSS Support(HTML 中 CSS 智能提示)
 Markdown All in One(Markdown 快捷输入)
 markdownlint(Markdown 检查)
 open in browser(通过浏览器运行 HTML)
 Path Intellisense(路径智能提示)
+Power Mode（输入代码很酷炫的效果）
 Prettier - Code formatter(代码格式化)
 Settings Sync(多台电脑同步配置)
 Sublime Text Keymap and Settings Importer(sublime 键位设置)
@@ -35,7 +39,7 @@ vscode-icons(图标主题)
 
 ## Commonly Used(常用)
 
-```
+```json
 "editor.fontSize": 13, //以像素为单位控制字号
 "editor.fontFamily": "Consolas", //控制字体系列
 "editor.tabSize": 2, //一个制表符等于的空格数
@@ -54,15 +58,15 @@ vscode-icons(图标主题)
 
 ## 整个配置
 
-```js
+```json
 {
   /*编辑器*/
   //每行字数 防止{} []换行
   "editor.cursorBlinking": "smooth",
   //控制字体系列
-  "editor.fontFamily": "Consolas",
+  // "editor.fontFamily": "Consolas",
   //以像素为单位控制字号
-  "editor.fontSize": 13,
+  "editor.fontSize": 15,
   //控制编辑器是否应自动设置粘贴内容的格式。
   "editor.formatOnPaste": true,
   //保存时设置文件的格式。格式化程序必须可用，不能自动保存文件，并且不能关闭编辑器。
@@ -81,11 +85,6 @@ vscode-icons(图标主题)
   "editor.snippetSuggestions": "top",
   //一个制表符等于的空格数
   "editor.tabSize": 2,
-  /*工作台*/
-  //控制工作台中活动栏的可见性。
-  "workbench.activityBar.visible": false,
-  //指定在工作台中使用的图标主题，或指定 "null" 以不显示任何文件图标。
-  "workbench.iconTheme": "vscode-icons",
   //在未能恢复上一会话信息的情况下，控制启动时显示的编辑器。
   "workbench.startupEditor": "newUntitledFile",
   /*窗口*/
@@ -136,20 +135,33 @@ vscode-icons(图标主题)
   "eslint.autoFixOnSave": false,
   // 是否开启 eslint 检测
   "eslint.enable": false,
-  //eslint 配置文件
-  "eslint.options": {
-    "plugins": [
-      "html",
-      "javascript",
-      {
-        "language": "vue",
-        "autoFix": true
-      },
-      "vue"
-    ]
-  },
   //eslint 能够识别的文件后缀类型
-  "eslint.validate": ["javascript", "javascriptreact", "html", "vue", "typescript", "typescriptreact"],
+  "eslint.validate": [
+    {
+      "language": "html",
+      "autoFix": false
+    },
+    {
+      "language": "javascript",
+      "autoFix": false
+    },
+    {
+      "language": "javascriptreact",
+      "autoFix": false
+    },
+    {
+      "language": "typescript",
+      "autoFix": false
+    },
+    {
+      "language": "typescriptreact",
+      "autoFix": false
+    },
+    {
+      "language": "vue",
+      "autoFix": false
+    }
+  ],
   /*Gitlens Configuration*/
   //细节,配置 gitlen 中 git 提交历史记录的信息显示情况
   "gitlens.advanced.messages": {
@@ -170,7 +182,7 @@ vscode-icons(图标主题)
   "sync.autoDownload": false,
   "sync.autoUpload": false,
   "sync.forceDownload": false,
-  "sync.gist": "15fbbb532bfd2b103dc345b36e298f4b",
+  "sync.gist": "710bcbf7c3f171d47d3b23e2030d469e",
   "sync.quietSync": false,
   "sync.removeExtensions": true,
   "sync.syncExtensions": true,
@@ -186,7 +198,8 @@ vscode-icons(图标主题)
   /*Emmet*/
   //在默认不支持 Emmet 的语言中启用 Emmet 缩写功能。
   "emmet.includeLanguages": {
-    "jsx-sublime-babel-tags": "javascriptreact"
+    "jsx-sublime-babel-tags": "javascriptreact",
+    "javascript": "javascriptreact"
   },
   //为指定的语法定义配置文件或使用带有特定规则的配置文件。
   "emmet.syntaxProfiles": {
@@ -199,35 +212,148 @@ vscode-icons(图标主题)
     }
   },
   //启用后，按下 TAB 键，将展开 Emmet 缩写。
-  "emmet.triggerExpansionOnTab": true
+  "emmet.triggerExpansionOnTab": true,
+  /*power效果插件*/
+  //是否启用power插件效果
+  "powermode.enabled": false,
+  /*vetur插件*/
+  //设置vue文件js格式化
+  "vetur.format.defaultFormatter.js": "vscode-typescript",
+  //设置vue文件html格式化
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  /*插件Easy LESS*/
+  "less.compile": {
+    // true => 删除多余空白
+    "compress": true,
+    // true => 生成源映射（.CS.MAP文件）
+    "sourceMap": true,
+    // false => 不要输出.CSS文件（每个文件可重写，见下文）
+    "out": false
+  },
+  "workbench.iconTheme": "vscode-icons"
 }
 ```
 
 # 快捷键
 
 ```js
+// 将按键绑定配置放入此文件中即可覆盖默认值
+[
+  {
+    key: 'ctrl+f1',
+    command: 'extension.openInBrowser'
+  },
+  {
+    key: 'alt+b',
+    command: '-extension.openInBrowser'
+  },
+  {
+    key: 'alt+t',
+    command: 'toggleFindInSelection',
+    when: 'editorFocus'
+  },
+  {
+    key: 'alt+l',
+    command: '-toggleFindInSelection',
+    when: 'editorFocus'
+  },
+  /*方向键和选择提示键位*/
+  {
+    key: 'alt+j',
+    command: 'cursorLeft',
+    when: 'textInputFocus'
+  },
+  {
+    key: 'left',
+    command: '-cursorLeft',
+    when: 'textInputFocus'
+  },
+  {
+    key: 'alt+i',
+    command: 'cursorUp',
+    when: 'textInputFocus'
+  },
+  {
+    key: 'up',
+    command: '-cursorUp',
+    when: 'textInputFocus'
+  },
+  {
+    key: 'alt+k',
+    command: 'cursorDown',
+    when: 'textInputFocus'
+  },
+  {
+    key: 'down',
+    command: '-cursorDown',
+    when: 'textInputFocus'
+  },
+  {
+    key: 'alt+l',
+    command: 'cursorRight',
+    when: 'textInputFocus'
+  },
+  {
+    key: 'right',
+    command: '-cursorRight',
+    when: 'textInputFocus'
+  },
+  {
+    key: 'alt+i',
+    command: 'selectPrevSuggestion',
+    when: 'suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus'
+  },
+  {
+    key: 'up',
+    command: '-selectPrevSuggestion',
+    when: 'suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus'
+  },
+  {
+    key: 'alt+k',
+    command: 'selectNextSuggestion',
+    when: 'suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus'
+  },
+  {
+    key: 'down',
+    command: '-selectNextSuggestion',
+    when: 'suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus'
+  }
+];
+```
+
+# 代码片段
+
+```json
 {
-"key": "cmd+h",
-"command": "workbench.action.terminal.toggleTerminal"
-},//打开和关闭终端窗口，关闭窗口后里面的命令行会照常运行，再次打开后依然可见
-{
-"key": "cmd+t",
-"command": "workbench.action.terminal.new",
-"when": "terminalFocus"
-},新建终端，一个终端窗口中，可以创建多个终端
-{
-"key": "cmd+right",
-"command": "workbench.action.terminal.focusNext",
-"when": "terminalFocus"
-},可以在终端间切换
-{
-"key": "cmd+left",
-"command": "workbench.action.terminal.focusPrevious",
-"when": "terminalFocus"
-},
-{
-"key": "cmd+w",
-"command": "workbench.action.terminal.kill",
-"when": "terminalFocus"
-}不想要的终端，用 cmd-w 来关闭
+  "head": {
+    "prefix": "head",
+    "body": ["---", "title: '$1'", "category: $2", "tags: [$3]", "date: $4", "---"],
+    "description": "快速输入博客头部"
+  },
+  "log": {
+    "prefix": "log",
+    "body": "console.log($1)"
+  },
+  "warn": {
+    "prefix": "warn",
+    "body": "console.warn(${1:'后端返回数据问题'});"
+  },
+  "ims": {
+    "prefix": "ims",
+    "body": "import ${1:styles} from '${2:./index.less}';"
+  },
+  "dva": {
+    "prefix": "dva",
+    "body": "import { connect } from 'dva';"
+  },
+  "dvac": {
+    "prefix": "dvac",
+    "body": ["@connect(({ ${1:sale} }) => ({", "  ${2:sale},", "}))"]
+  },
+  "menuSetting": {
+    "prefix": "menuSetting",
+    "body": ["{", "  path: '${1:/dashboard}',", "  name: '${2:dashboard}',", "  icon: '${3:dashboard}',", "  routes: [$4],", "},"],
+    "description": "菜单"
+  }
+}
 ```
