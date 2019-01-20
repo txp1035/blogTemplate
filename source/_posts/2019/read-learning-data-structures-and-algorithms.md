@@ -14,13 +14,9 @@ updated: 2018-9-28
 
 ## 数组
 
-概念：
-
 > 最简单的内存数据结构。
 
 ## 栈
-
-### 栈的概念
 
 > 栈是一种遵从后进先出(LIFO)原则的有序集合。
 > 新添加的或待删除的元素都保存在栈的末尾，称做栈顶，另一端就叫栈底。
@@ -92,8 +88,6 @@ function baseConverter(decNumber, base) {
 其他实例：平衡圆括号和汉诺塔
 
 ## 队列
-
-### 队列的概念
 
 > 队列是遵循 FIFO（First In First Out，先进先出，也称为先来先服务）原则的一组有序的项。
 > 队列在尾部添加新元素，并从顶部移除元素。
@@ -173,4 +167,112 @@ function hotPotato(nameList, num) {
   }
   return queue.dequeue();
 }
+```
+
+## 链表
+
+> 链表存储有序的元素集合,但不同于数组,链表中的元素在内存中并不是连续放置的。
+> 每个元素由一个存储元素本身的节点和一个指向下一个元素的引用(也称指针或链接)组成。
+> 解决数组起点或中间插入或移除项的成本很高的问题
+
+###　创建一个链表
+
+```js
+function LinkedList() {
+  var Node = function(element) {
+    this.element = element; //添加到列表的值
+    this.next = null; //指向列表中下一个节点项的指针
+  }; //要加入列表的项
+  var length = 0; //列表项的数量
+  var head = null; //第一个节点的引用
+  this.append = function(element) {
+    var node = new Node(element),
+      current;
+    if (head === null) {
+      head = node; //列表中第一个节点
+    } else {
+      current = head;
+      while (current.next) {
+        current = current.next;
+      } //循环链表,直到找到最后一项
+      current.next = node; //找到最后一项,将其next赋为node,建立链接
+    }
+    length++; //更新列表的长度
+  }; //向列表尾部添加一个新的项。
+  this.insert = function(position, element) {
+    //检查越界值
+    if (position >= 0 && position <= length) {
+      var node = new Node(element),
+        current = head,
+        previous,
+        index = 0;
+      if (position === 0) {
+        //在第一个位置添加
+        node.next = current;
+        head = node;
+      } else {
+        while (index++ < position) {
+          previous = current;
+          current = current.next;
+        }
+        node.next = current;
+        previous.next = node;
+      }
+      length++; //更新列表的长度
+      return true;
+    } else {
+      return false;
+    }
+  }; //向列表的特定位置插入一个新的项。
+  this.removeAt = function(position) {
+    //检查越界值
+    if (position > -1 && position < length) {
+      var current = head,
+        previous,
+        index = 0;
+      if (position === 0) {
+        head = current.next; //移除第一项
+      } else {
+        while (index++ < position) {
+          previous = current;
+          current = current.next;
+        }
+        previous.next = current.next; //重点：将previous与current的下一项链接起来:跳过current,从而移除它
+      }
+      length--;
+      return current.element;
+    } else {
+      return null;
+    }
+  }; //从列表的特定位置移除一项。
+  this.remove = function(element) {}; //从列表中移除一项。
+  this.indexOf = function(element) {
+    var current = head,
+      index = -1;
+    while (current) {
+      if (element === current.element) {
+        return index;
+      }
+      index++;
+      current = current.next;
+    }
+    return -1;
+  }; //返回元素在列表中的索引。如果列表中没有该元素则返回 -1 。
+  this.isEmpty = function() {}; //如果链表中不包含任何元素,返回 true ,如果链表长度大于0则返回 false 。
+  this.size = function() {}; //返回链表包含的元素个数。与数组的 length 属性类似。
+  this.toString = function() {
+    var current = head,
+      string = '';
+    while (current) {
+      // string = current.element; //书中写法，这样只能获得最后一项的字符串
+      string += current.next ? `${current.element},` : current.element;
+      current = current.next;
+    }
+    return string;
+  }; //由于列表项使用了 Node 类,就需要重写继承自JavaScript对象默认的toString 方法,让其只输出元素的值。
+  this.print = function() {
+    console.log(head);
+    console.log(length);
+  }; //辅助查看链表
+} //单项链表
 ```
