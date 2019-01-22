@@ -245,7 +245,23 @@ function LinkedList() {
       return null;
     }
   }; //从列表的特定位置移除一项。
-  this.remove = function(element) {}; //从列表中移除一项。
+  this.remove = function(element) {
+    var current = head,
+      previous,
+      index = 0;
+    while (current) {
+      if (element === current.element) {
+        if (index === 0) {
+          head = current.next; //移除第一项
+        } else {
+          previous = current;
+          current = current.next;
+          previous.next = current.next; //重点：将previous与current的下一项链接起来:跳过current,从而移除它
+        }
+      }
+      index++;
+    }
+  }; //从列表中移除一项。
   this.indexOf = function(element) {
     var current = head,
       index = -1;
@@ -258,8 +274,12 @@ function LinkedList() {
     }
     return -1;
   }; //返回元素在列表中的索引。如果列表中没有该元素则返回 -1 。
-  this.isEmpty = function() {}; //如果链表中不包含任何元素,返回 true ,如果链表长度大于0则返回 false 。
-  this.size = function() {}; //返回链表包含的元素个数。与数组的 length 属性类似。
+  this.isEmpty = function() {
+    return length === 0;
+  }; //如果链表中不包含任何元素,返回 true ,如果链表长度大于0则返回 false 。
+  this.size = function() {
+    return length;
+  }; //返回链表包含的元素个数。与数组的 length 属性类似。
   this.toString = function() {
     var current = head,
       string = '';
