@@ -295,4 +295,216 @@ function LinkedList() {
     console.log(length);
   }; //辅助查看链表
 } //单项链表
+function DoublyLinkedList() {
+  var Node = function(element) {
+    this.element = element;
+    this.next = null;
+    this.prev = null; //新增的
+  };
+  var length = 0;
+  var head = null;
+  var tail = null; //新增的
+  //这里是方法
+  this.insert = function(position, element) {
+    //检查越界值
+    if (position >= 0 && position <= length) {
+      var node = new Node(element),
+        current = head,
+        previous,
+        index = 0;
+      if (position === 0) {
+        if (!head) {
+          head = node;
+          tail = node;
+        } else {
+          node.next = current;
+          current.prev = node;
+          head = node;
+        }
+      } else if (position === length) {
+        current = tail;
+        current.next = node;
+        node.prev = current;
+        tail = node;
+      } else {
+        while (index++ < position) {
+          previous = current;
+          current = current.next;
+        }
+        node.next = current;
+        previous.next = node;
+        current.prev = node;
+        node.prev = previous;
+      }
+      length++; //更新列表的长度
+      return true;
+    } else {
+      return false;
+    }
+  };
+  this.removeAt = function(position) {
+    //检查越界值
+    if (position > -1 && position < length) {
+      var current = head,
+        previous,
+        index = 0;
+      //移除第一项
+      if (position === 0) {
+        head = current.next; // {1}
+        //如果只有一项，更新tail //新增的
+        if (length === 1) {
+          // {2}
+          tail = null;
+        } else {
+          head.prev = null; // {3}
+        }
+      } else if (position === length - 1) {
+        //最后一项 //新增的
+        current = tail; // {4}
+        tail = current.prev;
+        tail.next = null;
+      } else {
+        while (index++ < position) {
+          // {5}
+          previous = current;
+          current = current.next;
+        }
+        //将previous与current的下一项链接起来——跳过current
+        previous.next = current.next; // {6}
+        current.next.prev = previous; //新增的
+      }
+      length--;
+      return current.element;
+    } else {
+      return null;
+    }
+  };
+} //双向链表
+```
+
+## 集合
+
+### 创建一个集合
+
+```js
+function Set() {
+  var items = {};
+  this.add = function(value) {
+    if (!this.has(value)) {
+      items[value] = value;
+      return true;
+    }
+    return false;
+  }; //向集合添加一个新的项。
+  this.remove = function(value) {
+    if (this.has(value)) {
+      delete items[value];
+      return true;
+    }
+    return false;
+  }; //从集合移除一个值。
+  this.has = function(value) {
+    // return value in items; //老办法
+    return items.hasOwnProperty(value);
+  }; //如果值在集合中，返回true，否则返回false。
+  this.clear = function() {
+    items = {};
+  }; //移除集合中的所有项。
+  this.size = function() {
+    // var count = 0;
+    // for (var prop in items) {
+    //   if (items.hasOwnProperty(prop)) {
+    //     ++count;
+    //   }
+    // }
+    // return count;
+    return Object.keys(items).length;
+  }; //返回集合所包含元素的数量。与数组的length属性类似。
+  this.values = function() {
+    return Object.keys(items);
+  }; //返回一个包含集合中所有值的数组。
+  this.union = function(otherSet) {
+    var unionSet = new Set();
+    var values = this.values();
+    for (var i = 0; i < values.length; i++) {
+      unionSet.add(values[i]);
+    }
+    values = otherSet.values();
+    for (var i = 0; i < values.length; i++) {
+      unionSet.add(values[i]);
+    }
+    return unionSet;
+  }; //并集
+  this.intersection = function(otherSet) {
+    var intersectionSet = new Set();
+    var values = this.values();
+    for (var i = 0; i < values.length; i++) {
+      if (otherSet.has(values[i])) {
+        intersectionSet.add(values[i]);
+      }
+    }
+    return intersectionSet;
+  }; //交集
+  this.difference = function(otherSet) {
+    var differenceSet = new Set();
+    var values = this.values();
+    for (var i = 0; i < values.length; i++) {
+      if (!otherSet.has(values[i])) {
+        differenceSet.add(values[i]);
+      }
+    }
+    return differenceSet;
+  }; //差集
+  this.subset = function(otherSet) {
+    if (this.size() > otherSet.size()) {
+      return false;
+    } else {
+      var values = this.values();
+      for (var i = 0; i < values.length; i++) {
+        if (!otherSet.has(values[i])) {
+          return false;
+        }
+      }
+      return true;
+    }
+  };
+} //子集
+```
+
+## 字典和散列表
+
+### 创建一个字典
+
+```js
+function Dictionary() {
+  var items = {};
+  function set(key, value) {
+    items[key] = value;
+  } //向字典中添加新元素。
+  this.remove = function(key) {
+    if (this.has(key)) {
+      delete items[key];
+      return true;
+    }
+    return false;
+  }; //通过使用键值来从字典中移除键值对应的数据值。
+  this.has = function(key) {
+    return key in items;
+  }; //如果某个键值存在于这个字典中，则返回true，反之则返回false。
+  this.get = function(key) {
+    return this.has(key) ? items[key] : undefined;
+  }; //通过键值查找特定的数值并返回。
+  this.clear = function() {}; //将这个字典中的所有元素全部删除。
+  this.size = function() {}; //返回字典所包含元素的数量。与数组的length属性类似。
+  this.keys = function() {}; //将字典所包含的所有键名以数组形式返回。
+  this.values = function() {
+    var values = [];
+    for (var k in items) {
+      if (this.has(k)) {
+        values.push(items[k]);
+      }
+    }
+    return values;
+  }; //将字典所包含的所有数值以数组形式返回。
+}
 ```
