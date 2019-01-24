@@ -2,8 +2,8 @@
 title: '记一次H5开发'
 category: 技术
 tags: [笔记, 前端]
-date: 2018-9-28
-updated: 2018-9-28
+date: 2019-1-17
+updated: 2019-1-24
 ---
 
 《学习 JavaScript 数据结构与算法》读书笔记
