@@ -16,7 +16,7 @@ updated: 2019-1-24
 
 ```js
 const DirectoryTree = {
-  docs: null,
+  docs: { dec: null, next: null },
   examples: null,
   packages: null,
   scripts: null,
