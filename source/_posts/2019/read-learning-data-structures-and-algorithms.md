@@ -508,3 +508,299 @@ function Dictionary() {
   }; //将字典所包含的所有数值以数组形式返回。
 }
 ```
+
+### 创建一个散列表
+
+```js
+function HashTable() {
+  var table = [];
+  var loseloseHashCode = function(key) {
+    var hash = 0;
+    for (var i = 0; i < key.length; i++) {
+      hash += key.charCodeAt(i);
+    }
+    return hash % 37;
+  }; //散列函数
+  this.put = function(key, value) {
+    var position = loseloseHashCode(key);
+    console.log(position + ' - ' + key);
+    table[position] = value;
+  }; //向散列表增加一个新的项(也能更新散列表)
+  this.remove = function(key) {
+    table[loseloseHashCode(key)] = undefined;
+  }; //根据键值从散列表中移除值。
+  this.get = function(key) {
+    return table[loseloseHashCode(key)];
+  }; //返回根据键值检索到的特定的值。
+} //带冲突的散列表
+function HashTable１() {
+  var table = [];
+  var loseloseHashCode = function(key) {
+    var hash = 0;
+    for (var i = 0; i < key.length; i++) {
+      hash += key.charCodeAt(i);
+    }
+    return hash % 37;
+  }; //散列函数
+  var ValuePair = function(key, value) {
+    this.key = key;
+    this.value = value;
+    this.toString = function() {
+      return '[' + this.key + ' - ' + this.value + ']';
+    };
+  };
+  this.put = function(key, value) {
+    var position = loseloseHashCode(key);
+    if (table[position] == undefined) {
+      table[position] = new LinkedList(); //前面的链表
+    }
+    table[position].append(new ValuePair(key, value));
+  }; //向散列表增加一个新的项(也能更新散列表)
+  this.remove = function(key) {
+    var position = loseloseHashCode(key);
+    if (table[position] !== undefined) {
+      var current = table[position].getHead();
+      while (current.next) {
+        if (current.element.key === key) {
+          table[position].remove(current.element);
+          if (table[position].isEmpty()) {
+            table[position] = undefined;
+          }
+          return true;
+        }
+        current = current.next;
+      }
+      // 检查是否为第一个或最后一个元素
+      if (current.element.key === key) {
+        table[position].remove(current.element);
+        if (table[position].isEmpty()) {
+          table[position] = undefined;
+        }
+        return true;
+      }
+    }
+    return false;
+  }; //根据键值从散列表中移除值。
+  this.get = function(key) {
+    var position = loseloseHashCode(key);
+    if (table[position] !== undefined) {
+      var current = table[position].getHead();
+      while (current.next) {
+        if (current.element.key === key) {
+          return current.element.value;
+        }
+        current = current.next;
+      }
+      //检查元素在链表第一个或最后一个节点的情况
+      if (current.element.key === key) {
+        return current.element.value;
+      }
+    }
+    return undefined;
+  }; //返回根据键值检索到的特定的值。
+} //分离链接解决散列表冲突
+function HashTable２() {
+  var table = [];
+  var loseloseHashCode = function(key) {
+    var hash = 0;
+    for (var i = 0; i < key.length; i++) {
+      hash += key.charCodeAt(i);
+    }
+    return hash % 37;
+  }; //散列函数
+  this.put = function(key, value) {
+    var position = loseloseHashCode(key);
+    if (table[position] == undefined) {
+      table[position] = new ValuePair(key, value);
+    } else {
+      var index = ++position;
+      while (table[index] != undefined) {
+        index++;
+      }
+      table[index] = new ValuePair(key, value);
+    }
+  }; //向散列表增加一个新的项(也能更新散列表)
+  this.remove = function(key) {
+    var position = loseloseHashCode(key);
+    if (table[position] !== undefined) {
+      if (table[position].key === key) {
+        return table[position].value;
+      } else {
+        var index = ++position;
+        while (table[index] === undefined || table[index].key !== key) {
+          index++;
+        }
+        table[index] = undefined;
+      }
+    }
+    return undefined;
+  }; //根据键值从散列表中移除值。
+  this.get = function(key) {
+    var position = loseloseHashCode(key);
+    if (table[position] !== undefined) {
+      if (table[position].key === key) {
+        return table[position].value;
+      } else {
+        var index = ++position;
+        while (table[index] === undefined || table[index].key !== key) {
+          index++;
+        }
+        if (table[index].key === key) {
+          return table[index].value;
+        }
+      }
+    }
+    return undefined;
+  }; //返回根据键值检索到的特定的值。
+} //线性探查解决散列表冲突
+var djb2HashCode = function(key) {
+  var hash = 5381; //{1}
+  for (var i = 0; i < key.length; i++) {
+    //{2}
+    hash = hash * 33 + key.charCodeAt(i); //{3}
+  }
+  return hash % 1013; //{4}
+}; //更好的散列函数
+```
+
+## 树
+
+### 创建 BinarySearchTree 类
+
+```js
+function BinarySearchTree() {
+  var Node = function(key) {
+    this.key = key;
+    this.left = null;
+    this.right = null;
+  };
+  var root = null;
+  var insertNode = function(node, newNode) {
+    if (newNode.key < node.key) {
+      if (node.left === null) {
+        node.left = newNode;
+      } else {
+        insertNode(node.left, newNode);
+      }
+    } else {
+      if (node.right === null) {
+        node.right = newNode;
+      } else {
+        insertNode(node.right, newNode);
+      }
+    }
+  };
+  this.insert = function(key) {
+    var newNode = new Node(key);
+    if (root === null) {
+      root = newNode;
+    } else {
+      insertNode(root, newNode);
+    }
+  }; //向树中插入一个新的键。
+  var searchNode = function(node, key) {
+    if (node === null) {
+      return false;
+    }
+    if (key < node.key) {
+      return searchNode(node.left, key);
+    } else if (key > node.key) {
+      return searchNode(node.right, key);
+    } else {
+      return true;
+    }
+  };
+  this.search = function(key) {
+    return searchNode(root, key);
+  }; //在树中查找一个键,如果节点存在,则返回 true ;如果不存在,则返回false 。
+  var inOrderTraverseNode = function(node, callback) {
+    if (node !== null) {
+      inOrderTraverseNode(node.left, callback);
+      callback(node.key);
+      inOrderTraverseNode(node.right, callback);
+    }
+  };
+  this.inOrderTraverse = function(callback) {
+    inOrderTraverseNode(root, callback);
+  }; //通过中序遍历方式遍历所有节点。
+  var preOrderTraverseNode = function(node, callback) {
+    if (node !== null) {
+      callback(node.key);
+      preOrderTraverseNode(node.left, callback);
+      preOrderTraverseNode(node.right, callback);
+    }
+  };
+  this.preOrderTraverse = function() {
+    preOrderTraverseNode(root, callback);
+  }; //通过先序遍历方式遍历所有节点。
+  var postOrderTraverseNode = function(node, callback) {
+    if (node !== null) {
+      postOrderTraverseNode(node.left, callback);
+      postOrderTraverseNode(node.right, callback);
+      callback(node.key);
+    }
+  };
+  this.postOrderTraverse = function() {
+    postOrderTraverseNode(root, callback);
+  }; //通过后序遍历方式遍历所有节点。
+  var minNode = function(node) {
+    if (node) {
+      while (node && node.left !== null) {
+        node = node.left;
+      }
+      return node.key;
+    }
+    return null;
+  };
+  this.min = function() {
+    return minNode(root);
+  }; //返回树中最小的值/键。
+  var maxNode = function(node) {
+    if (node) {
+      while (node && node.right !== null) {
+        node = node.right;
+      }
+      return node.key;
+    }
+    return null;
+  };
+  this.max = function() {
+    return maxNode(root);
+  }; //返回树中最大的值/键。
+  var removeNode = function(node, key) {
+    if (node === null) {
+      return null;
+    }
+    if (key < node.key) {
+      node.left = removeNode(node.left, key);
+      return node;
+    } else if (key > node.key) {
+      node.right = removeNode(node.right, key);
+      return node;
+    } else {
+      //键等于node.key
+      //第一种情况——一个叶节点
+      if (node.left === null && node.right === null) {
+        node = null;
+        return node;
+      }
+      //第二种情况——一个只有一个子节点的节点
+      if (node.left === null) {
+        node = node.right;
+        return node;
+      } else if (node.right === null) {
+        node = node.left;
+        return node;
+      }
+      //第三种情况——一个有两个子节点的节点
+      var aux = findMinNode(node.right);
+      node.key = aux.key;
+      node.right = removeNode(node.right, aux.key);
+      return node;
+    }
+  };
+  this.remove = function(key) {
+    root = removeNode(root, key);
+  }; //从树中移除某个键。
+}
+```
