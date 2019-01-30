@@ -1,12 +1,12 @@
 ---
-title: '《学习 JavaScript 数据结构与算法》'
+title: '《学习 JavaScript 数据结构与算法》读书笔记'
 category: 技术
 tags: [笔记, 前端]
 date: 2019-1-17
 updated: 2019-1-30
 ---
 
-《学习 JavaScript 数据结构与算法》读书笔记
+看完 react 的 diff 算法和 swagger 的数据结构，想温习波数据结构和算法。
 
 <!-- more -->
 
@@ -18,6 +18,7 @@ updated: 2019-1-30
 
 ## 栈
 
+> 一种顺序数据结构
 > 栈是一种遵从后进先出(LIFO)原则的有序集合。
 > 新添加的或待删除的元素都保存在栈的末尾，称做栈顶，另一端就叫栈底。
 > 在栈里，新元素都靠近栈顶，旧元素都接近栈底。
@@ -89,6 +90,7 @@ function baseConverter(decNumber, base) {
 
 ## 队列
 
+> 一种顺序数据结构
 > 队列是遵循 FIFO（First In First Out，先进先出，也称为先来先服务）原则的一组有序的项。
 > 队列在尾部添加新元素，并从顶部移除元素。
 > 最新添加的元素必须排在队列的末尾。
@@ -175,7 +177,7 @@ function hotPotato(nameList, num) {
 > 每个元素由一个存储元素本身的节点和一个指向下一个元素的引用(也称指针或链接)组成。
 > 解决数组起点或中间插入或移除项的成本很高的问题
 
-###　创建一个链表
+### 创建一个链表
 
 ```js
 function LinkedList() {
@@ -384,6 +386,10 @@ function DoublyLinkedList() {
 
 ## 集合
 
+> 一种非顺序数据结构
+> 集合是由一组无序且唯一（即不能重复）的项组成的。
+> 集合中的对象列表用`{}`（大括号）包围。
+
 ### 创建一个集合
 
 ```js
@@ -473,6 +479,13 @@ function Set() {
 
 ## 字典和散列表
 
+### 字典
+
+> 一种非顺序数据结构
+> 在字典中，存储的是`[键，值]`对，其中键名是用来查询特定元素的。
+> 字典和集合很相似，集合以`[值，值]`的形式存储元素，字典则是以`[键，值]`的形式来存储元素。
+> 字典也称作映射。
+
 ### 创建一个字典
 
 ```js
@@ -508,6 +521,12 @@ function Dictionary() {
   }; //将字典所包含的所有数值以数组形式返回。
 }
 ```
+
+## 散列表
+
+> 一种非顺序数据结构
+> 散列表就是通过散列算法将字典的键转化成对应下标值取得键对应的值。
+> 散列算法的作用是尽可能快地在数据结构中找到一个值。
 
 ### 创建一个散列表
 
@@ -654,16 +673,18 @@ function HashTable２() {
   }; //返回根据键值检索到的特定的值。
 } //线性探查解决散列表冲突
 var djb2HashCode = function(key) {
-  var hash = 5381; //{1}
+  var hash = 5381;
   for (var i = 0; i < key.length; i++) {
-    //{2}
-    hash = hash * 33 + key.charCodeAt(i); //{3}
+    hash = hash * 33 + key.charCodeAt(i);
   }
-  return hash % 1013; //{4}
+  return hash % 1013;
 }; //更好的散列函数
 ```
 
 ## 树
+
+> 一种非顺序数据结构
+> 它对于存储需要快速查找的数据非常有用。
 
 ### 创建 BinarySearchTree 类
 
@@ -807,6 +828,9 @@ function BinarySearchTree() {
 
 ## 图
 
+> 一种非线性数据结构。
+> 图是网络结构的抽象模型。
+
 ### 创建图类
 
 ```js
@@ -820,7 +844,7 @@ function Graph() {
   this.addEdge = function(v, w) {
     adjList.get(v).push(w);
     adjList.get(w).push(v);
-  };
+  }; //添加元素
   this.toString = function() {
     var s = '';
     for (var i = 0; i < vertices.length; i++) {
@@ -832,11 +856,134 @@ function Graph() {
       s += '\n';
     }
     return s;
+  }; //显示图
+  var initializeColor = function() {
+    var color = [];
+    for (var i = 0; i < vertices.length; i++) {
+      color[vertices[i]] = 'white';
+    }
+    return color;
   };
+  this.bfs = function(v, callback) {
+    var color = initializeColor(),
+      queue = new Queue();
+    queue.enqueue(v);
+    while (!queue.isEmpty()) {
+      var u = queue.dequeue(),
+        neighbors = adjList.get(u);
+      color[u] = 'grey';
+      for (var i = 0; i < neighbors.length; i++) {
+        var w = neighbors[i];
+        if (color[w] === 'white') {
+          color[w] = 'grey';
+          queue.enqueue(w);
+        }
+      }
+      color[u] = 'black';
+      if (callback) {
+        callback(u);
+      }
+    }
+  }; //广度优先搜索
+  this.BFS = function(v) {
+    var color = initializeColor(),
+      queue = new Queue(),
+      d = [],
+      pred = [];
+    queue.enqueue(v);
+    for (var i = 0; i < vertices.length; i++) {
+      d[vertices[i]] = 0;
+      pred[vertices[i]] = null;
+    }
+    while (!queue.isEmpty()) {
+      var u = queue.dequeue(),
+        neighbors = adjList.get(u);
+      color[u] = 'grey';
+      for (i = 0; i < neighbors.length; i++) {
+        var w = neighbors[i];
+        if (color[w] === 'white') {
+          color[w] = 'grey';
+          d[w] = d[u] + 1;
+          pred[w] = u;
+          queue.enqueue(w);
+        }
+      }
+      color[u] = 'black';
+    }
+    return {
+      distances: d,
+      predecessors: pred
+    };
+  }; //优化广度优先搜索
+
+  this.dfs = function(callback) {
+    var color = initializeColor();
+    for (var i = 0; i < vertices.length; i++) {
+      if (color[vertices[i]] === 'white') {
+        dfsVisit(vertices[i], color, callback);
+      }
+    }
+  };
+  var dfsVisit = function(u, color, callback) {
+    color[u] = 'grey';
+    if (callback) {
+      callback(u);
+    }
+    var neighbors = adjList.get(u);
+    for (var i = 0; i < neighbors.length; i++) {
+      var w = neighbors[i];
+      if (color[w] === 'white') {
+        dfsVisit(w, color, callback);
+      }
+    }
+    color[u] = 'black';
+  }; //深度优先搜索
+  var time = 0;
+  var DFSVisit = function(u, color, d, f, p) {
+    console.log('discovered ' + u);
+    color[u] = 'grey';
+    d[u] = ++time;
+    var neighbors = adjList.get(u);
+    for (var i = 0; i < neighbors.length; i++) {
+      var w = neighbors[i];
+      if (color[w] === 'white') {
+        p[w] = u;
+        DFSVisit(w, color, d, f, p);
+      }
+    }
+    color[u] = 'black';
+    f[u] = ++time;
+    console.log('explored ' + u);
+  };
+  this.DFS = function() {
+    var color = initializeColor(),
+      d = [],
+      f = [],
+      p = [];
+    time = 0;
+    for (var i = 0; i < vertices.length; i++) {
+      f[vertices[i]] = 0;
+      d[vertices[i]] = 0;
+      p[vertices[i]] = null;
+    }
+    for (i = 0; i < vertices.length; i++) {
+      if (color[vertices[i]] === 'white') {
+        DFSVisit(vertices[i], color, d, f, p);
+      }
+    }
+    return {
+      discovery: d,
+      finished: f,
+      predecessors: p
+    };
+  }; //优化深度优先搜索
 }
 ```
 
 ## 排序和搜索算法
+
+> 排序算法：冒泡排序、选择排序、插入排序、归并排序、快速排序
+> 搜索算法：顺序搜索、二分搜索
 
 ```js
 function ArrayList() {
@@ -990,3 +1137,47 @@ function ArrayList() {
   }; //二分搜索
 }
 ```
+
+## 算法补充知识
+
+### 递归
+
+> 递归是一种解决问题的方法，它解决问题的各个小部分，直到解决最初的大问题。
+> 通常涉及函数调用自身。
+
+### 动态规划
+
+> 动态规划（Dynamic Programming，DP）是一种将复杂问题分解成更小的子问题来解决的优化技术。
+
+用动态规划解决问题时，要遵循三个重要步骤：
+
+1. 定义子问题；
+2. 实现要反复执行而解决子问题的部分（这一步要参考前一节讨论的递归的步骤）；
+3. 识别并求解出边界条件。
+
+能用动态规划解决的一些著名的问题如下:
+
+- 背包问题：给出一组项目，各自有值和容量，目标是找出总值最大的项目的集合。这个
+  问题的限制是，总容量必须小于等于“背包”的容量。
+- 最长公共子序列：找出一组序列的最长公共子序列（可由另一序列删除元素但不改变余
+  下元素的顺序而得到）。
+- 矩阵链相乘：给出一系列矩阵，目标是找到这些矩阵相乘的最高效办法（计算次数尽可
+  能少）。相乘操作不会进行，解决方案是找到这些矩阵各自相乘的顺序。
+- 硬币找零：给出面额为 d1…dn 的一定数量的硬币和要找零的钱数，找出有多少种找零的
+  方法。
+- 图的全源最短路径：对所有顶点对(u, v)，找出从顶点 u 到顶点 v 的最短路径。
+
+### 贪心算法
+
+> 贪心算法遵循一种近似解决问题的技术，期盼通过每个阶段的局部最优选择（当前最好的解），从而达到全局的最优（全局最优解）。
+
+### 大 O 表示法
+
+> 描述算法的性能和复杂程度。
+> O(1)：常数的
+> O(log(n))：对数的
+> O((log(n))c)：对数多项式的
+> O(n)：线性的
+> O($n^2$)：二次的
+> O($n^c$)：多项式的
+> O($c^n$)：指数的
