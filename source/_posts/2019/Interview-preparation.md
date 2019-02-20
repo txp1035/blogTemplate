@@ -211,7 +211,7 @@ React.createElement():JSX 语法就是用 React.createElement()来构建 React �
 React.createElement(type, [props], [...children]);
 ```
 
-React.cloneElement()与 React.createElement()相似，不同的是它传入的第一个参数是一个 React 元素，而不是标签名或组件。新添加的属性会并入原有的属性，传入到返回的新元素中，而就的子元素奖杯替换。
+React.cloneElement()与 React.createElement()相似，不同的是它传入的第一个参数是一个 React 元素，而不是标签名或组件。新添加的属性会并入原有的属性，传入到返回的新元素中，而旧的子元素奖杯替换。
 
 ```js
 React.cloneElement(element, [props], [...children]);
@@ -250,3 +250,7 @@ creat-react-app Yeoman 等
 
 - 一个组件所需要的数据，必须由父组件传过来，而不能像 flux 中直接从 store 取。
 - 当一个组件相关数据更新时，即使父组件不需要用到这个组件，父组件还是会重新 render，可能会有效率影响，或者需要写复杂的 shouldComponentUpdate 进行判断。
+
+## 业务篇
+
+### 简述下
