@@ -63,4 +63,10 @@ smis 系统问题：生命检测系统数据怎么处理的？
 
 隔壁仓库管理系统问题：react 生命周期？
 
-阿里(ICBU 技术部)：两类：jQuery 技术体系（脚手架、框架）（PC）、react（脚手架、UI 库）（卖家端比较多）、egg（node 服务）、ant design（内部系统）
+阿里(ICBU 技术部)：
+
+对外场景 PC：jQuery 技术体系（脚手架、框架、组件）
+卖家端：react（脚手架、组件库）
+无限：weex
+可视端：egg（node 应用）
+内部系统：ant design
