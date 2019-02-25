@@ -14,7 +14,7 @@ updated: 2019-2-14
 
 ## 环境配置
 
-### Windows
+### Windows 环境配置
 
 1. 安装 jdk
 2. 安装 flutter
@@ -63,3 +63,69 @@ C:\Users\ShawDanon\AppData\Local\Android\Sdk\emulator\emulator.exe -netdelay non
 `C:\Users\ShawDanon\AppData\Local\Android\Sdk\emulator\emulator.exe`这个是安卓 sdk 路径下的可执行程序，需要改成你的路径。`Nexus_5X_API_28`是模拟器名字（名字本来是`Nexus 5X API 28`，空格使用下划线代替），在创建模拟器的时候可以设置。然后运行批处理文件即可打开安卓模拟器。
 
 通过 vscode 打开刚才创建的项目，发现没有高亮代码。然后安装插件 flutter，安装完成重启 vscode 发现代码高亮了，就可以在 vscode 运行 flutter 了。在 vscode 中运行`flutter run`即可在刚才启动的模拟器中运行应用，但是在 vscode 中不能热更新了，需要每次修改代码之后在命令行输入 r 才能在模拟器中看到效果，如果需要热更新，要使用 debug 。
+
+## 打包
+
+### Windows 打包
+
+1. 配置 app 图标
+2. AndroidManifest.xml（配置 APP 的名称、图标和系统权限）
+3. 生成 keystore
+4. 配置 key 注册
+5. 生成 apk
+
+在目录`项目根目录/android/app/src/main/res/`中设置图标文件
+
+在目录`项目根目录/android/app/src/main/AndroidManifest.xml`中
+
+```js
+android: label = 'flutter_app'; //配置APP的名称，支持中文
+android: icon = '@mipmap/ic_launcher'; //APP图标的文件名称
+```
+
+通过`D:\Program\Android\'Android Studio'\jre\bin\keytool -genkey -v -keystore D:\key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias key`命令来生成 keystore，输入密码后，在 d 盘得到一个 key.jks 文件。`D:\Program\Android\'Android Studio'\jre\bin\keytool`安卓生成钥匙的地址，通过 flutter doctor -v 可以查询到`Java binary at：D:\Program\Android\'Android Studio'\jre\bin\keytool`，`D:\key.jks`是生成钥匙的地址，生成好钥匙后，在`android`文件夹下创建一个名为 key.properties 的文件文件内容如下：
+
+```js
+storePassword=123123   //输入上一步创建KEY时输入的 密钥库 密码
+keyPassword=123123   //输入上一步创建KEY时输入的 密钥 密码
+keyAlias=key
+storeFile=D:\key.jks   //key.jks的存放路径
+```
+
+key 生成好后需要配置 build.gradle 文件，在项目目录的/android/app/build.gradle 文件，在 android{这一行前面,加入如下代码：
+
+```js
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+```
+
+把如下代码进行替换:
+
+```js
+buildTypes {
+    release {
+        signingConfig signingConfigs.debug
+    }
+}
+```
+
+替换的代码：
+
+```js
+signingConfigs {
+    release {
+        keyAlias keystoreProperties['keyAlias']
+        keyPassword keystoreProperties['keyPassword']
+        storeFile file(keystoreProperties['storeFile'])
+        storePassword keystoreProperties['storePassword']
+    }
+}
+buildTypes {
+    release {
+        signingConfig signingConfigs.release
+    }
+}
+```
+
+配置改好后运行`flutter build apk`就能够打包成 apk 在手机安装了
