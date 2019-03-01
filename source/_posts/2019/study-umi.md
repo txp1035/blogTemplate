@@ -16,10 +16,18 @@ updated: 2019-1-24
 
 ```js
 const DirectoryTree = {
-  docs: { dec: null, next: null },
-  examples: null,
-  packages: null,
-  scripts: null,
+  docs: { dec: '说明文档', child: null },
+  examples: { dec: '例子', child: null },
+  packages: { dec: 'npm包', child: null },
+  scripts: {
+    dec: '脚本',
+    child: {
+      'build.js': '打包脚本',
+      'publish.js': '发布脚本',
+      'startDevServers.js': '启动开发服务脚本',
+      'test.js': '测试脚本'
+    }
+  },
   website: null,
   '.editorconfig': 'EditorConfig配置文件|EditorConfig有助于为跨越各种编辑器和IDE的同一项目的多个开发人员维护一致的编码样式',
   '.eslintignore': '设置ESlint不跟踪的文件，同.gitignore一样',
