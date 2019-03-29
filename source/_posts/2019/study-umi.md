@@ -16,7 +16,8 @@ updated: 2019-1-24
 
 ```js
 const DirectoryTree = {
-  docs: { dec: '说明文档', child: null },
+  '.github':{},
+  docs:{ dec: '说明文档', child: null },
   examples: { dec: '例子', child: null },
   packages: {
     dec: 'npm包',
@@ -63,14 +64,16 @@ const DirectoryTree = {
   'jest.config.js': 'jest配置文件',
   'lerna.json': 'lerna配置文件|Lerna 是一个用来优化托管在git、npm上的多package代码库的工作流的一个管理工具。',
   'package.json': null,
-  'rollup.config.js': 'rollup配置文件|rollup是一款打包工具'
+  '（废弃）rollup.config.js': 'rollup配置文件|rollup是一款打包工具'
   'tsconfig.json': 'TypeScript配置文件'
 };
 ```
 
 整个目录看下来光工具和包很多都没接触过，代码检查有用过 eslint，项目落地还是不多，这个月看来要恶补一番前端开发规范啊。
 
-## package.json
+## 一级目录
+
+### package.json
 
 ```json
 {
@@ -126,7 +129,7 @@ const DirectoryTree = {
 }
 ```
 
-## Lerna
+### Lerna
 
 从目录架构来看，首先要学的是多包管理与发布。通过多包管理可以把作者多个包放在一起用一个仓库储存来维护。（PS：npm 包上传后不能删除，强迫症患者需要慎重取名）
 
@@ -170,7 +173,7 @@ const DirectoryTree = {
 }
 ```
 
-## Travis
+### Travis
 
 Travis 是一款持续集成工具。那么持续集成是什么呢？
 
@@ -209,9 +212,9 @@ git:
   depth: 5
 ```
 
-## rollup
+### rollup
 
-## EditorConfig
+### EditorConfig
 
 ```ini
 # http://editorconfig.org
@@ -240,7 +243,7 @@ trim_trailing_whitespace = false
 indent_style = tab
 ```
 
-## eslintrc
+### eslintrc
 
 ```json
 {
@@ -307,7 +310,7 @@ indent_style = tab
 }
 ```
 
-## jest
+### jest
 
 ```js
 module.exports = {
@@ -338,7 +341,7 @@ module.exports = {
 };
 ```
 
-## a
+### a
 
 ```js
 {
