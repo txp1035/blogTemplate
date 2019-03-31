@@ -16,38 +16,39 @@ updated: 2019-1-24
 
 ```js
 const DirectoryTree = {
-  '.github':{},
-  docs:{ dec: '说明文档', child: null },
+  '.github': { dec: undefined, child: null },
+  docs: { dec: '说明文档', child: null },
   examples: { dec: '例子', child: null },
   packages: {
     dec: 'npm包',
     child: {
-      'af-webpack': null
-      'babel-preset-umi': null
-      'eslint-config-umi': null
-      'umi': null
-      'umi-build-dev': null
-      'umi-core': null
-      'umi-library': null
-      'umi-mock': null
-      'umi-plugin-dll': null
-      'umi-plugin-dva': null
-      'umi-plugin-hd': null
-      'umi-plugin-locale': null
-      'umi-plugin-polyfills': null
-      'umi-plugin-react': null
-      'umi-plugin-routes': null
-      'umi-serve': null
-      'umi-test': null
-      'umi-types': null
+      'af-webpack': null,
+      'babel-preset-umi': null,
+      'eslint-config-umi': null,
+      umi: null,
+      'umi-build-dev': null,
+      'umi-core': null,
+      'umi-library': null,
+      'umi-mock': null,
+      'umi-plugin-dll': null,
+      'umi-plugin-dva': null,
+      'umi-plugin-hd': null,
+      'umi-plugin-locale': null,
+      'umi-plugin-polyfills': null,
+      'umi-plugin-react': null,
+      'umi-plugin-routes': null,
+      'umi-serve': null,
+      'umi-test': null,
+      'umi-types': null,
       'umi-utils': null
     }
   },
   scripts: {
     dec: '脚本',
     child: {
-      'build.js': '打包脚本',
+      'build.js': '构建脚本',
       'publish.js': '发布脚本',
+      'reinstall_deps.sh': undefined,
       'startDevServers.js': '启动开发服务脚本',
       'test.js': '测试脚本'
     }
@@ -64,8 +65,8 @@ const DirectoryTree = {
   'jest.config.js': 'jest配置文件',
   'lerna.json': 'lerna配置文件|Lerna 是一个用来优化托管在git、npm上的多package代码库的工作流的一个管理工具。',
   'package.json': null,
-  '（废弃）rollup.config.js': 'rollup配置文件|rollup是一款打包工具'
-  'tsconfig.json': 'TypeScript配置文件'
+  '（废弃集成到了umi-tools中）rollup.config.js': 'rollup配置文件|rollup是一款打包工具',
+  'tsconfig.json': 'TypeScript配置文件|指定ts编译的一些参数信息'
 };
 ```
 
@@ -212,7 +213,36 @@ git:
   depth: 5
 ```
 
-### rollup
+### Jest
+
+```js
+module.exports = {
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/examples/',
+    '/lib/',
+    '/packages/umi/src/scripts/test.js',
+    '/packages/umi/src/test.js',
+    '/packages/umi-build-dev/src/fixtures',
+    '/packages/umi-build-dev/src/routes/fixtures',
+    '/packages/umi-plugin-dva/src/fixtures',
+    '/packages/umi-utils/src/fixtures',
+    '/packages/umi-library/src/fixtures',
+    '/packages/umi/test/fixtures'
+  ], //排除测试的文件
+  setupFilesAfterEnv: ['./jasmine.js'], //在每次测试之前运行一些代码以配置或设置测试框架的模块的路径列表。
+  collectCoverageFrom: ['packages/**/src/**/*.{js,jsx}'], //应收集覆盖率信息的一组文件。
+  coveragePathIgnorePatterns: [
+    '/packages/umi-plugin-dva/src/fixtures',
+    '/packages/umi-build-dev/src/fixtures',
+    '/packages/umi-build-dev/src/routes/fixtures',
+    '/packages/umi-build-dev/src/plugins/commands/generate/generators',
+    '/packages/umi-library/src/fixtures',
+    '/packages/umi-utils/src/fixtures',
+    '/packages/umi/test/fixtures'
+  ] //覆盖率排除的文件。
+};
+```
 
 ### EditorConfig
 
@@ -243,7 +273,7 @@ trim_trailing_whitespace = false
 indent_style = tab
 ```
 
-### eslintrc
+### ESLint
 
 ```json
 {
@@ -310,38 +340,7 @@ indent_style = tab
 }
 ```
 
-### jest
-
-```js
-module.exports = {
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    '/examples/',
-    '/lib/',
-    '/packages/umi/src/scripts/test.js',
-    '/packages/umi/src/test.js',
-    '/packages/umi-build-dev/src/fixtures',
-    '/packages/umi-build-dev/src/routes/fixtures',
-    '/packages/umi-plugin-dva/src/fixtures',
-    '/packages/umi-utils/src/fixtures',
-    '/packages/umi-library/src/fixtures',
-    '/packages/umi/test/fixtures'
-  ], //排除测试的文件
-  setupFilesAfterEnv: ['./jasmine.js'], //在每次测试之前运行一些代码以配置或设置测试框架的模块的路径列表。
-  collectCoverageFrom: ['packages/**/src/**/*.{js,jsx}'], //应收集覆盖率信息的一组文件。
-  coveragePathIgnorePatterns: [
-    '/packages/umi-plugin-dva/src/fixtures',
-    '/packages/umi-build-dev/src/fixtures',
-    '/packages/umi-build-dev/src/routes/fixtures',
-    '/packages/umi-build-dev/src/plugins/commands/generate/generators',
-    '/packages/umi-library/src/fixtures',
-    '/packages/umi-utils/src/fixtures',
-    '/packages/umi/test/fixtures'
-  ] //覆盖率排除的文件。
-};
-```
-
-### a
+### Typescript
 
 ```js
 {
@@ -355,6 +354,252 @@ module.exports = {
 
 ```
 
+## scripts 文件夹
+
+### build.js
+
+```js
+/*
+child_process 模块提供了以与 popen(3) 类似但不相同的方式衍生子进程的功能。
+child_process.fork():衍生一个新的 Node.js 进程，并通过建立 IPC 通信通道来调用指定的模块，该通道允许在父进程与子进程之间发送消息。
+*/
+const { fork } = require('child_process');
+/*
+path 模块提供用于处理文件路径和目录路径的实用工具。
+*/
+const { join } = require('path');
+
+function runUmiTools(...args) {
+  console.log(['>> umi-tools', ...args].join(' '));
+  /*
+  child_process.fork(modulePath[, args][, options])
+  modulePath <string> 要在子进程中运行的模块。
+  args <string[]> 字符串参数的列表。
+  options <Object>
+    stdio <Array> | <string> 参阅 child_process.spawn() 的 stdio。当提供此选项时，则它覆盖 silent 选项。如果使用了数组变量，则它必须包含一个值为 'ipc' 的元素，否则会抛出错误。例如 [0, 1, 2, 'ipc']。
+    cwd <string> 子进程的当前工作目录。
+  返回: <ChildProcess>
+  */
+  /*
+  path.join([...paths])
+  ...paths <string> 路径片段的序列。
+  返回: <string>
+  path.join() 方法使用平台特定的分隔符作为定界符将所有给定的 path 片段连接在一起，然后规范化生成的路径。
+  零长度的 path 片段会被忽略。 如果连接的路径字符串是零长度的字符串，则返回 '.'，表示当前工作目录。
+  */
+  /*
+   process.cwd() 方法返回 Node.js 进程的当前工作目录。
+  */
+  return fork(join(process.cwd(), 'node_modules/.bin/umi-tools'), [...args].concat(process.argv.slice(2)), {
+    stdio: 'inherit',
+    cwd: process.cwd()
+  });
+}
+
+const cp = runUmiTools('build');
+/*
+'error' 事件
+err <Error> 错误对象。
+当出现以下情况时触发 'error' 事件：
+1.无法衍生进程；
+2.无法杀死进程；
+3.向子进程发送信息失败。
+发生错误后，'exit' 事件可能会也可能不会触发。如果同时监听了 'exit' 和 'error' 事件，可能会多次调用处理函数。
+*/
+cp.on('error', err => {
+  console.log(err);
+});
+/*
+'message' 事件
+  message <Object> JSON 对象或原始值。
+  sendHandle <Handle> net.Socket 或 net.Server 对象，或 undefined。
+当子进程使用 process.send() 发送消息时触发。
+消息通过序列化和解析传递，收到的消息可能跟发送的不完全一样。
+*/
+cp.on('message', message => {
+  if (message === 'BUILD_COMPLETE') {
+    runUmiTools('rollup', '-g', 'dva:dva,antd:antd');
+  } //构建完成打包
+});
+```
+
+### publish.js
+
+```js
+/*
+ShellJS是 Node.js API之上的Unix shell 命令的可移植（Windows / Linux / OS X）实现。您可以使用它来消除shell脚本对Unix的依赖性，同时仍保留其熟悉且功能强大的命令。您也可以在全局安装它，这样您就可以从Node项目外部运行它- 告别那些粗糙的Bash脚本！
+*/
+const shell = require('shelljs');
+const { join } = require('path');
+const { fork } = require('child_process');
+/*
+shell.exec(command [, options] [, callback])
+执行命令
+options：
+  async：异步执行。如果提供了回调，则true无论传递的值如何（默认值:)，都将设置为回调  false。
+  silent：不要将程序输出回显到控制台（默认值:) false。
+  encoding：要使用的字符编码。影响返回到stdout和stderr的值，以及未处于静默模式时写入stdout和stderr的值（默认值:) 'utf8'。
+以及Node.js可用的任何选项 child_process.exec()
+除非另有说明，否则command同步执行给定的给定。
+在同步模式下，这将返回ShellString。否则，这将返回子进程对象，并callback接收参数(code, stdout, stderr)。
+*/
+if (!shell.exec('npm config get registry').stdout.includes('https://registry.npmjs.org/')) {
+  console.error('Failed: set npm registry to https://registry.npmjs.org/ first');
+  process.exit(1); //退出进程
+} //判断当前npm镜像源是否为npm官方源，不是则失败提示请设置镜像源
+
+const cwd = process.cwd();
+const ret = shell.exec('./node_modules/.bin/lerna updated').stdout; //运行lerna updated时的输出
+const updatedRepos = ret
+  .split('\n')
+  .map(line => line.replace('- ', ''))
+  .filter(line => line !== ''); //筛选出需要更新的仓库
+
+if (updatedRepos.length === 0) {
+  console.log('No package is updated.');
+  process.exit(0);
+} //没有需要更新仓库的情况
+
+const { code: buildCode } = shell.exec('npm run build'); //执行构建
+if (buildCode === 1) {
+  console.error('Failed: npm run build');
+  process.exit(1);
+} //构建失败情况
+
+const { code: uiBuildCode } = shell.exec('npm run ui:build'); //执行ui构建
+if (uiBuildCode === 1) {
+  console.error('Failed: npm run ui:build');
+  process.exit(1);
+} //ui构建失败情况
+
+const cp = fork(join(process.cwd(), 'node_modules/.bin/lerna'), ['version'].concat(process.argv.slice(2)), {
+  stdio: 'inherit',
+  cwd: process.cwd()
+});
+cp.on('error', err => {
+  console.log(err);
+});
+/*
+code <number> 子进程的退出码。
+signal <string> 终止子进程的信号。
+当子进程的 stdio 流被关闭时触发。 与 'exit' 事件的区别是，多个进程可能共享同一 stdio 流。
+*/
+cp.on('close', code => {
+  console.log('code', code);
+  if (code === 1) {
+    console.error('Failed: lerna publish');
+    process.exit(1);
+  }
+
+  publishToNpm();
+});
+
+function publishToNpm() {
+  console.log(`repos to publish: ${updatedRepos.join(', ')}`);
+  updatedRepos.forEach(repo => {
+    shell.cd(join(cwd, 'packages', repo));
+    const { version } = require(join(cwd, 'packages', repo, 'package.json'));
+    if (version.includes('-rc.') || version.includes('-beta.') || version.includes('-alpha.')) {
+      console.log(`[${repo}] npm publish --tag next`);
+      shell.exec(`npm publish --tag next`);
+    } else {
+      console.log(`[${repo}] npm publish`);
+      shell.exec(`npm publish`);
+    } //版本包含-rc.-beta.-alpha.字眼更新标签，否则直接发布
+  });
+}
+```
+
+### startDevServers.js
+
+```js
+const { fork } = require('child_process');
+const { join, dirname } = require('path');
+
+const DEV_SCRIPT = join(__dirname, '../packages/umi/bin/umi.js');
+
+function startDevServer(opts = {}) {
+  const { port, cwd } = opts;
+  return new Promise(resolve => {
+    const child = fork(DEV_SCRIPT, ['dev', '--port', port, '--cwd', cwd], {
+      env: {
+        ...process.env,
+        CLEAR_CONSOLE: 'none',
+        BROWSER: 'none',
+        UMI_DIR: dirname(require.resolve('../packages/umi/package'))
+      }
+    });
+    child.on('message', args => {
+      if (args.type === 'DONE') {
+        resolve(child);
+      }
+    });
+  });
+}
+
+function start() {
+  const devServers = [
+    [12341, '../packages/umi/test/fixtures/e2e/normal'],
+    [12342, '../packages/umi/test/fixtures/e2e/hashHistory'],
+    [12351, '../packages/umi-plugin-react/test/normal'],
+    [12352, '../packages/umi-plugin-react/test/with-dva'],
+    [12353, '../packages/umi-plugin-react/test/pwa']
+  ];
+
+  return Promise.all(
+    devServers.map(([port, cwd]) => {
+      return startDevServer({ port, cwd: join(__dirname, cwd) });
+    })
+  );
+}
+
+module.exports = start;
+
+if (require.main === module) {
+  start()
+    .then(() => {
+      console.log('All dev servers are started.');
+    })
+    .catch(e => {
+      console.log(e);
+    });
+}
+```
+
+### test.js
+
+```js
+/*
+child_process.spawn() 方法异步地衍生子进程，且不阻塞 Node.js 事件循环。 child_process.spawnSync() 方法则以同步的方式提供等效功能，但会阻止事件循环直到衍生的进程退出或终止。
+*/
+const { spawn } = require('child_process');
+const startDevServers = require('./startDevServers');
+
+startDevServers()
+  .then(devServers => {
+    const testCmd = spawn(/^win/.test(process.platform) ? 'npm.cmd' : 'npm', ['run', 'test:coverage'], {
+      stdio: 'inherit'
+    });
+    testCmd.on('exit', code => {
+      devServers.forEach(devServer => devServer && devServer.kill('SIGINT'));
+      process.exit(code);
+    });
+  })
+  .catch(e => {
+    console.log(e);
+  });
+```
+
+## 总结
+
+### 2019/3/31
+
+通过了解 umi 的源码知道了很多有意思的东西：npm 包发布、通过 lerna 来管理包、使用 Travis 持续集成项目、EditorConfig 来保证不同编辑器风格一致、ESLint 保证代码风格一致、Jest 测试保证代码可靠性、lint-staged 和 husky 阻止代码提交（最开始在 ant design pro 有遇到），shelljs 执行脚本命令。
+
+## demo 地址
+
+[准备用来存些常用库的仓库](https://github.com/ShawDanon/txp)
+
 ## 参考
 
 [创建并发布一个小而美的 npm 包，没你想的那么难！](https://juejin.im/post/5c26c1b65188252dcb312ad6#heading-0)
@@ -364,3 +609,5 @@ module.exports = {
 [前端开源项目持续集成三剑客](https://efe.baidu.com/blog/front-end-continuous-integration-tools/)
 [editorconfig](https://editorconfig.org/)
 [eslint](https://eslint.org/docs/user-guide/getting-started)
+[Node.js 中文网](http://nodejs.cn/api/)
+[shelljs](http://documentup.com/shelljs/shelljs)
