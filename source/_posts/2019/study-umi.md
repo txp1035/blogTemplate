@@ -2,8 +2,8 @@
 title: '学习UMI'
 category: 技术
 tags: [笔记, 前端]
-date: 2019-1-24
-updated: 2019-1-24
+date: 2019-3-2
+updated: 2019-3-31
 ---
 
 第一次认真学习开源项目，看一次开源代码...
