@@ -3,7 +3,6 @@ title: 'vue-cli环境搭建'
 category: 技术
 tags: [前端]
 date: 2018-01-24
-
 ---
 
 vue-cli 环境搭建。
@@ -31,8 +30,8 @@ vue-cli 的配置信息：
 **Install vue-router? (Y/n)**是否安装 vue-router，这是官方的路由，大多数情况下都使用。这里就输入“y”后回车即可。
 **Use ESLint to lint your code? (Y/n)**是否使用 ESLint 管理代码，ESLint 是个代码风格管理工具，是用来统一代码风格的，并不会影响整体的运行，这也是为了多人协作，新手就不用了，一般项目中都会使用。[ESLint 官网](https://eslint.org/)，这里就输入“y”"n"都可以。
 **Pick an ESLint preset (Use arrow keys)**选择一个 ESLint 预设，编写 vue 项目时的代码风格，因为我选择了使用 ESLint。
-1、**Standard (https://github.com/feross/standard)**标准，有些看不明白，什么标准呢，去给提示的 standardgithub 地址看一下， 原来时 js 的标准风格。
-2、**AirBNB (https://github.com/airbnb/javascript)**JavaScript 最合理的方法，这个 github 地址说的是 JavaScript 最合理的方法。
+1、**[Standard](https://github.com/feross/standard)**标准，有些看不明白，什么标准呢，去给提示的 standardgithub 地址看一下， 原来时 js 的标准风格。
+2、**[AirBNB](https://github.com/airbnb/javascript)**JavaScript 最合理的方法，这个 github 地址说的是 JavaScript 最合理的方法。
 3、**none (configure it yourself)**不选择。
 
 **Set up unit tests? (Y/n)**是否安装单元测试，我选择安装。
@@ -51,7 +50,7 @@ vue-cli 的配置信息：
 
 下面来看看项目目录：
 
-```
+```yml
 ├── build/                      # webpack配置参数文件
 │   └── ...
 ├── config/

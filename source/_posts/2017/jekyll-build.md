@@ -3,7 +3,6 @@ title: 'jekyll'
 category: 技术
 tags: [博客, 框架]
 date: 2017-09-12
-
 ---
 
 jekyll 使用总结...
@@ -28,4 +27,4 @@ jekyll 使用总结...
 1、打开命令行窗口，输入`gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/`把国外镜像换成国内镜像，这样做可以使安装软件速度加快。
 2、打开命令行窗口，输入`gem install bundler`安装依赖包 bundler，然后输入`gem install jekyll`安装 jekyll。
 3、打开命令行窗口，输入`jekyll new 123`创建一个 jekyll 默认博客名字叫 123，如果有博客也需要创建一次，防止报错。
-4、进入 123 文件目录（你的 jekyll 博客），打开命令行窗口（shift+鼠标右键，点击‘在此处打开命令窗口’），输入`jekyll serve`，看到`Server address: http://127.0.0.1:4000/ Server running... press ctrl-c to stop.`然后就可以在服务器上浏览了,浏览地址：http://127.0.0.1:4000/。
+4、进入 123 文件目录（你的 jekyll 博客），打开命令行窗口（shift+鼠标右键，点击‘在此处打开命令窗口’），输入`jekyll serve`，看到`Server address: http://127.0.0.1:4000/ Server running... press ctrl-c to stop.`然后就可以在服务器上浏览了,浏览地址：<http://127.0.0.1:4000/>。
