@@ -3,7 +3,7 @@ title: "Linux"
 category: 技术
 tags: 系统
 date: 2018-09-11
-updated: 2018-09-11
+
 ---
 
 # 资料
@@ -12,5 +12,5 @@ updated: 2018-09-11
 
 # manjaro
 
-安装中文输入法：  
+安装中文输入法：
 1、

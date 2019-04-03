@@ -3,7 +3,7 @@ title: 'Node.js'
 category: 技术
 tags: [前端]
 date: 2018-01-24
-updated: 2018-01-24
+
 ---
 
 # 安装（Windows）

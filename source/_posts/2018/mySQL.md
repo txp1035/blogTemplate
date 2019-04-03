@@ -3,7 +3,7 @@ title: 'MySQL安装'
 category: 技术
 tags: [数据库]
 date: 2018-01-02
-updated: 2018-01-02
+
 ---
 
 mysql 安装总结...

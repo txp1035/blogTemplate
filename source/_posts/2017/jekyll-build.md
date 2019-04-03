@@ -3,7 +3,7 @@ title: 'jekyll'
 category: 技术
 tags: [博客, 框架]
 date: 2017-09-12
-updated: 2017-09-12
+
 ---
 
 jekyll 使用总结...

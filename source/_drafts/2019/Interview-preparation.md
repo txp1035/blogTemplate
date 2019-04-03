@@ -3,7 +3,7 @@ title: '2019面试准备'
 category: 技术
 tags: [总结, 前端]
 date: 2019-2-19
-updated: 2019-2-19
+
 ---
 
 希望有个好的 offer...

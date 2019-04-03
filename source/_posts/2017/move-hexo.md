@@ -3,7 +3,7 @@ title: '搬入hexo'
 category: 技术
 tags: [前端, 博客搭建]
 date: 2017-12-13
-updated: 2017-12-13
+
 ---
 
 由于用 node 比较多，所以想试试基于 node 的 hexo...

@@ -3,7 +3,6 @@ title: '《学习 JavaScript 数据结构与算法》读书笔记'
 category: 技术
 tags: [笔记, 前端]
 date: 2019-1-17
-updated: 2019-1-30
 ---
 
 看完 react 的 diff 算法和 swagger 的数据结构，想温习波数据结构和算法。

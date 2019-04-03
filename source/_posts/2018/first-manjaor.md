@@ -3,7 +3,7 @@ title: '初探manjaor'
 category: 技术
 tags: [数据库]
 date: 2018-01-02
-updated: 2018-01-02
+
 ---
 
 第一次使用 manjaor...

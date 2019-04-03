@@ -3,7 +3,7 @@ title: 'Markdown'
 category: 工具
 tags: [编辑]
 date: 2018-9-28
-updated: 2018-9-28
+
 ---
 
 Markdown 示例。
