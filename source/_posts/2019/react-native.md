@@ -105,6 +105,15 @@ export const StyleSheet = {
 ```
 
 引入这个文件就有代码提示了。
+
+```js
+import { StyleSheet } from './utils/utils.js';
+
+const styles = StyleSheet.create({
+    ...
+});
+```
+
 问题二：把组件放入目录中引入会报错`The development server returned response error code: 500`。
 解决方案：组件放在根目录（感觉只是临时解决）。
 
