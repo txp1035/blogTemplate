@@ -9,7 +9,7 @@ date: 2019-3-2
 
 <!-- more -->
 
-# 学习 UMI
+# 学习 UMI（一）
 
 ## 目录
 
@@ -599,7 +599,7 @@ startDevServers()
 
 [准备用来存些常用库的仓库](https://github.com/ShawDanon/txp)
 
-## 参考
+## 参考一
 
 [创建并发布一个小而美的 npm 包，没你想的那么难！](https://juejin.im/post/5c26c1b65188252dcb312ad6#heading-0)
 [lerna 管理前端 packages 的最佳实践](https://juejin.im/post/5a989fb451882555731b88c2)
@@ -610,3 +610,180 @@ startDevServers()
 [eslint](https://eslint.org/docs/user-guide/getting-started)
 [Node.js 中文网](http://nodejs.cn/api/)
 [shelljs](http://documentup.com/shelljs/shelljs)
+
+# 学习 UMI（二）
+
+正式开始看源码了
+
+## packages/umi
+
+### packages/umi/package.json
+
+先来看看 package.json 文件。
+
+```json
+{
+  "name": "umi",
+  "version": "2.6.16",
+  "description": "Pluggable enterprise-level react application framework.",
+  "dependencies": {
+    "@babel/core": "7.2.2", //babel核心包
+    "@babel/runtime": "7.3.0", //一个包含Babel模块化运行时助手和一个版本的库
+    "@types/react": "16.x", //react
+    "@types/react-router-dom": "4.x", //react路由
+    "babel-preset-umi": "1.4.1", //云谦的babel预设
+    "debug": "4.1.0", //一个微小的JavaScript调试工具，以Node.js核心的调试技术为模型。适用于Node.js和Web浏览器。
+    "dotenv": "6.2.0", //Dotenv是一个零依赖模块，可以将.env文件中的环境变量加载到process.env。在与代码分开的环境中存储配置基于The Twelve-Factor App方法。
+    "is-windows": "1.0.2", //如果平台是windows，则返回true。UMD模块，适用于node.js，commonjs，浏览器，AMD，电子等。
+    "lodash": "4.17.11", //一个现代JavaScript实用程序库，提供模块化，性能和附加功能。深拷贝用过
+    "react-loadable": "5.5.0", //用于加载具有动态导入的组件的更高阶组件。
+    "resolve-cwd": "2.0.0", //解析模块的路径，require.resolve()但是从当前工作目录中解析
+    "semver": "5.6.0", //节点的semver解析器，语义化版本
+    "signale": "1.3.0", //可记录和可配置到核心，signale可用于记录目的，状态报告，以及处理其他节点模块和应用程序的输出呈现过程。
+    "umi-build-dev": "1.8.3", //未有readme文件具体功能暂时不知
+    "umi-utils": "1.4.1", //工具类
+    "update-notifier": "2.5.0", //更新CLI应用程序的通知
+    "yargs-parser": "13.0.0" //Yargs通过解析参数和生成优雅的用户界面来帮助您构建交互式命令行工具。
+  }, //依赖包
+  "module": "index.js",
+  "sideEffects": ["./lib/renderRoutes.js"],
+  "bin": {
+    "umi": "./bin/umi.js"
+  }, //很多软件包都有一个或多个可以安装到PATH中的可执行文件。
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/umi/tree/master/packages/umi"
+  },
+  "homepage": "https://github.com/umijs/umi/tree/master/packages/umi",
+  "authors": ["chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"],
+  "bugs": {
+    "url": "https://github.com/umijs/umi/issues"
+  },
+  "files": [
+    "lib",
+    "src",
+    "bin",
+    "index.js",
+    "index.d.ts",
+    "babel.js",
+    "dynamic.d.ts",
+    "link.d.ts",
+    "navlink.d.ts",
+    "prompt.d.ts",
+    "redirect.d.ts",
+    "router.d.ts",
+    "withRouter.d.ts",
+    "routerTypes.d.ts"
+  ], //可选files字段是一个文件模式数组，描述了将软件包作为依赖项安装时要包含的条目。
+  "umiTools": {
+    "browserFiles": [
+      "src/createHistory.js",
+      "src/dynamic.js",
+      "src/link.js",
+      "src/navlink.js",
+      "src/prompt.js",
+      "src/redirect.js",
+      "src/renderRoutes.js",
+      "src/Route.js",
+      "src/router.js",
+      "src/runtimePlugin.js",
+      "src/utils.js",
+      "src/withRouter.js"
+    ]
+  }
+}
+```
+
+### packages/umi/index.js
+
+```js
+export { default as Link } from './lib/link';
+export { default as NavLink } from './lib/navlink';
+export { default as Redirect } from './lib/redirect';
+export { default as dynamic } from './lib/dynamic';
+export { default as router } from './lib/router';
+export { default as withRouter } from './lib/withRouter';
+export { default as Route } from './lib/Route';
+```
+
+umi 输出的 api 对应[官方文档](https://umijs.org/zh/api/)。
+
+### packages/umi/bin/umi.js
+
+```js
+#!/usr/bin/env node
+
+const resolveCwd = require('resolve-cwd');
+
+const localCLI = resolveCwd.silent('umi/bin/umi'); //获取模块路径，测试结果为null
+if (localCLI && localCLI !== __filename) {
+  const debug = require('debug')('umi');
+  debug('Using local install of umi');
+  require(localCLI);
+} else {
+  require('../lib/cli');
+} //执行cli
+```
+
+### packages/umi/src/cli.js
+
+```js
+import { dirname } from 'path';
+import yParser from 'yargs-parser';
+import signale from 'signale';
+import semver from 'semver';
+import buildDevOpts from './buildDevOpts';
+
+//process.argv属性返回一个数组，其中包含当启动 Node.js 进程时传入的命令行参数。
+const script = process.argv[2]; //获取第一个可选参数（数组前两个是路径）
+const args = yParser(process.argv.slice(3));
+
+// Node版本检查
+const nodeVersion = process.versions.node; //node版本号
+if (semver.satisfies(nodeVersion, '<6.5')) {
+  signale.error(`Node version must >= 6.5, but got ${nodeVersion}`);
+  process.exit(1);
+} //版本小于6.5提示node版本大于等于6.5并退出程序
+
+// 进程退出（defer: true ）时通知更新
+const updater = require('update-notifier');
+const pkg = require('../package.json');
+updater({ pkg }).notify({ defer: true });
+
+process.env.UMI_DIR = dirname(require.resolve('../package')); //当前包根目录路径
+process.env.UMI_VERSION = pkg.version; //当前包版本
+
+const aliasMap = {
+  '-v': 'version',
+  '--version': 'version',
+  '-h': 'help',
+  '--help': 'help'
+};
+//如果umi后面有参数就执行对应scripts文件中的脚本，否则引入umi-build-dev，应该是各种命令的提示语
+switch (script) {
+  case 'build':
+  case 'dev':
+  case 'test':
+  case 'inspect':
+    require(`./scripts/${script}`);
+    break;
+  default: {
+    const Service = require('umi-build-dev/lib/Service').default;
+    new Service(buildDevOpts(args)).run(aliasMap[script] || script, args);
+    break;
+  }
+}
+```
+
+## packages/umi-build-dev
+
+## create-umi
+
+通过脚手架构建项目
+
+执行 `npm create umi`
+
+## 参考二
+
+[配置 npm](https://docs.npmjs.com/files/package.json)
