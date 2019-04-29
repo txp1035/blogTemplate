@@ -709,7 +709,90 @@ export { default as Route } from './lib/Route';
 
 umi 输出的 api 对应[官方文档](https://umijs.org/zh/api/)。
 
+### packages/umi/link.js
+
+link 组件直接使用 react-router 的 link 组件
+
+```js
+import { Link } from 'react-router-dom';
+export default Link;
+```
+
+### packages/umi/NavLink.js
+
+NavLink 组件直接使用 react-router 的 NavLink 组件
+
+```js
+import { NavLink } from 'react-router-dom';
+export default NavLink;
+```
+
+### packages/umi/Redirect.js
+
+Redirect 组件直接使用 react-router 的 Redirect 组件
+
+```js
+import { Redirect } from 'react-router-dom';
+export default Redirect;
+```
+
+### packages/umi/router.js
+
+js 路由操作文件
+
+```js
+/* global window */
+
+export function push(...args) {
+  window.g_history.push(...args);
+}
+
+export function replace(...args) {
+  window.g_history.replace(...args);
+}
+
+export function go(...args) {
+  window.g_history.go(...args);
+}
+
+export function goBack(...args) {
+  window.g_history.goBack(...args);
+}
+
+export function goForward(...args) {
+  window.g_history.goForward(...args);
+}
+
+export default {
+  push,
+  replace,
+  go,
+  goBack,
+  goForward
+};
+```
+
+### packages/umi/withRouter.js
+
+withRouter 组件直接使用 react-router 的 withRouter 组件
+
+```js
+import { withRouter } from 'react-router-dom';
+export default withRouter;
+```
+
+### packages/umi/Route.js
+
+Route 组件直接使用 react-router 的 Route 组件
+
+```js
+import { Route } from 'react-router-dom';
+export default Route;
+```
+
 ### packages/umi/bin/umi.js
+
+umi 命令的入口文件，`umi [option]`就会执行这个文件了。
 
 ```js
 #!/usr/bin/env node
@@ -728,6 +811,8 @@ if (localCLI && localCLI !== __filename) {
 
 ### packages/umi/src/cli.js
 
+从入口文件来到具体命令处理的文件
+
 ```js
 import { dirname } from 'path';
 import yParser from 'yargs-parser';
@@ -737,7 +822,7 @@ import buildDevOpts from './buildDevOpts';
 
 //process.argv属性返回一个数组，其中包含当启动 Node.js 进程时传入的命令行参数。
 const script = process.argv[2]; //获取第一个可选参数（数组前两个是路径）
-const args = yParser(process.argv.slice(3));
+const args = yParser(process.argv.slice(3)); //获取第一个可选参数之后的参数，转换成对象。如：umi dev -a -name=1，args为{_:[],a:true,name:1}
 
 // Node版本检查
 const nodeVersion = process.versions.node; //node版本号
@@ -759,8 +844,8 @@ const aliasMap = {
   '--version': 'version',
   '-h': 'help',
   '--help': 'help'
-};
-//如果umi后面有参数就执行对应scripts文件中的脚本，否则引入umi-build-dev，应该是各种命令的提示语
+}; //扩展命令
+//如果umi后面有build、dev、test、inspect参数就执行对应scripts文件中的脚本，否则引入umi-build-dev执行
 switch (script) {
   case 'build':
   case 'dev':
@@ -776,14 +861,189 @@ switch (script) {
 }
 ```
 
-## packages/umi-build-dev
+### packages/umi/src/buildDevOpts.js
 
-## create-umi
+加载 env 环境并返回路径
 
-通过脚手架构建项目
+```js
+//path.join() 方法使用平台特定的分隔符作为定界符将所有给定的 path 片段连接在一起，然后规范化生成的路径。
+//path.isAbsolute() 方法检测 path 是否为绝对路径。
+import { join, isAbsolute } from 'path';
+//fs.readFileSync() 同步地读取文件的全部内容。
+//fs.existsSync() 通过检查文件系统来测试给定的路径是否存在。
+import { readFileSync, existsSync } from 'fs';
+//isWindows 判断是否为Windows平台
+import isWindows from 'is-windows';
+//winPath 将Windows反斜杠路径转换为斜杠路径：foo\\bar➔foo/ba
+import { winPath } from 'umi-utils';
+import { parse } from 'dotenv';
 
-执行 `npm create umi`
+export default function(opts = {}) {
+  loadDotEnv(); //加载env环境
+
+  let cwd = opts.cwd || process.env.APP_ROOT;
+  if (cwd) {
+    if (!isAbsolute(cwd)) {
+      cwd = join(process.cwd(), cwd);
+    }
+    cwd = winPath(cwd);
+    // 原因：webpack 的 include 规则得是 \ 才能判断出是绝对路径
+    if (isWindows()) {
+      cwd = cwd.replace(/\//g, '\\');
+    }
+  }
+
+  return {
+    cwd
+  };
+}
+
+function loadDotEnv() {
+  //process.cwd() 方法返回 Node.js 进程的当前工作目录。
+  const baseEnvPath = join(process.cwd(), '.env');
+  const localEnvPath = `${baseEnvPath}.local`;
+
+  const loadEnv = envPath => {
+    //判断是否存在env的文件，存在就读取文件遍历设置env
+    if (existsSync(envPath)) {
+      const parsed = parse(readFileSync(envPath, 'utf-8'));
+      Object.keys(parsed).forEach(key => {
+        if (!process.env.hasOwnProperty(key)) {
+          process.env[key] = parsed[key];
+        }
+      });
+    }
+  };
+
+  loadEnv(baseEnvPath);
+  loadEnv(localEnvPath);
+}
+```
+
+### packages/umi/src/scripts/build.js
+
+构建执行脚本，实际调用 umi-build-dev 模块
+
+```js
+import yParser from 'yargs-parser';
+import buildDevOpts from '../buildDevOpts';
+
+process.env.NODE_ENV = 'production'; //设置环境为生产环境
+
+const args = yParser(process.argv.slice(2));
+const Service = require('umi-build-dev/lib/Service').default;
+new Service(buildDevOpts(args)).run('build', args);
+```
+
+### packages/umi/src/dev.js
+
+开发执行脚本，实际调用 umi-build-dev 模块
+
+```js
+import fork from 'umi-build-dev/lib/fork';
+
+const child = fork(require.resolve('./realDev.js'));
+child.on('message', data => {
+  if (process.send) {
+    process.send(data);
+  }
+});
+child.on('exit', code => {
+  if (code === 1) {
+    process.exit(code);
+  }
+});
+
+process.on('SIGINT', () => {
+  child.kill('SIGINT');
+});
+```
+
+### packages/umi/src/inspect.js
+
+检查内部 Webpack 配置脚本文件
+
+```js
+import yParser from 'yargs-parser';
+import buildDevOpts from '../buildDevOpts';
+
+const args = yParser(process.argv.slice(2));
+
+if (args.mode === 'production') {
+  process.env.NODE_ENV = 'production';
+} else {
+  process.env.NODE_ENV = 'development';
+} //如果命令指定了mode=production，则切换换生产环境否则为开发环境
+
+const Service = require('umi-build-dev/lib/Service').default;
+new Service(buildDevOpts(args)).run('inspect', args);
+```
+
+### packages/umi/src/realDev.js
+
+```js
+import yParser from 'yargs-parser';
+import buildDevOpts from '../buildDevOpts';
+
+let closed = false;
+
+// kill(2) Ctrl-C
+process.once('SIGINT', () => onSignal('SIGINT'));
+// kill(3) Ctrl-\
+process.once('SIGQUIT', () => onSignal('SIGQUIT'));
+// kill(15) default
+process.once('SIGTERM', () => onSignal('SIGTERM'));
+
+function onSignal(signal) {
+  if (closed) return;
+  closed = true;
+  process.exit(0);
+}
+
+process.env.NODE_ENV = 'development';
+
+const args = yParser(process.argv.slice(2));
+const Service = require('umi-build-dev/lib/Service').default;
+new Service(buildDevOpts(args)).run('dev', args);
+```
+
+### packages/umi/src/test.js
+
+测试脚本
+
+```js
+import yParser from 'yargs-parser';
+import buildDevOpts from '../buildDevOpts';
+
+process.env.NODE_ENV = 'development';
+
+const args = yParser(process.argv.slice(2));
+const Service = require('umi-build-dev/lib/Service').default;
+new Service(buildDevOpts(args)).run('test', args);
+```
+
+## packages/umi-utils
+
+辅助 umi 的模块
+
+### packages/umi-utils/src/winPath.js
+
+```js
+//将Windows反斜杠路径转换为斜杠路径：foo\\bar➔foo/ba
+import slash from 'slash2';
+r;
+
+export default function(path) {
+  return slash(path);
+}
+```
+
+## 总结 4/30
+
+通过源码和视频学习了命令行运行包文件，虽然只是打印了`hello txp`（[demo](https://github.com/ShawDanon/txp/tree/master/packages/txp-first)）,阅读源码的同时对 node 印象更深刻了。疑惑的是 router 文件中的`window.g_history`不知道哪儿定义的，接下来需要看`umi-build-dev`模块了解构建运行的情况。
 
 ## 参考二
 
 [配置 npm](https://docs.npmjs.com/files/package.json)
+[Node.js 中文网](http://nodejs.cn/api/)
+[基于 umi 封装自己的框架：sekiro](https://www.bilibili.com/video/av47877835)
