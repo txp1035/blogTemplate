@@ -617,7 +617,9 @@ startDevServers()
 
 ## packages/umi
 
-### packages/umi/package.json
+### 重要的
+
+#### packages/umi/package.json
 
 先来看看 package.json 文件。
 
@@ -695,7 +697,9 @@ startDevServers()
 }
 ```
 
-### packages/umi/index.js
+### 提供接口相关的文件
+
+#### packages/umi/index.js
 
 ```js
 export { default as Link } from './lib/link';
@@ -709,7 +713,7 @@ export { default as Route } from './lib/Route';
 
 umi 输出的 api 对应[官方文档](https://umijs.org/zh/api/)。
 
-### packages/umi/link.js
+#### packages/umi/link.js
 
 link 组件直接使用 react-router 的 link 组件
 
@@ -718,7 +722,7 @@ import { Link } from 'react-router-dom';
 export default Link;
 ```
 
-### packages/umi/NavLink.js
+#### packages/umi/NavLink.js
 
 NavLink 组件直接使用 react-router 的 NavLink 组件
 
@@ -727,7 +731,7 @@ import { NavLink } from 'react-router-dom';
 export default NavLink;
 ```
 
-### packages/umi/Redirect.js
+#### packages/umi/Redirect.js
 
 Redirect 组件直接使用 react-router 的 Redirect 组件
 
@@ -736,7 +740,7 @@ import { Redirect } from 'react-router-dom';
 export default Redirect;
 ```
 
-### packages/umi/router.js
+#### packages/umi/router.js
 
 js 路由操作文件
 
@@ -772,7 +776,7 @@ export default {
 };
 ```
 
-### packages/umi/withRouter.js
+#### packages/umi/withRouter.js
 
 withRouter 组件直接使用 react-router 的 withRouter 组件
 
@@ -781,7 +785,7 @@ import { withRouter } from 'react-router-dom';
 export default withRouter;
 ```
 
-### packages/umi/Route.js
+#### packages/umi/Route.js
 
 Route 组件直接使用 react-router 的 Route 组件
 
@@ -790,7 +794,80 @@ import { Route } from 'react-router-dom';
 export default Route;
 ```
 
-### packages/umi/bin/umi.js
+#### packages/umi/dynamic.js
+
+```js
+import React from 'react';
+import Loadable from 'react-loadable';
+
+// Thanks to next.js
+// ref: https://github.com/zeit/next.js/blob/canary/lib/dynamic.js
+export default function(dynamicOptions, options) {
+  let loadableFn = Loadable;
+  let loadableOptions = {
+    loading: ({ error, isLoading }) => {
+      if (process.env.NODE_ENV === 'development') {
+        if (isLoading) {
+          return <p>loading...</p>;
+        }
+        if (error) {
+          return (
+            <p>
+              {error.message}
+              <br />
+              {error.stack}
+            </p>
+          );
+        }
+      }
+      return <p>loading...</p>;
+    }
+  };
+
+  // Support for direct import(),
+  // eg: dynamic(import('../hello-world'))
+  if (typeof dynamicOptions.then === 'function') {
+    loadableOptions.loader = () => dynamicOptions;
+    // Support for having first argument being options,
+    // eg: dynamic({loader: import('../hello-world')})
+  } else if (typeof dynamicOptions === 'object') {
+    loadableOptions = { ...loadableOptions, ...dynamicOptions };
+  }
+
+  // Support for passing options,
+  // eg: dynamic(import('../hello-world'), {loading: () => <p>Loading something</p>})
+  loadableOptions = { ...loadableOptions, ...options };
+
+  // Support for `render` when using a mapping,
+  // eg: `dynamic({ modules: () => {return {HelloWorld: import('../hello-world')}, render(props, loaded) {} } })
+  if (dynamicOptions.render) {
+    loadableOptions.render = (loaded, props) => dynamicOptions.render(props, loaded);
+  }
+
+  // Support for `modules` when using a mapping,
+  // eg: `dynamic({ modules: () => {return {HelloWorld: import('../hello-world')}, render(props, loaded) {} } })
+  if (dynamicOptions.modules) {
+    loadableFn = Loadable.Map;
+    const loadModules = {};
+    const modules = dynamicOptions.modules();
+    Object.keys(modules).forEach(key => {
+      const value = modules[key];
+      if (typeof value.then === 'function') {
+        loadModules[key] = () => value.then(mod => mod.default || mod);
+        return;
+      }
+      loadModules[key] = value;
+    });
+    loadableOptions.loader = loadModules;
+  }
+
+  return loadableFn(loadableOptions);
+}
+```
+
+### 命令相关的文件
+
+#### packages/umi/bin/umi.js
 
 umi 命令的入口文件，`umi [option]`就会执行这个文件了。
 
@@ -809,7 +886,7 @@ if (localCLI && localCLI !== __filename) {
 } //执行cli
 ```
 
-### packages/umi/src/cli.js
+#### packages/umi/src/cli.js
 
 从入口文件来到具体命令处理的文件
 
@@ -861,7 +938,7 @@ switch (script) {
 }
 ```
 
-### packages/umi/src/buildDevOpts.js
+#### packages/umi/src/buildDevOpts.js
 
 加载 env 环境并返回路径
 
@@ -920,7 +997,7 @@ function loadDotEnv() {
 }
 ```
 
-### packages/umi/src/scripts/build.js
+#### packages/umi/src/scripts/build.js
 
 构建执行脚本，实际调用 umi-build-dev 模块
 
@@ -935,7 +1012,7 @@ const Service = require('umi-build-dev/lib/Service').default;
 new Service(buildDevOpts(args)).run('build', args);
 ```
 
-### packages/umi/src/dev.js
+#### packages/umi/src/scripts/dev.js
 
 开发执行脚本，实际调用 umi-build-dev 模块
 
@@ -959,7 +1036,7 @@ process.on('SIGINT', () => {
 });
 ```
 
-### packages/umi/src/inspect.js
+#### packages/umi/src/scripts/inspect.js
 
 检查内部 Webpack 配置脚本文件
 
@@ -979,7 +1056,7 @@ const Service = require('umi-build-dev/lib/Service').default;
 new Service(buildDevOpts(args)).run('inspect', args);
 ```
 
-### packages/umi/src/realDev.js
+#### packages/umi/src/scripts/realDev.js
 
 ```js
 import yParser from 'yargs-parser';
@@ -1007,7 +1084,9 @@ const Service = require('umi-build-dev/lib/Service').default;
 new Service(buildDevOpts(args)).run('dev', args);
 ```
 
-### packages/umi/src/test.js
+### 其他
+
+#### packages/umi/src/test.js
 
 测试脚本
 
@@ -1020,6 +1099,271 @@ process.env.NODE_ENV = 'development';
 const args = yParser(process.argv.slice(2));
 const Service = require('umi-build-dev/lib/Service').default;
 new Service(buildDevOpts(args)).run('test', args);
+```
+
+#### packages/umi/src/babel.js
+
+```js
+export default function(context, opts = {}) {
+  return {
+    presets: [
+      [
+        require.resolve('babel-preset-umi'),
+        {
+          ...opts,
+          preact: true
+        }
+      ]
+    ]
+  };
+}
+```
+
+#### packages/umi/src/createHistory.js
+
+```js
+import createHistory from 'history/createBrowserHistory';
+import { normalizePath } from './utils';
+
+export default function(opts) {
+  const history = createHistory(opts);
+  if (__UMI_HTML_SUFFIX) {
+    const oldPush = history.push;
+    const oldReplace = history.replace;
+    history.push = (path, state) => {
+      oldPush(normalizePath(path), state);
+    };
+    history.replace = (path, state) => {
+      oldReplace(normalizePath(path), state);
+    };
+  }
+  return history;
+}
+```
+
+#### packages/umi/src/prompt.js
+
+```js
+import { Prompt } from 'react-router-dom';
+export default Prompt;
+```
+
+#### packages/umi/src/renderRoutes.js
+
+```js
+import React from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+
+const RouteInstanceMap = {
+  get(key) {
+    return key._routeInternalComponent;
+  },
+  has(key) {
+    return key._routeInternalComponent !== undefined;
+  },
+  set(key, value) {
+    key._routeInternalComponent = value;
+  }
+};
+
+// Support pass props from layout to child routes
+const RouteWithProps = ({ path, exact, strict, render, location, sensitive, ...rest }) => (
+  <Route path={path} exact={exact} strict={strict} location={location} sensitive={sensitive} render={props => render({ ...props, ...rest })} />
+);
+
+function getCompatProps(props) {
+  const compatProps = {};
+  if (__UMI_BIGFISH_COMPAT) {
+    if (props.match && props.match.params && !props.params) {
+      compatProps.params = props.match.params;
+    }
+  }
+  return compatProps;
+}
+
+function withRoutes(route) {
+  if (RouteInstanceMap.has(route)) {
+    return RouteInstanceMap.get(route);
+  }
+
+  const { Routes } = route;
+  let len = Routes.length - 1;
+  let Component = args => {
+    const { render, ...props } = args;
+    return render(props);
+  };
+  while (len >= 0) {
+    const AuthRoute = Routes[len];
+    const OldComponent = Component;
+    Component = props => (
+      <AuthRoute {...props}>
+        <OldComponent {...props} />
+      </AuthRoute>
+    );
+    len -= 1;
+  }
+
+  const ret = args => {
+    const { render, ...rest } = args;
+    return (
+      <RouteWithProps
+        {...rest}
+        render={props => {
+          return <Component {...props} route={route} render={render} />;
+        }}
+      />
+    );
+  };
+  RouteInstanceMap.set(route, ret);
+  return ret;
+}
+
+export default function renderRoutes(routes, extraProps = {}, switchProps = {}) {
+  return routes ? (
+    <Switch {...switchProps}>
+      {routes.map((route, i) => {
+        if (route.redirect) {
+          return <Redirect key={route.key || i} from={route.path} to={route.redirect} exact={route.exact} strict={route.strict} />;
+        }
+        const RouteRoute = route.Routes ? withRoutes(route) : RouteWithProps;
+        return (
+          <RouteRoute
+            key={route.key || i}
+            path={route.path}
+            exact={route.exact}
+            strict={route.strict}
+            sensitive={route.sensitive}
+            render={props => {
+              const childRoutes = renderRoutes(
+                route.routes,
+                {},
+                {
+                  location: props.location
+                }
+              );
+              if (route.component) {
+                const compatProps = getCompatProps({
+                  ...props,
+                  ...extraProps
+                });
+                const newProps = window.g_plugins.apply('modifyRouteProps', {
+                  initialValue: {
+                    ...props,
+                    ...extraProps,
+                    ...compatProps
+                  },
+                  args: { route }
+                });
+                return (
+                  <route.component {...newProps} route={route}>
+                    {childRoutes}
+                  </route.component>
+                );
+              } else {
+                return childRoutes;
+              }
+            }}
+          />
+        );
+      })}
+    </Switch>
+  ) : null;
+}
+```
+
+#### packages/umi/src/runtimePlugin.js
+
+```js
+import assert from 'assert';
+import isPlainObject from 'lodash/isPlainObject';
+
+let plugins = null;
+let validKeys = [];
+
+export function init(opts = {}) {
+  plugins = [];
+  validKeys = opts.validKeys || [];
+}
+
+export function use(plugin) {
+  Object.keys(plugin).forEach(key => {
+    // TODO: remove default
+    // default 是为了兼容内部框架内置的一个 babel 插件问题
+    assert(validKeys.concat('default').indexOf(key) > -1, `Invalid key ${key} from plugin`);
+  });
+  plugins.push(plugin);
+}
+
+export function getItem(key) {
+  assert(validKeys.indexOf(key) > -1, `Invalid key ${key}`);
+  return plugins.filter(plugin => key in plugin).map(plugin => plugin[key]);
+}
+
+function _compose(...funcs) {
+  if (funcs.length === 1) {
+    return funcs[0];
+  }
+  const last = funcs.pop();
+  return funcs.reduce((a, b) => () => b(a), last);
+}
+
+export function compose(item, { initialValue }) {
+  if (typeof item === 'string') item = getItem(item);
+  return () => {
+    return _compose(...item, initialValue)();
+  };
+}
+
+export function apply(item, { initialValue, args }) {
+  if (typeof item === 'string') item = getItem(item);
+  assert(Array.isArray(item), `item must be Array`);
+  return item.reduce((memo, fn) => {
+    assert(typeof fn === 'function', `applied item must be function`);
+    return fn(memo, args);
+  }, initialValue);
+}
+
+export function applyForEach(item, { initialValue }) {
+  if (typeof item === 'string') item = getItem(item);
+  assert(Array.isArray(item), `item must be Array`);
+  item.forEach(fn => {
+    assert(typeof fn === 'function', `applied item must be function`);
+    fn(initialValue);
+  });
+}
+
+// shadow merge
+export function mergeConfig(item) {
+  if (typeof item === 'string') item = getItem(item);
+  assert(Array.isArray(item), `item must be Array`);
+  return item.reduce((memo, config) => {
+    assert(isPlainObject(config), `Config is not plain object`);
+    return { ...memo, ...config };
+  }, {});
+}
+```
+
+#### packages/umi/src/utils.js
+
+```js
+function addHtmlAffix(pathname) {
+  if (pathname.slice(-1) === '/' || pathname.slice(-5) === '.html') {
+    return pathname;
+  } else {
+    return `${pathname}.html`;
+  }
+}
+
+export function normalizePath(path) {
+  if (typeof path === 'string') {
+    const [pathname, search] = path.split('?');
+    return `${addHtmlAffix(pathname)}${search ? '?' : ''}${search || ''}`;
+  }
+  return {
+    ...path,
+    pathname: addHtmlAffix(path.pathname)
+  };
+}
 ```
 
 ## packages/umi-utils
@@ -1047,3 +1391,5 @@ export default function(path) {
 [配置 npm](https://docs.npmjs.com/files/package.json)
 [Node.js 中文网](http://nodejs.cn/api/)
 [基于 umi 封装自己的框架：sekiro](https://www.bilibili.com/video/av47877835)
+
+# 学习 UMI（三）
