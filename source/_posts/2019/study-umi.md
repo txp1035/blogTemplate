@@ -1416,7 +1416,7 @@ export default function(path) {
     "af-webpack": "1.7.5",
     "babel-plugin-module-resolver": "3.1.1",
     "babel-preset-umi": "1.4.1",
-    "chalk": "2.4.1",
+    "chalk": "2.4.1", //终端字符串样式做得很好
     "cheerio": "1.0.0-rc.2",
     "chokidar": "2.0.4",
     "clipboardy": "1.2.3",
@@ -1451,7 +1451,7 @@ export default function(path) {
     "react-router-config": "1.0.0-beta.4",
     "react-router-dom": "4.3.1",
     "requireindex": "1.2.0",
-    "resolve": "1.8.1",
+    "resolve": "1.8.1", //实现节点require.resolve() 算法 ，以便您可以require.resolve()异步和同步代表文件
     "rimraf": "2.6.2",
     "semver": "5.6.0",
     "serve-static": "1.13.2",
@@ -1535,6 +1535,7 @@ import mkdirp from 'mkdirp'; //mkdir -p作用，确保目录名称存在，如�
 import { assign, cloneDeep } from 'lodash';
 import { parse } from 'dotenv'; //Dotenv是一个零依赖模块，可以将.env文件中的环境变量加载到process.env
 import signale from 'signale'; //可记录和可配置到核心，signale可用于记录目的，状态报告，以及处理其他节点模块和应用程序的输出呈现过程。终端中命令执行成功失败异常等的状态
+//deprecate 用于终端上提示方法被弃用,传入(方法名，...想要提示的其他信息),调用方法终端输出提示信息。
 import { deprecate } from 'umi-utils';
 import getPaths from './getPaths';
 import getPlugins from './getPlugins';
@@ -1874,9 +1875,11 @@ export default function(service) {
 #### packages/umi-build-dev/src/getPlugins
 
 ```js
+//实现节点require.resolve() 算法 ，以便您可以require.resolve()异步和同步代表文件
 import resolve from 'resolve';
+//assert来自Node.js 的模块，用于浏览器。使用browserify，只需require('assert')或使用assert全局，您将获得此模块。目标是提供尽可能与Node.js assertAPI功能相同的API。阅读API文档的官方文档。
 import assert from 'assert';
-import chalk from 'chalk';
+import chalk from 'chalk'; //终端字符串样式修改
 import registerBabel, { addBabelRegisterFiles } from './registerBabel';
 import isEqual from './isEqual';
 import getCodeFrame from './utils/getCodeFrame';
@@ -1885,7 +1888,6 @@ const debug = require('debug')('umi-build-dev:getPlugin');
 
 export default function(opts = {}) {
   const { cwd, plugins = [] } = opts;
-
   // 内置插件
   const builtInPlugins = [
     './plugins/commands/dev',
@@ -2618,6 +2620,45 @@ export default function({ stack, message }, options = {}) {
   } else {
     return message;
   }
+}
+```
+
+#### packages/umi-build-dev/src/utils/deprecate
+
+用于终端上提示方法被弃用,传入(方法名，...想要提示的其他信息),调用方法终端输出提示信息。
+
+```js
+//process.platform属性返回字符串，标识Node.js进程运行其上的操作系统平台。
+const isWindows = typeof process !== 'undefined' && process.platform === 'win32';
+const EOL = isWindows ? '\r\n' : '\n';
+//判断是否是windows更具系统选择换行符号
+
+const hits = {};
+export default function deprecate(methodName, ...args) {
+  if (hits[methodName]) return;
+  hits[methodName] = true;
+  //process.stderr 属性返回连接到 stderr (fd 2) 的流。 它是一个 net.Socket 流（也就是双工流），除非 fd 2 指向一个文件，在这种情况下它是一个可写流。console.error() 内部分别是由它实现的。
+  const stream = process.stderr;
+  //判断 Node.js 是否在 TTY 上下文中运行的首选方法是检查 process.stdout.isTTY 属性的值是否为 true：
+  const color = stream.isTTY && '\x1b[31;1m';
+  //如果上下文是终端设置亮黄色加粗字体
+
+  stream.write(EOL); //终端写入换行
+  if (color) {
+    stream.write(color);
+  }
+
+  stream.write(`Warning: ${methodName} has been deprecated.`); //警告方法名已经被弃用
+  stream.write(EOL); //换行
+  args.forEach(message => {
+    stream.write(message); //打印参数
+    stream.write(EOL); //换行
+  });
+  if (color) {
+    stream.write('\x1b[0m');
+  } //把字体还原
+  stream.write(EOL);
+  stream.write(EOL);
 }
 ```
 
