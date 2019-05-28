@@ -9,9 +9,11 @@ date: 2019-3-2
 
 <!-- more -->
 
-# 学习 UMI（一）
+## 学习 UMI（一）
 
-## 目录
+umi@2.6.17
+
+### 目录
 
 ```js
 const DirectoryTree = {
@@ -71,9 +73,9 @@ const DirectoryTree = {
 
 整个目录看下来光工具和包很多都没接触过，代码检查有用过 eslint，项目落地还是不多，这个月看来要恶补一番前端开发规范啊。
 
-## 一级目录
+### 一级目录
 
-### package.json
+#### package.json
 
 ```json
 {
@@ -129,7 +131,7 @@ const DirectoryTree = {
 }
 ```
 
-### Lerna
+#### Lerna
 
 从目录架构来看，首先要学的是多包管理与发布。通过多包管理可以把作者多个包放在一起用一个仓库储存来维护。（PS：npm 包上传后不能删除，强迫症患者需要慎重取名）
 
@@ -173,7 +175,7 @@ const DirectoryTree = {
 }
 ```
 
-### Travis
+#### Travis
 
 Travis 是一款持续集成工具。那么持续集成是什么呢？
 
@@ -212,7 +214,7 @@ git:
   depth: 5
 ```
 
-### Jest
+#### Jest
 
 ```js
 module.exports = {
@@ -243,7 +245,7 @@ module.exports = {
 };
 ```
 
-### EditorConfig
+#### EditorConfig
 
 ```ini
 # http://editorconfig.org
@@ -272,7 +274,7 @@ trim_trailing_whitespace = false
 indent_style = tab
 ```
 
-### ESLint
+#### ESLint
 
 ```json
 {
@@ -339,7 +341,7 @@ indent_style = tab
 }
 ```
 
-### Typescript
+#### Typescript
 
 ```js
 {
@@ -353,9 +355,9 @@ indent_style = tab
 
 ```
 
-## scripts 文件夹
+### scripts 文件夹
 
-### build.js
+#### build.js
 
 ```js
 /*
@@ -422,7 +424,7 @@ cp.on('message', message => {
 });
 ```
 
-### publish.js
+#### publish.js
 
 ```js
 /*
@@ -509,7 +511,7 @@ function publishToNpm() {
 }
 ```
 
-### startDevServers.js
+#### startDevServers.js
 
 ```js
 const { fork } = require('child_process');
@@ -565,7 +567,7 @@ if (require.main === module) {
 }
 ```
 
-### test.js
+#### test.js
 
 ```js
 /*
@@ -589,17 +591,17 @@ startDevServers()
   });
 ```
 
-## 总结
+### 总结
 
-### 2019/3/31
+#### 2019/3/31
 
 通过了解 umi 的源码知道了很多有意思的东西：npm 包发布、通过 lerna 来管理包、使用 Travis 持续集成项目、EditorConfig 来保证不同编辑器风格一致、ESLint 保证代码风格一致、Jest 测试保证代码可靠性、lint-staged 和 husky 阻止代码提交（最开始在 ant design pro 有遇到），shelljs 执行脚本命令。
 
-## demo 地址
+### demo 地址
 
 [准备用来存些常用库的仓库](https://github.com/ShawDanon/txp)
 
-## 参考一
+### 参考一
 
 [创建并发布一个小而美的 npm 包，没你想的那么难！](https://juejin.im/post/5c26c1b65188252dcb312ad6#heading-0)
 [lerna 管理前端 packages 的最佳实践](https://juejin.im/post/5a989fb451882555731b88c2)
@@ -611,15 +613,16 @@ startDevServers()
 [Node.js 中文网](http://nodejs.cn/api/)
 [shelljs](http://documentup.com/shelljs/shelljs)
 
-# 学习 UMI（二）
+## 学习 UMI（二）
 
+umi@2.6.17
 正式开始看源码了
 
-## packages/umi
+### packages/umi
 
-### 重要的
+#### 重要的
 
-#### packages/umi/package.json
+##### packages/umi/package.json
 
 先来看看 package.json 文件。
 
@@ -697,9 +700,9 @@ startDevServers()
 }
 ```
 
-### 提供接口相关的文件
+#### 提供接口相关的文件
 
-#### packages/umi/index.js
+##### packages/umi/index.js
 
 ```js
 export { default as Link } from './lib/link';
@@ -713,7 +716,7 @@ export { default as Route } from './lib/Route';
 
 umi 输出的 api 对应[官方文档](https://umijs.org/zh/api/)。
 
-#### packages/umi/link.js
+##### packages/umi/link.js
 
 link 组件直接使用 react-router 的 link 组件
 
@@ -722,7 +725,7 @@ import { Link } from 'react-router-dom';
 export default Link;
 ```
 
-#### packages/umi/NavLink.js
+##### packages/umi/NavLink.js
 
 NavLink 组件直接使用 react-router 的 NavLink 组件
 
@@ -731,7 +734,7 @@ import { NavLink } from 'react-router-dom';
 export default NavLink;
 ```
 
-#### packages/umi/Redirect.js
+##### packages/umi/Redirect.js
 
 Redirect 组件直接使用 react-router 的 Redirect 组件
 
@@ -740,7 +743,7 @@ import { Redirect } from 'react-router-dom';
 export default Redirect;
 ```
 
-#### packages/umi/router.js
+##### packages/umi/router.js
 
 js 路由操作文件
 
@@ -776,7 +779,7 @@ export default {
 };
 ```
 
-#### packages/umi/withRouter.js
+##### packages/umi/withRouter.js
 
 withRouter 组件直接使用 react-router 的 withRouter 组件
 
@@ -785,7 +788,7 @@ import { withRouter } from 'react-router-dom';
 export default withRouter;
 ```
 
-#### packages/umi/Route.js
+##### packages/umi/Route.js
 
 Route 组件直接使用 react-router 的 Route 组件
 
@@ -794,7 +797,7 @@ import { Route } from 'react-router-dom';
 export default Route;
 ```
 
-#### packages/umi/dynamic.js
+##### packages/umi/dynamic.js
 
 ```js
 import React from 'react';
@@ -865,9 +868,9 @@ export default function(dynamicOptions, options) {
 }
 ```
 
-### 命令相关的文件
+#### 命令相关的文件
 
-#### packages/umi/bin/umi.js
+##### packages/umi/bin/umi.js
 
 umi 命令的入口文件，`umi [option]`就会执行这个文件了。
 
@@ -877,6 +880,7 @@ umi 命令的入口文件，`umi [option]`就会执行这个文件了。
 const resolveCwd = require('resolve-cwd');
 
 const localCLI = resolveCwd.silent('umi/bin/umi'); //获取模块路径，测试结果为null
+
 if (localCLI && localCLI !== __filename) {
   const debug = require('debug')('umi');
   debug('Using local install of umi');
@@ -886,7 +890,7 @@ if (localCLI && localCLI !== __filename) {
 } //执行cli
 ```
 
-#### packages/umi/src/cli.js
+##### packages/umi/src/cli.js
 
 从入口文件来到具体命令处理的文件
 
@@ -938,9 +942,9 @@ switch (script) {
 }
 ```
 
-#### packages/umi/src/buildDevOpts.js
+##### packages/umi/src/buildDevOpts.js
 
-加载 env 环境并返回路径
+加载 env 环境并对应平台返回 app 目录路径
 
 ```js
 //path.join() 方法使用平台特定的分隔符作为定界符将所有给定的 path 片段连接在一起，然后规范化生成的路径。
@@ -951,23 +955,23 @@ import { join, isAbsolute } from 'path';
 import { readFileSync, existsSync } from 'fs';
 //isWindows 判断是否为Windows平台
 import isWindows from 'is-windows';
-//winPath 将Windows反斜杠路径转换为斜杠路径：foo\\bar➔foo/ba
+//winPath 将Windows反斜杠路径转换为斜杠路径：foo\\bar➔foo/bar
 import { winPath } from 'umi-utils';
 import { parse } from 'dotenv';
 
 export default function(opts = {}) {
   loadDotEnv(); //加载env环境
-
-  let cwd = opts.cwd || process.env.APP_ROOT;
+  let cwd = opts.cwd || process.env.APP_ROOT; //得到将传入路径或者环境设置路径
   if (cwd) {
     if (!isAbsolute(cwd)) {
       cwd = join(process.cwd(), cwd);
-    }
-    cwd = winPath(cwd);
+    } //cwd不是绝对路径转换为绝对路径
+    cwd = winPath(cwd); //将Windows反斜杠路径转换为斜杠路径：foo\\bar➔foo/ba
     // 原因：webpack 的 include 规则得是 \ 才能判断出是绝对路径
     if (isWindows()) {
       cwd = cwd.replace(/\//g, '\\');
-    }
+    } //如果是Windows平台将/替换为\\ foo/bar➔foo\\bar
+    //感觉上面两步怎么不弄成一步来呢
   }
 
   return {
@@ -977,11 +981,11 @@ export default function(opts = {}) {
 
 function loadDotEnv() {
   //process.cwd() 方法返回 Node.js 进程的当前工作目录。
-  const baseEnvPath = join(process.cwd(), '.env');
-  const localEnvPath = `${baseEnvPath}.local`;
+  const baseEnvPath = join(process.cwd(), '.env'); //获取当前进程目录下.env路径
+  const localEnvPath = `${baseEnvPath}.local`; //获取当前进程目录下.env.local路径
 
   const loadEnv = envPath => {
-    //判断是否存在env的文件，存在就读取文件遍历设置env
+    //判断路径是否存在env的文件，存在就读取文件遍历设置env
     if (existsSync(envPath)) {
       const parsed = parse(readFileSync(envPath, 'utf-8'));
       Object.keys(parsed).forEach(key => {
@@ -991,13 +995,14 @@ function loadDotEnv() {
       });
     }
   };
-
+  //加载.env环境
   loadEnv(baseEnvPath);
+  //加载.env.local环境覆盖.env环境
   loadEnv(localEnvPath);
 }
 ```
 
-#### packages/umi/src/scripts/build.js
+##### packages/umi/src/scripts/build.js
 
 构建执行脚本，实际调用 umi-build-dev 模块
 
@@ -1012,7 +1017,7 @@ const Service = require('umi-build-dev/lib/Service').default;
 new Service(buildDevOpts(args)).run('build', args);
 ```
 
-#### packages/umi/src/scripts/dev.js
+##### packages/umi/src/scripts/dev.js
 
 开发执行脚本，实际调用 umi-build-dev 模块
 
@@ -1036,7 +1041,7 @@ process.on('SIGINT', () => {
 });
 ```
 
-#### packages/umi/src/scripts/inspect.js
+##### packages/umi/src/scripts/inspect.js
 
 检查内部 Webpack 配置脚本文件
 
@@ -1056,7 +1061,7 @@ const Service = require('umi-build-dev/lib/Service').default;
 new Service(buildDevOpts(args)).run('inspect', args);
 ```
 
-#### packages/umi/src/scripts/realDev.js
+##### packages/umi/src/scripts/realDev.js
 
 ```js
 import yParser from 'yargs-parser';
@@ -1084,9 +1089,9 @@ const Service = require('umi-build-dev/lib/Service').default;
 new Service(buildDevOpts(args)).run('dev', args);
 ```
 
-### 其他
+#### 其他
 
-#### packages/umi/src/test.js
+##### packages/umi/src/test.js
 
 测试脚本
 
@@ -1101,7 +1106,7 @@ const Service = require('umi-build-dev/lib/Service').default;
 new Service(buildDevOpts(args)).run('test', args);
 ```
 
-#### packages/umi/src/babel.js
+##### packages/umi/src/babel.js
 
 ```js
 export default function(context, opts = {}) {
@@ -1119,7 +1124,7 @@ export default function(context, opts = {}) {
 }
 ```
 
-#### packages/umi/src/createHistory.js
+##### packages/umi/src/createHistory.js
 
 ```js
 import createHistory from 'history/createBrowserHistory';
@@ -1141,14 +1146,14 @@ export default function(opts) {
 }
 ```
 
-#### packages/umi/src/prompt.js
+##### packages/umi/src/prompt.js
 
 ```js
 import { Prompt } from 'react-router-dom';
 export default Prompt;
 ```
 
-#### packages/umi/src/renderRoutes.js
+##### packages/umi/src/renderRoutes.js
 
 ```js
 import React from 'react';
@@ -1271,7 +1276,7 @@ export default function renderRoutes(routes, extraProps = {}, switchProps = {}) 
 }
 ```
 
-#### packages/umi/src/runtimePlugin.js
+##### packages/umi/src/runtimePlugin.js
 
 ```js
 import assert from 'assert';
@@ -1343,7 +1348,7 @@ export function mergeConfig(item) {
 }
 ```
 
-#### packages/umi/src/utils.js
+##### packages/umi/src/utils.js
 
 ```js
 function addHtmlAffix(pathname) {
@@ -1366,39 +1371,76 @@ export function normalizePath(path) {
 }
 ```
 
-## packages/umi-utils
+### packages/umi-utils
 
 辅助 umi 的模块
 
-### packages/umi-utils/src/winPath.js
+#### packages/umi-utils/src/winPath.js
 
 ```js
 //将Windows反斜杠路径转换为斜杠路径：foo\\bar➔foo/ba
 import slash from 'slash2';
-r;
 
 export default function(path) {
   return slash(path);
 }
 ```
 
-## 总结 4/30
+### 总结 4/30
 
 通过源码和视频学习了命令行运行包文件，虽然只是打印了`hello txp`（[demo](https://github.com/ShawDanon/txp/tree/master/packages/txp-first)）,阅读源码的同时对 node 印象更深刻了。疑惑的是 router 文件中的`window.g_history`不知道哪儿定义的，接下来需要看`umi-build-dev`模块了解构建运行的情况。
 
-## 参考二
+### 参考二
 
 [配置 npm](https://docs.npmjs.com/files/package.json)
 [Node.js 中文网](http://nodejs.cn/api/)
 [基于 umi 封装自己的框架：sekiro](https://www.bilibili.com/video/av47877835)
 
-# 学习 UMI（三）
+## 学习 UMI（三）
 
-## packages/umi-build-dev
+umi@2.6.17
 
-### 重要
+### 运行 umi 代码
 
-#### packages/umi-build-dev/package.json
+阅读代码，看文档，总感觉缺点什么，经过云嫌和小虎两位大佬帮助，开始了 umi 代码调试之旅。其实上个月就想边运行边看代码，只是连安装开发依赖都没解决，所以拖到了现在。
+整个流程如下（也可以参考[贡献文档](https://github.com/umijs/umi/blob/master/CONTRIBUTING.md)）：
+1、克隆 umi 项目，在 umi 更目录装开发依赖，贡献文档是推荐用 yarn 装，不过要是网络不好，没有科学上网条件，会卡在装`puppeteer`上面，具体原因不是包上面是要下载`Chromium`的时候网络超时失败的。所以解决方案是通过 cnpm 装。
+
+```js
+cnpm i
+```
+
+2、安装各个包依赖，因为用的 lerna 作为包管理工具,所以运行`lerna bootstrap`进行安装，当然也可可以参照贡献文档使用`yarn bootstrap`装，这只是 umi 包的一个 script 转换而已。
+3、为了方便使用需要把 umi 链接到全局，链接到全局和全局装包效果是一样的。首先切换到 umi 包目录，`cd packages/umi`，然后可以使用`npm link`或者`yarn link`，建议使用 yarn，npm 链接有点慢。
+4、链接完成后就可以运行 umi 的命令了，我们试一试，结果提示找不到 lib 目录。因此我们需要切回根目录，运行`yarn build`对所有包进行构建生成 lib 目录文件，贡献文档命令是`yarn build --watch`可以实现实时构建。如此运行 umi 命令就和直接通过`npm i umi -g`命令安装一样了。
+
+### inspect
+
+目前能够运行本地 umi 代码了，可以在 umi 中加入`console.log()`来打印需要的参数，但是这样也不是很方面来理解代码。参照[官方文档](https://umijs.org/zh/guide/faq.html#%E5%A6%82%E4%BD%95%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95)可以通过 inspect 进行断点调试。
+inspect 调试方法：
+1、全局安装 node-inspect 包
+
+```js
+npm i node-inspect -g
+```
+
+2、在 umi 包目录运行`node --inspect-brk ./bin/umi dev`,`./bin/umi`是运行文件相对执行环境位置,`dev`是执行参数。成功运行能够看到打印信息如下。
+
+```js
+Debugger listening on ws://127.0.0.1:9229/71f532b3-d619-4898-82ee-3145d817e5da
+For help, see: https://nodejs.org/en/docs/inspector
+```
+
+3、进入调试器有两种方法，第一种是在谷歌浏览器输入`chrome://inspect/#devices`中打开，第二种是谷歌浏览器按 F12 唤醒开发者工具里打开，如下图。
+![图一](../../img/2019/5-27-1.png)
+调试器如下图，基本操作和平时调试差不多。唯一遇到的坑就是 require 其他文件的时候进不去，试过在代码里加 debugger 也不行。最后发现左侧 Node 栏里面的文件是根据代码运行变化的，require 模块后 Node 栏里就会多出相应模块的代码，然后这个时候通过 Node 栏打开代码打断点即可调试。
+![图二](../../img/2019/5-27-2.png)
+
+### packages/umi-build-dev
+
+#### 重要
+
+##### packages/umi-build-dev/package.json
 
 ```json
 {
@@ -1515,9 +1557,9 @@ export default function(path) {
 }
 ```
 
-### umi 中引用的
+#### umi 中引用的
 
-#### packages/umi-build-dev/src/Service
+##### packages/umi-build-dev/src/Service
 
 ```js
 import chalk from 'chalk'; //终端字符串样式做得很好(终端字符串颜色处理插件)
@@ -1550,6 +1592,7 @@ const debug = require('debug')('umi-build-dev:Service');
 export default class Service {
   //构造函数传入目录
   constructor({ cwd }) {
+    //cwd为app根目录
     //process.cwd() 方法返回 Node.js 进程的当前工作目录。
     this.cwd = cwd || process.cwd(); //如果不传入cwd，cwd为Node.js 进程的当前工作目录.
     try {
@@ -1560,7 +1603,7 @@ export default class Service {
 
     registerBabel({
       cwd: this.cwd
-    });
+    }); //注册Babel
 
     this.commands = {};
     this.pluginHooks = {};
@@ -1808,8 +1851,8 @@ ${getCodeFrame(e, { cwd: this.cwd })}
   }
 
   run(name = 'help', args) {
-    this.init();
-    return this.runCommand(name, args);
+    this.init(); //初始化
+    return this.runCommand(name, args); //运行help命令
   }
 
   runCommand(rawName, rawArgs) {
@@ -1849,443 +1892,66 @@ function mergeConfig(oldConfig, newConfig) {
 }
 ```
 
-#### packages/umi-build-dev/src/getPaths
+##### packages/umi-build-dev/src/registerBabel
 
 ```js
-import { join } from 'path';
-import getPaths from 'umi-core/lib/getPaths';
+import { join, isAbsolute } from 'path'; //引入拼接路径模块和判断是否为绝对路劲模块
+import { existsSync } from 'fs'; //同步检查路肩是否存在模块
+import registerBabel from 'af-webpack/registerBabel';
+import { winPath } from 'umi-utils';
+//获取umi配置文件路径的数组
+import { getConfigPaths } from 'umi-core/lib/getUserConfig';
 
-function template(path) {
-  return join(__dirname, '../template', path);
+let files = null;
+
+function initFiles(cwd) {
+  if (files) return;
+  files = getConfigPaths(cwd); //传入node运行时路径
+} //初始化文件，若文件存在则忽略
+
+export function addBabelRegisterFiles(extraFiles, { cwd }) {
+  initFiles(cwd);
+  files.push(...extraFiles);
 }
 
-export default function(service) {
-  const { cwd, config } = service;
-  return {
-    ...getPaths({ cwd, config }),
-    defaultEntryTplPath: template('entry.js.tpl'),
-    defaultRouterTplPath: template('router.js.tpl'),
-    defaultHistoryTplPath: template('history.js.tpl'),
-    defaultRegisterSWTplPath: template('registerServiceWorker.js'),
-    defaultDocumentPath: template('document.ejs')
-  };
-}
-```
+export default function({ cwd }) {
+  initFiles(cwd);
+  const only = files.map(f => {
+    const fullPath = isAbsolute(f) ? f : join(cwd, f);
+    return winPath(fullPath);
+  }); //转化路径
 
-#### packages/umi-build-dev/src/getPlugins
+  let absSrcPath = join(cwd, 'src'); //获取src目录路径
+  if (!existsSync(absSrcPath)) {
+    absSrcPath = cwd;
+  } //如果不存在src目录则把根目录作为src目录
 
-```js
-//实现节点require.resolve() 算法 ，以便您可以require.resolve()异步和同步代表文件
-import resolve from 'resolve';
-//assert来自Node.js 的模块，用于浏览器。使用browserify，只需require('assert')或使用assert全局，您将获得此模块。目标是提供尽可能与Node.js assertAPI功能相同的API。阅读API文档的官方文档。
-import assert from 'assert';
-import chalk from 'chalk'; //终端字符串样式修改
-import registerBabel, { addBabelRegisterFiles } from './registerBabel';
-import isEqual from './isEqual';
-import getCodeFrame from './utils/getCodeFrame';
-
-const debug = require('debug')('umi-build-dev:getPlugin');
-
-export default function(opts = {}) {
-  const { cwd, plugins = [] } = opts;
-  // 内置插件
-  const builtInPlugins = [
-    './plugins/commands/dev',
-    './plugins/commands/build',
-    './plugins/commands/inspect',
-    './plugins/commands/test',
-    './plugins/commands/help',
-    './plugins/commands/generate',
-    './plugins/commands/rm',
-    './plugins/commands/config',
-    './plugins/commands/block',
-    // './plugins/commands/ui',
-    './plugins/commands/version',
-    './plugins/global-js',
-    './plugins/global-css',
-    './plugins/base',
-    './plugins/mountElementId',
-    './plugins/mock',
-    './plugins/proxy',
-    './plugins/history',
-    './plugins/afwebpack-config',
-    './plugins/mountElementId',
-    './plugins/404', // 404 must after mock
-    './plugins/targets'
-  ];
-
-  const pluginsObj = [
-    // builtIn 的在最前面
-    ...builtInPlugins.map(p => {
-      let opts;
-      if (Array.isArray(p)) {
-        opts = p[1]; // eslint-disable-line
-        p = p[0];
+  registerBabel({
+    // only suport glob
+    // ref: https://babeljs.io/docs/en/next/babel-core.html#configitem-type
+    only,
+    babelPreset: [
+      require.resolve('babel-preset-umi'),
+      {
+        env: { targets: { node: 8 } },
+        transformRuntime: false
       }
-      const apply = require(p); // eslint-disable-line
-      return {
-        id: p.replace(/^.\//, 'built-in:'),
-        apply: apply.default || apply,
-        opts
-      };
-    }),
-    ...getUserPlugins(process.env.UMI_PLUGINS ? process.env.UMI_PLUGINS.split(',') : [], { cwd }),
-    ...getUserPlugins(plugins, { cwd })
-  ];
-
-  debug(`plugins: \n${pluginsObj.map(p => `  ${p.id}`).join('\n')}`);
-  return pluginsObj;
-}
-
-function pluginToPath(plugins, { cwd }) {
-  return (plugins || []).map(p => {
-    assert(Array.isArray(p) || typeof p === 'string', `Plugin config should be String or Array, but got ${chalk.red(typeof p)}`);
-    if (typeof p === 'string') {
-      p = [p];
-    }
-    const [path, opts] = p;
-    try {
-      return [
-        resolve.sync(path, {
-          basedir: cwd
-        }),
-        opts
-      ];
-    } catch (e) {
-      throw new Error(
-        `
-Plugin ${chalk.underline.cyan(path)} can't be resolved
-
-   Please try the following solutions:
-
-     1. checkout the plugins config in your config file (.umirc.js or config/config.js)
-     ${path.charAt(0) !== '.' && path.charAt(0) !== '/' ? `2. install ${chalk.underline.cyan(path)} via npm/yarn` : ''}
-`.trim()
-      );
-    }
+    ],
+    babelPlugins: [
+      [
+        require.resolve('babel-plugin-module-resolver'),
+        {
+          alias: {
+            '@': absSrcPath
+          }
+        }
+      ]
+    ]
   });
 }
-
-function getUserPlugins(plugins, { cwd }) {
-  const pluginPaths = pluginToPath(plugins, { cwd });
-
-  // 用户给的插件需要做 babel 转换
-  if (pluginPaths.length) {
-    addBabelRegisterFiles(pluginPaths.map(p => p[0]), { cwd });
-    registerBabel({
-      cwd
-    });
-  }
-
-  return pluginPaths.map(p => {
-    const [path, opts] = p;
-    let apply;
-    try {
-      apply = require(path); // eslint-disable-line
-    } catch (e) {
-      throw new Error(
-        `
-Plugin ${chalk.cyan.underline(path)} require failed
-
-${getCodeFrame(e)}
-      `.trim()
-      );
-    }
-    return {
-      id: path.replace(makesureLastSlash(cwd), 'user:'),
-      apply: apply.default || apply,
-      opts
-    };
-  });
-}
-
-function resolveIdAndOpts({ id, opts }) {
-  return { id, opts };
-}
-
-function toIdStr(plugins) {
-  return plugins.map(p => p.id).join('^^');
-}
-
-/**
- * 返回结果：
- *   pluginsChanged: true | false
- *   optionChanged: [ 'a', 'b' ]
- */
-export function diffPlugins(newOption, oldOption, { cwd }) {
-  const newPlugins = getUserPlugins(newOption, { cwd }).map(resolveIdAndOpts);
-  const oldPlugins = getUserPlugins(oldOption, { cwd }).map(resolveIdAndOpts);
-
-  if (newPlugins.length !== oldPlugins.length) {
-    return { pluginsChanged: true };
-  } else if (toIdStr(newPlugins) !== toIdStr(oldPlugins)) {
-    return { pluginsChanged: true };
-  } else {
-    return {
-      optionChanged: newPlugins.filter((p, index) => {
-        return !isEqual(newPlugins[index].opts, oldPlugins[index].opts);
-      })
-    };
-  }
-}
-
-function makesureLastSlash(path) {
-  return path.slice(-1) === '/' ? path : `${path}/`;
-}
 ```
 
-#### packages/umi-build-dev/src/isEqual
-
-```js
-import { isPlainObject, isEqual } from 'lodash';
-
-function funcToStr(obj) {
-  if (typeof obj === 'function') return obj.toString();
-  if (isPlainObject(obj)) {
-    return Object.keys(obj).reduce((memo, key) => {
-      memo[key] = funcToStr(obj[key]);
-      return memo;
-    }, {});
-  } else {
-    return obj;
-  }
-}
-
-export default function(a, b) {
-  return isEqual(funcToStr(a), funcToStr(b));
-}
-```
-
-#### packages/umi-build-dev/src/PluginAPI
-
-```js
-import debug from 'debug';
-import assert from 'assert';
-import { relative } from 'path';
-import lodash, { isPlainObject } from 'lodash';
-import Mustache from 'mustache';
-import { winPath, compatDirname, findJS, findCSS } from 'umi-utils';
-import signale from 'signale';
-import BasicGenerator from './BasicGenerator';
-import registerBabel, { addBabelRegisterFiles } from './registerBabel';
-
-export default class PluginAPI {
-  constructor(id, service) {
-    this.id = id;
-    this.service = service;
-
-    // utils
-    this.debug = debug(`umi-plugin: ${id}`);
-    this.log = signale;
-    this.winPath = winPath;
-    this._ = lodash;
-    this.compatDirname = compatDirname;
-    this.findJS = findJS;
-    this.findCSS = findCSS;
-    this.Mustache = Mustache;
-    this.Generator = BasicGenerator;
-
-    this.API_TYPE = {
-      ADD: Symbol('add'),
-      MODIFY: Symbol('modify'),
-      EVENT: Symbol('event')
-    };
-
-    this._addMethods();
-  }
-
-  relativeToTmp = path => {
-    return this.winPath(relative(this.service.paths.absTmpDirPath, path));
-  };
-
-  _resolveDeps(file) {
-    return require.resolve(file);
-  }
-
-  _addMethods() {
-    [
-      [
-        'chainWebpackConfig',
-        {
-          type: this.API_TYPE.EVENT
-        }
-      ],
-      [
-        '_registerConfig',
-        {
-          type: this.API_TYPE.ADD
-        }
-      ],
-      'onStart',
-      'onStartAsync',
-      'onDevCompileDone',
-      'onBuildSuccess',
-      'onBuildSuccessAsync',
-      'onBuildFail',
-      'addPageWatcher',
-      'addEntryCode',
-      'addEntryCodeAhead',
-      'addEntryImport',
-      'addEntryImportAhead',
-      'addEntryPolyfillImports',
-      'addRendererWrapperWithComponent',
-      'addRendererWrapperWithModule',
-      'addRouterImport',
-      'addRouterImportAhead',
-      'addVersionInfo',
-      'addUIPlugin',
-      'modifyAFWebpackOpts',
-      'modifyEntryRender',
-      'modifyEntryHistory',
-      'modifyRouteComponent',
-      'modifyRouterRootComponent',
-      'modifyWebpackConfig',
-      '_beforeServerWithApp',
-      'beforeDevServer',
-      '_beforeDevServerAsync',
-      'afterDevServer',
-      'addMiddlewareAhead',
-      'addMiddleware',
-      'addMiddlewareBeforeMock',
-      'addMiddlewareAfterMock',
-      'modifyRoutes',
-      'onPatchRoute',
-      'modifyHTMLContext',
-      'addHTMLMeta',
-      'addHTMLLink',
-      'addHTMLScript',
-      'addHTMLStyle',
-      'addHTMLHeadScript',
-      'modifyHTMLChunks',
-      'onGenerateFiles',
-      'onHTMLRebuild',
-      'modifyDefaultConfig',
-      '_modifyConfig',
-      'modifyHTMLWithAST',
-      '_modifyHelpInfo',
-      'addRuntimePlugin',
-      'addRuntimePluginKey',
-      'beforeBlockWriting',
-      '_modifyBlockPackageJSONPath',
-      '_modifyBlockDependencies',
-      '_modifyBlockFile',
-      '_modifyBlockTarget',
-      '_modifyCommand',
-      '_modifyBlockNewRouteConfig'
-    ].forEach(method => {
-      if (Array.isArray(method)) {
-        this.registerMethod(...method);
-      } else {
-        let type;
-        const isPrivate = method.charAt(0) === '_';
-        const slicedMethod = isPrivate ? method.slice(1) : method;
-        if (slicedMethod.indexOf('modify') === 0) {
-          type = this.API_TYPE.MODIFY;
-        } else if (slicedMethod.indexOf('add') === 0) {
-          type = this.API_TYPE.ADD;
-        } else if (slicedMethod.indexOf('on') === 0 || slicedMethod.indexOf('before') === 0 || slicedMethod.indexOf('after') === 0) {
-          type = this.API_TYPE.EVENT;
-        } else {
-          throw new Error(`unexpected method name ${method}`);
-        }
-        this.registerMethod(method, { type });
-      }
-    });
-  }
-
-  register(hook, fn) {
-    assert(typeof hook === 'string', `The first argument of api.register() must be string, but got ${hook}`);
-    assert(typeof fn === 'function', `The second argument of api.register() must be function, but got ${fn}`);
-    const { pluginHooks } = this.service;
-    pluginHooks[hook] = pluginHooks[hook] || [];
-    pluginHooks[hook].push({
-      fn
-    });
-  }
-
-  registerCommand(name, opts, fn) {
-    this.service.registerCommand(name, opts, fn);
-  }
-
-  registerGenerator(name, opts) {
-    const { generators } = this.service;
-    assert(typeof name === 'string', `name should be supplied with a string, but got ${name}`);
-    assert(opts && opts.Generator, `opts.Generator should be supplied`);
-    assert(!(name in generators), `Generator ${name} exists, please select another one.`);
-    generators[name] = opts;
-  }
-
-  registerPlugin(opts) {
-    assert(isPlainObject(opts), `opts should be plain object, but got ${opts}`);
-    const { id, apply } = opts;
-    assert(id && apply, `id and apply must supplied`);
-    assert(typeof id === 'string', `id must be string`);
-    assert(typeof apply === 'function', `apply must be function`);
-    assert(id.indexOf('user:') !== 0 && id.indexOf('built-in:') !== 0, `api.registerPlugin() should not register plugin prefixed with user: and built-in:`);
-    assert(Object.keys(opts).every(key => ['id', 'apply', 'opts'].includes(key)), `Only id, apply and opts is valid plugin properties`);
-    this.service.extraPlugins.push(opts);
-  }
-
-  registerMethod(name, opts) {
-    assert(!this[name], `api.${name} exists.`);
-    assert(opts, `opts must supplied`);
-    const { type, apply } = opts;
-    assert(!(type && apply), `Only be one for type and apply.`);
-    assert(type || apply, `One of type and apply must supplied.`);
-
-    this.service.pluginMethods[name] = (...args) => {
-      if (apply) {
-        this.register(name, opts => {
-          return apply(opts, ...args);
-        });
-      } else if (type === this.API_TYPE.ADD) {
-        this.register(name, opts => {
-          return (opts.memo || []).concat(typeof args[0] === 'function' ? args[0](opts.memo, opts.args) : args[0]);
-        });
-      } else if (type === this.API_TYPE.MODIFY) {
-        this.register(name, opts => {
-          return typeof args[0] === 'function' ? args[0](opts.memo, opts.args) : args[0];
-        });
-      } else if (type === this.API_TYPE.EVENT) {
-        this.register(name, opts => {
-          return args[0](opts.args);
-        });
-      } else {
-        throw new Error(`unexpected api type ${type}`);
-      }
-    };
-  }
-
-  addBabelRegister(files) {
-    assert(Array.isArray(files), `files for registerBabel must be Array, but got ${files}`);
-    addBabelRegisterFiles(files, {
-      cwd: this.service.cwd
-    });
-    registerBabel({
-      cwd: this.service.cwd
-    });
-  }
-}
-```
-
-#### packages/umi-build-dev/src/BasicGenerator
-
-```js
-import Generator from 'yeoman-generator';
-const { existsSync } = require('fs');
-const { join } = require('path');
-
-class BasicGenerator extends Generator {
-  constructor(args, opts) {
-    super(args, opts);
-    this.isTypeScript = existsSync(join(opts.env.cwd, 'tsconfig.json'));
-  }
-}
-
-export default BasicGenerator;
-```
-
-#### packages/umi-build-dev/src/UserConfig
+##### packages/umi-build-dev/src/UserConfig
 
 ```js
 import { join } from 'path';
@@ -2475,155 +2141,199 @@ class UserConfig {
 export default UserConfig;
 ```
 
-#### packages/umi-build-dev/src/getConfig/watch
+##### packages/umi-build-dev/src/getPaths
 
 ```js
-import chokidar from 'chokidar';
-import { join, isAbsolute } from 'path';
+```
 
-// 按 key 存，值为数组
-const watchers = {};
+##### packages/umi-build-dev/src/getPlugins
 
-function toAbsolute(p) {
-  if (isAbsolute(p)) {
-    return p;
-  }
-  return join(process.cwd(), p);
+```js
+//实现节点require.resolve() 算法 ，以便您可以require.resolve()异步和同步代表文件
+import resolve from 'resolve';
+//assert来自Node.js 的模块，用于浏览器。使用browserify，只需require('assert')或使用assert全局，您将获得此模块。目标是提供尽可能与Node.js assertAPI功能相同的API。阅读API文档的官方文档。
+import assert from 'assert';
+import chalk from 'chalk'; //终端字符串样式修改
+import registerBabel, { addBabelRegisterFiles } from './registerBabel';
+import isEqual from './isEqual';
+import getCodeFrame from './utils/getCodeFrame';
+
+const debug = require('debug')('umi-build-dev:getPlugin');
+
+export default function(opts = {}) {
+  const { cwd, plugins = [] } = opts;
+  // 内置插件
+  const builtInPlugins = [
+    './plugins/commands/dev',
+    './plugins/commands/build',
+    './plugins/commands/inspect',
+    './plugins/commands/test',
+    './plugins/commands/help',
+    './plugins/commands/generate',
+    './plugins/commands/rm',
+    './plugins/commands/config',
+    './plugins/commands/block',
+    // './plugins/commands/ui',
+    './plugins/commands/version',
+    './plugins/global-js',
+    './plugins/global-css',
+    './plugins/base',
+    './plugins/mountElementId',
+    './plugins/mock',
+    './plugins/proxy',
+    './plugins/history',
+    './plugins/afwebpack-config',
+    './plugins/mountElementId',
+    './plugins/404', // 404 must after mock
+    './plugins/targets'
+  ];
+
+  const pluginsObj = [
+    // builtIn 的在最前面
+    ...builtInPlugins.map(p => {
+      let opts;
+      if (Array.isArray(p)) {
+        opts = p[1]; // eslint-disable-line
+        p = p[0];
+      }
+      const apply = require(p); // eslint-disable-line
+      return {
+        id: p.replace(/^.\//, 'built-in:'),
+        apply: apply.default || apply,
+        opts
+      };
+    }),
+    ...getUserPlugins(process.env.UMI_PLUGINS ? process.env.UMI_PLUGINS.split(',') : [], { cwd }),
+    ...getUserPlugins(plugins, { cwd })
+  ];
+
+  debug(`plugins: \n${pluginsObj.map(p => `  ${p.id}`).join('\n')}`);
+  return pluginsObj;
 }
 
-export function watch(key, files) {
-  if (process.env.WATCH_FILES === 'none') return;
-  if (!watchers[key]) {
-    watchers[key] = [];
-  }
-  const { APP_ROOT } = process.env;
-  const watcher = chokidar.watch(files, {
-    ignoreInitial: true,
-    cwd: APP_ROOT ? toAbsolute(APP_ROOT) : process.cwd()
+function pluginToPath(plugins, { cwd }) {
+  return (plugins || []).map(p => {
+    assert(Array.isArray(p) || typeof p === 'string', `Plugin config should be String or Array, but got ${chalk.red(typeof p)}`);
+    if (typeof p === 'string') {
+      p = [p];
+    }
+    const [path, opts] = p;
+    try {
+      return [
+        resolve.sync(path, {
+          basedir: cwd
+        }),
+        opts
+      ];
+    } catch (e) {
+      throw new Error(
+        `
+Plugin ${chalk.underline.cyan(path)} can't be resolved
+
+   Please try the following solutions:
+
+     1. checkout the plugins config in your config file (.umirc.js or config/config.js)
+     ${path.charAt(0) !== '.' && path.charAt(0) !== '/' ? `2. install ${chalk.underline.cyan(path)} via npm/yarn` : ''}
+`.trim()
+      );
+    }
   });
-  watchers[key].push(watcher);
-  return watcher;
 }
 
-export function unwatch(key) {
-  if (!key) {
-    return Object.keys(watchers).forEach(unwatch);
-  }
-  if (watchers[key]) {
-    watchers[key].forEach(watcher => {
-      watcher.close();
+function getUserPlugins(plugins, { cwd }) {
+  const pluginPaths = pluginToPath(plugins, { cwd });
+
+  // 用户给的插件需要做 babel 转换
+  if (pluginPaths.length) {
+    addBabelRegisterFiles(pluginPaths.map(p => p[0]), { cwd });
+    registerBabel({
+      cwd
     });
   }
-}
-```
 
-#### packages/umi-build-dev/src/registerBabel
+  return pluginPaths.map(p => {
+    const [path, opts] = p;
+    let apply;
+    try {
+      apply = require(path); // eslint-disable-line
+    } catch (e) {
+      throw new Error(
+        `
+Plugin ${chalk.cyan.underline(path)} require failed
 
-```js
-import { join, isAbsolute } from 'path';
-import { existsSync } from 'fs';
-import registerBabel from 'af-webpack/registerBabel';
-import { winPath } from 'umi-utils';
-import { getConfigPaths } from 'umi-core/lib/getUserConfig';
-
-let files = null;
-
-function initFiles(cwd) {
-  if (files) return;
-  files = getConfigPaths(cwd);
-}
-
-export function addBabelRegisterFiles(extraFiles, { cwd }) {
-  initFiles(cwd);
-  files.push(...extraFiles);
-}
-
-export default function({ cwd }) {
-  initFiles(cwd);
-  const only = files.map(f => {
-    const fullPath = isAbsolute(f) ? f : join(cwd, f);
-    return winPath(fullPath);
-  });
-
-  let absSrcPath = join(cwd, 'src');
-  if (!existsSync(absSrcPath)) {
-    absSrcPath = cwd;
-  }
-
-  registerBabel({
-    // only suport glob
-    // ref: https://babeljs.io/docs/en/next/babel-core.html#configitem-type
-    only,
-    babelPreset: [
-      require.resolve('babel-preset-umi'),
-      {
-        env: { targets: { node: 8 } },
-        transformRuntime: false
-      }
-    ],
-    babelPlugins: [
-      [
-        require.resolve('babel-plugin-module-resolver'),
-        {
-          alias: {
-            '@': absSrcPath
-          }
-        }
-      ]
-    ]
+${getCodeFrame(e)}
+      `.trim()
+      );
+    }
+    return {
+      id: path.replace(makesureLastSlash(cwd), 'user:'),
+      apply: apply.default || apply,
+      opts
+    };
   });
 }
-```
 
-#### packages/umi-build-dev/src/utils/getCodeFrame
-
-```js
-import { readFileSync } from 'fs';
-import { codeFrameColumns } from '@babel/code-frame';
-
-function hasCodeFrame(stack) {
-  return stack.includes('^') && stack.includes('>');
+function resolveIdAndOpts({ id, opts }) {
+  return { id, opts };
 }
 
-export default function({ stack, message }, options = {}) {
-  const { codeFrame = {}, cwd } = options;
-  if (hasCodeFrame(stack)) {
-    return message;
-  }
+function toIdStr(plugins) {
+  return plugins.map(p => p.id).join('^^');
+}
 
-  // console.log(stack);
-  const re = /at[^(]+\(([^:]+):(\d+):(\d+)\)/;
-  const m = stack.match(re);
-  if (m) {
-    const [_, file, line, column] = m;
-    if (!file.startsWith('.') && !file.startsWith('/')) {
-      return message;
-    }
-    const rawLines = readFileSync(file, 'utf-8');
-    if (file.startsWith(cwd)) {
-      return [
-        `${file}: ${message} (${line}, ${column})`,
-        codeFrameColumns(
-          rawLines,
-          {
-            start: { line, column }
-          },
-          {
-            highlightCode: true,
-            ...codeFrame
-          }
-        )
-      ].join('\n\n');
-    } else {
-      return message;
-    }
+/**
+ * 返回结果：
+ *   pluginsChanged: true | false
+ *   optionChanged: [ 'a', 'b' ]
+ */
+export function diffPlugins(newOption, oldOption, { cwd }) {
+  const newPlugins = getUserPlugins(newOption, { cwd }).map(resolveIdAndOpts);
+  const oldPlugins = getUserPlugins(oldOption, { cwd }).map(resolveIdAndOpts);
+
+  if (newPlugins.length !== oldPlugins.length) {
+    return { pluginsChanged: true };
+  } else if (toIdStr(newPlugins) !== toIdStr(oldPlugins)) {
+    return { pluginsChanged: true };
   } else {
-    return message;
+    return {
+      optionChanged: newPlugins.filter((p, index) => {
+        return !isEqual(newPlugins[index].opts, oldPlugins[index].opts);
+      })
+    };
   }
+}
+
+function makesureLastSlash(path) {
+  return path.slice(-1) === '/' ? path : `${path}/`;
 }
 ```
 
-#### packages/umi-build-dev/src/utils/deprecate
+##### packages/umi-build-dev/src/isEqual
+
+```js
+```
+
+##### packages/umi-build-dev/src/PluginAPI
+
+```js
+```
+
+##### packages/umi-build-dev/src/BasicGenerator
+
+```js
+```
+
+##### packages/umi-build-dev/src/getConfig/watch
+
+```js
+```
+
+##### packages/umi-build-dev/src/utils/getCodeFrame
+
+```js
+```
+
+##### packages/umi-build-dev/src/utils/deprecate
 
 用于终端上提示方法被弃用,传入(方法名，...想要提示的其他信息),调用方法终端输出提示信息。
 
@@ -2662,364 +2372,29 @@ export default function deprecate(methodName, ...args) {
 }
 ```
 
-### src 其他
+#### src 其他
 
-#### packages/umi-build-dev/src/constants
+##### packages/umi-build-dev/src/constants
 
 ```js
-export const EXT_LIST = ['.js', '.jsx', '.ts', '.tsx'];
-
-export const SINGULAR_SENSLTIVE = ['pages', 'components', 'models', 'locales', 'utils', 'services', 'layouts'];
 ```
 
-#### packages/umi-build-dev/src/FilesGenerator
+##### packages/umi-build-dev/src/FilesGenerator
 
 ```js
-import { join, relative } from 'path';
-import { writeFileSync, readFileSync } from 'fs';
-import mkdirp from 'mkdirp';
-import chokidar from 'chokidar';
-import assert from 'assert';
-import chalk from 'chalk';
-import { debounce, uniq } from 'lodash';
-import Mustache from 'mustache';
-import { winPath, findJS } from 'umi-utils';
-import stripJSONQuote from './routes/stripJSONQuote';
-import routesToJSON from './routes/routesToJSON';
-import importsToStr from './importsToStr';
-import { EXT_LIST } from './constants';
-
-const debug = require('debug')('umi:FilesGenerator');
-
-export const watcherIgnoreRegExp = /(^|[\/\\])(_mock.js$|\..)/;
-
-export default class FilesGenerator {
-  constructor(opts) {
-    Object.keys(opts).forEach(key => {
-      this[key] = opts[key];
-    });
-
-    this.routesContent = null;
-    this.hasRebuildError = false;
-  }
-
-  generate() {
-    debug('generate');
-    const { paths } = this.service;
-    const { absTmpDirPath, tmpDirPath } = paths;
-    debug(`mkdir tmp dir: ${tmpDirPath}`);
-    mkdirp.sync(absTmpDirPath);
-
-    this.generateFiles();
-  }
-
-  createWatcher(path) {
-    const watcher = chokidar.watch(path, {
-      ignored: watcherIgnoreRegExp, // ignore .dotfiles and _mock.js
-      ignoreInitial: true
-    });
-    watcher.on(
-      'all',
-      debounce((event, path) => {
-        debug(`${event} ${path}`);
-        this.rebuild();
-      }, 100)
-    );
-    return watcher;
-  }
-
-  watch() {
-    if (process.env.WATCH_FILES === 'none') return;
-    const {
-      paths,
-      config: { singular }
-    } = this.service;
-
-    const layout = singular ? 'layout' : 'layouts';
-    let pageWatchers = [paths.absPagesPath, ...EXT_LIST.map(ext => join(paths.absSrcPath, `${layout}/index${ext}`)), ...EXT_LIST.map(ext => join(paths.absSrcPath, `app${ext}`))];
-    if (this.modifyPageWatcher) {
-      pageWatchers = this.modifyPageWatcher(pageWatchers);
-    }
-
-    this.watchers = pageWatchers.map(p => {
-      return this.createWatcher(p);
-    });
-    process.on('SIGINT', () => {
-      this.unwatch();
-    });
-  }
-
-  unwatch() {
-    if (this.watchers) {
-      this.watchers.forEach(watcher => {
-        watcher.close();
-      });
-    }
-  }
-
-  rebuild() {
-    const { refreshBrowser, printError } = this.service;
-    try {
-      this.service.applyPlugins('onGenerateFiles', {
-        args: {
-          isRebuild: true
-        }
-      });
-
-      this.generateRouterJS();
-      this.generateEntry();
-      this.generateHistory();
-
-      if (this.hasRebuildError) {
-        refreshBrowser();
-        this.hasRebuildError = false;
-      }
-    } catch (e) {
-      // 向浏览器发送出错信息
-      printError([e.message]);
-
-      this.hasRebuildError = true;
-      this.routesContent = null; // why?
-      debug(`Generate failed: ${e.message}`);
-      debug(e);
-      console.error(chalk.red(e.message));
-    }
-  }
-
-  generateFiles() {
-    this.service.applyPlugins('onGenerateFiles');
-    this.generateRouterJS();
-    this.generateEntry();
-    this.generateHistory();
-  }
-
-  generateEntry() {
-    const { paths } = this.service;
-
-    // Generate umi.js
-    const entryTpl = readFileSync(paths.defaultEntryTplPath, 'utf-8');
-    const initialRender = this.service.applyPlugins('modifyEntryRender', {
-      initialValue: `
-  const rootContainer = window.g_plugins.apply('rootContainer', {
-    initialValue: React.createElement(require('./router').default),
-  });
-  ReactDOM.render(
-    rootContainer,
-    document.getElementById('${this.mountElementId}'),
-  );
-      `.trim()
-    });
-
-    const moduleBeforeRenderer = this.service
-      .applyPlugins('addRendererWrapperWithModule', {
-        initialValue: []
-      })
-      .map((source, index) => {
-        return {
-          source,
-          specifier: `moduleBeforeRenderer${index}`
-        };
-      });
-
-    const plugins = this.service
-      .applyPlugins('addRuntimePlugin', {
-        initialValue: []
-      })
-      .map(plugin => {
-        return winPath(relative(paths.absTmpDirPath, plugin));
-      });
-    if (findJS(paths.absSrcPath, 'app')) {
-      plugins.push('@/app');
-    }
-    const validKeys = this.service.applyPlugins('addRuntimePluginKey', {
-      initialValue: ['patchRoutes', 'render', 'rootContainer', 'modifyRouteProps', 'onRouteChange']
-    });
-    assert(uniq(validKeys).length === validKeys.length, `Conflict keys found in [${validKeys.join(', ')}]`);
-    const entryContent = Mustache.render(entryTpl, {
-      code: this.service
-        .applyPlugins('addEntryCode', {
-          initialValue: []
-        })
-        .join('\n\n'),
-      codeAhead: this.service
-        .applyPlugins('addEntryCodeAhead', {
-          initialValue: []
-        })
-        .join('\n\n'),
-      imports: importsToStr(
-        this.service.applyPlugins('addEntryImport', {
-          initialValue: moduleBeforeRenderer
-        })
-      ).join('\n'),
-      importsAhead: importsToStr(
-        this.service.applyPlugins('addEntryImportAhead', {
-          initialValue: []
-        })
-      ).join('\n'),
-      polyfillImports: importsToStr(
-        this.service.applyPlugins('addEntryPolyfillImports', {
-          initialValue: []
-        })
-      ).join('\n'),
-      moduleBeforeRenderer,
-      render: initialRender,
-      plugins,
-      validKeys
-    });
-    writeFileSync(paths.absLibraryJSPath, `${entryContent.trim()}\n`, 'utf-8');
-  }
-
-  generateHistory() {
-    const { paths } = this.service;
-    const tpl = readFileSync(paths.defaultHistoryTplPath, 'utf-8');
-    const initialHistory = `
-require('umi/_createHistory').default({
-  basename: window.routerBase,
-})
-    `.trim();
-    const content = Mustache.render(tpl, {
-      history: this.service.applyPlugins('modifyEntryHistory', {
-        initialValue: initialHistory
-      })
-    });
-    writeFileSync(join(paths.absTmpDirPath, 'initHistory.js'), `${content.trim()}\n`, 'utf-8');
-  }
-
-  generateRouterJS() {
-    const { paths } = this.service;
-    const { absRouterJSPath } = paths;
-    this.RoutesManager.fetchRoutes();
-
-    const routesContent = this.getRouterJSContent();
-    // 避免文件写入导致不必要的 webpack 编译
-    if (this.routesContent !== routesContent) {
-      writeFileSync(absRouterJSPath, `${routesContent.trim()}\n`, 'utf-8');
-      this.routesContent = routesContent;
-    }
-  }
-
-  getRouterJSContent() {
-    const { paths } = this.service;
-    const routerTpl = readFileSync(paths.defaultRouterTplPath, 'utf-8');
-    const routes = stripJSONQuote(
-      this.getRoutesJSON({
-        env: process.env.NODE_ENV
-      })
-    );
-    const rendererWrappers = this.service
-      .applyPlugins('addRendererWrapperWithComponent', {
-        initialValue: []
-      })
-      .map((source, index) => {
-        return {
-          source,
-          specifier: `RendererWrapper${index}`
-        };
-      });
-
-    const routerContent = this.getRouterContent(rendererWrappers);
-    return Mustache.render(routerTpl, {
-      imports: importsToStr(
-        this.service.applyPlugins('addRouterImport', {
-          initialValue: rendererWrappers
-        })
-      ).join('\n'),
-      importsAhead: importsToStr(
-        this.service.applyPlugins('addRouterImportAhead', {
-          initialValue: []
-        })
-      ).join('\n'),
-      routes,
-      routerContent,
-      RouterRootComponent: this.service.applyPlugins('modifyRouterRootComponent', {
-        initialValue: 'DefaultRouter'
-      })
-    });
-  }
-
-  fixHtmlSuffix(routes) {
-    routes.forEach(route => {
-      if (route.routes) {
-        route.path = `${route.path}(.html)?`;
-        this.fixHtmlSuffix(route.routes);
-      }
-    });
-  }
-
-  getRoutesJSON(opts = {}) {
-    const { env } = opts;
-    return routesToJSON(this.RoutesManager.routes, this.service, env);
-  }
-
-  getRouterContent(rendererWrappers) {
-    const defaultRenderer = `
-    <Router history={window.g_history}>
-      { renderRoutes(routes, {}) }
-    </Router>
-    `.trim();
-    return rendererWrappers.reduce((memo, wrapper) => {
-      return `
-        <${wrapper.specifier}>
-          ${memo}
-        </${wrapper.specifier}>
-      `.trim();
-    }, defaultRenderer);
-  }
-}
 ```
 
-#### packages/umi-build-dev/src/fork
+##### packages/umi-build-dev/src/fork
 
 ```js
-export default from 'af-webpack/lib/fork';
 ```
 
-#### packages/umi-build-dev/src/getWebpackConfig
+##### packages/umi-build-dev/src/getWebpackConfig
 
 ```js
-import getConfig from 'af-webpack/getConfig';
-import assert from 'assert';
-
-export default function(service) {
-  const { config } = service;
-
-  const afWebpackOpts = service.applyPlugins('modifyAFWebpackOpts', {
-    initialValue: {
-      cwd: service.cwd
-    }
-  });
-
-  assert(!('chainConfig' in afWebpackOpts), `chainConfig should not supplied in modifyAFWebpackOpts`);
-  afWebpackOpts.chainConfig = webpackConfig => {
-    service.applyPlugins('chainWebpackConfig', {
-      args: webpackConfig
-    });
-    if (config.chainWebpack) {
-      config.chainWebpack(webpackConfig, {
-        webpack: require('af-webpack/webpack')
-      });
-    }
-  };
-
-  return service.applyPlugins('modifyWebpackConfig', {
-    initialValue: getConfig(afWebpackOpts)
-  });
-}
 ```
 
-#### packages/umi-build-dev/src/importsToStr
+##### packages/umi-build-dev/src/importsToStr
 
 ```js
-import { winPath } from 'umi-utils';
-
-export default function(imports) {
-  return imports.map(imp => {
-    const { source, specifier } = imp;
-    if (specifier) {
-      return `import ${specifier} from '${winPath(source)}'`;
-    } else {
-      return `import '${winPath(source)}';`;
-    }
-  });
-}
 ```
