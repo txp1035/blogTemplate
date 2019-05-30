@@ -1436,130 +1436,19 @@ For help, see: https://nodejs.org/en/docs/inspector
 调试器如下图，基本操作和平时调试差不多。唯一遇到的坑就是 require 其他文件的时候进不去，试过在代码里加 debugger 也不行。最后发现左侧 Node 栏里面的文件是根据代码运行变化的，require 模块后 Node 栏里就会多出相应模块的代码，然后这个时候通过 Node 栏打开代码打断点即可调试。
 ![图二](../../img/2019/5-27-2.png)
 
-### packages/umi-build-dev
+### umi 命令内部运行过程
 
-#### 重要
+目前主要看了 umi 包和 umi-build-dev 包，umi 主要提供运行时接口和编译时命令引导；umi-build-dev 包主要是编译时的工作，还包含内置插件（dev、build 等）。
+例如运行`umi`这个命令不加任何参数：
 
-##### packages/umi-build-dev/package.json
+1. 首先是进入 `packages/umi/bin/umi.js` 主文件，其功能是将命令分发到`packages/umi/src/cli.js`文件。
+2. cli 文件对 umi 包进行检查，会提示版本更新。然后把命令分发到 script 文件执行命令，如果命令不存在直接执行命令。
+3. 执行命令文件`packages/umi-build-dev/src/Service`是一个类，构造函数会注册 Babel、解析用户配置、解析插件（解析插件会把内置插件和用户配置插件整合到一个数组中）。
+4. 然后命令执行运行类的 run 方法，如果 umi 命令没有参数则默认运行 help 命令。该方法会先初始化（加载环境.env、初始化插件、加载用户配置）。然后执行运行命令方法，该方法执行 umi 内部插件。
 
-```json
-{
-  "name": "umi-build-dev",
-  "version": "1.8.4",
-  "dependencies": {
-    "@babel/code-frame": "7.0.0",
-    "@babel/generator": "7.3.0",
-    "@babel/parser": "7.3.0",
-    "@babel/polyfill": "7.2.5",
-    "@babel/runtime": "7.3.0",
-    "@babel/template": "7.2.2",
-    "@babel/traverse": "7.2.3",
-    "@babel/types": "7.3.0",
-    "af-webpack": "1.7.5",
-    "babel-plugin-module-resolver": "3.1.1",
-    "babel-preset-umi": "1.4.1",
-    "chalk": "2.4.1", //终端字符串样式做得很好
-    "cheerio": "1.0.0-rc.2",
-    "chokidar": "2.0.4",
-    "clipboardy": "1.2.3",
-    "core-js": "2.6.5",
-    "crequire": "^1.8.1",
-    "debug": "4.1.0",
-    "didyoumean": "1.2.1",
-    "dotenv": "6.2.0",
-    "ejs": "2.6.1",
-    "escodegen": "1.11.0",
-    "esprima": "4.0.1",
-    "esprima-extract-comments": "1.1.0",
-    "esquery": "1.0.1",
-    "execa": "1.0.0",
-    "express": "4.16.4",
-    "extend2": "1.0.0",
-    "glob": "7.1.3",
-    "got": "9.5.0",
-    "html-minifier": "3.5.21",
-    "http-proxy-middleware": "0.19.1",
-    "js-yaml": "3.12.0",
-    "lodash": "4.17.11",
-    "mkdirp": "0.5.1",
-    "mustache": "3.0.1",
-    "ora": "3.0.0",
-    "path-to-regexp": "1.7.0",
-    "prettier": "1.15.3",
-    "random-color": "1.0.1",
-    "react": "16.8.3",
-    "react-dom": "16.8.3",
-    "react-router": "4.3.1",
-    "react-router-config": "1.0.0-beta.4",
-    "react-router-dom": "4.3.1",
-    "requireindex": "1.2.0",
-    "resolve": "1.8.1", //实现节点require.resolve() 算法 ，以便您可以require.resolve()异步和同步代表文件
-    "rimraf": "2.6.2",
-    "semver": "5.6.0",
-    "serve-static": "1.13.2",
-    "signale": "1.3.0",
-    "sockjs": "0.3.19",
-    "stringify-object": "3.3.0",
-    "umi-core": "1.2.3",
-    "umi-history": "0.1.2",
-    "umi-mock": "1.1.3",
-    "umi-notify": "^0.1.1",
-    "umi-test": "1.5.7",
-    "umi-utils": "1.4.1",
-    "uppercamelcase": "3.0.0",
-    "url-polyfill": "1.1.3",
-    "user-home": "2.0.0",
-    "whatwg-fetch": "3.0.0",
-    "yeoman-generator": "3.1.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/umijs/umi/tree/master/packages/umi-build-dev"
-  },
-  "homepage": "http://github.com/umijs/umi/tree/master/packages/umi-build-dev",
-  "authors": ["chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"],
-  "bugs": {
-    "url": "http://github.com/umijs/umi/issues"
-  },
-  "license": "MIT",
-  "files": ["lib", "src", "template"],
-  "umiTools": {
-    "browserFiles": [
-      "src/plugins/404/NotFound.js",
-      "src/plugins/404/guessJSFileFromPath.js",
-      "src/plugins/commands/ui/src/pages/index/index.js",
-      "src/plugins/commands/ui/src/layouts/index.js",
-      "src/plugins/commands/ui/plugins/config/client.js",
-      "src/plugins/commands/ui/plugins/routes/client.js",
-      "src/plugins/commands/ui/plugins/blocks/client.js"
-    ],
-    "rollupFiles": [
-      [
-        "lib/plugins/commands/ui/plugins/config/client.js",
-        {
-          "name": "g_umiUIPlugins.config"
-        }
-      ],
-      [
-        "lib/plugins/commands/ui/plugins/blocks/client.js",
-        {
-          "name": "g_umiUIPlugins.blocks"
-        }
-      ],
-      [
-        "lib/plugins/commands/ui/plugins/routes/client.js",
-        {
-          "name": "g_umiUIPlugins.routes"
-        }
-      ]
-    ]
-  }
-}
-```
+### 看过的一些源码及注释 packages/umi-build-dev
 
-#### umi 中引用的
-
-##### packages/umi-build-dev/src/Service
+#### packages/umi-build-dev/src/Service
 
 ```js
 import chalk from 'chalk'; //终端字符串样式做得很好(终端字符串颜色处理插件)
@@ -1615,20 +1504,20 @@ export default class Service {
       cwd: this.cwd,
       service: this
     });
-    debug(`user config: ${JSON.stringify(this.config)}`);
+    debug(`user config: ${JSON.stringify(this.config)} `);
 
-    // 解析插件
+    // 解析插件，内置插件和用户插件解析
     this.plugins = this.resolvePlugins();
     this.extraPlugins = [];
-    debug(`plugins: ${this.plugins.map(p => p.id).join(' | ')}`);
+    debug(`plugins: ${this.plugins.map(p => p.id).join(' | ')} `);
 
-    // resolve paths
+    // 相对路径
     this.paths = getPaths(this);
   }
 
   resolvePlugins() {
     try {
-      assert(Array.isArray(this.config.plugins || []), `Configure item ${chalk.underline.cyan('plugins')} should be Array, but got ${chalk.red(typeof this.config.plugins)}`);
+      assert(Array.isArray(this.config.plugins || []), `Configure item ${chalk.underline.cyan('plugins')} should be Array, but got ${chalk.red(typeof this.config.plugins)} `);
       return getPlugins({
         cwd: this.cwd,
         plugins: this.config.plugins || []
@@ -1641,7 +1530,7 @@ export default class Service {
         process.exit(1);
       }
     }
-  }
+  } //解析插件
 
   initPlugin(plugin) {
     const { id, apply, opts } = plugin;
@@ -1651,10 +1540,10 @@ export default class Service {
         `
 plugin must export a function, e.g.
 
-  export default function(api) {
-    // Implement functions via api
-  }
-        `.trim()
+export default function (api) {
+  // Implement functions via api
+}
+`.trim()
       );
       const api = new Proxy(new PluginAPI(id, this), {
         get: (target, prop) => {
@@ -1709,13 +1598,13 @@ plugin must export a function, e.g.
 Plugin ${chalk.cyan.underline(id)} initialize failed
 
 ${getCodeFrame(e, { cwd: this.cwd })}
-        `.trim()
+`.trim()
         );
         debug(e);
         process.exit(1);
       }
     }
-  }
+  } //初始化插件
 
   initPlugins() {
     this.plugins.forEach(plugin => {
@@ -1738,11 +1627,11 @@ ${getCodeFrame(e, { cwd: this.cwd })}
     this.plugins.forEach(plugin => {
       ['onOptionChange', 'register', 'registerMethod', 'registerPlugin'].forEach(method => {
         plugin._api[method] = () => {
-          throw new Error(`api.${method}() should not be called after plugin is initialized.`);
+          throw new Error(`api.${method} () should not be called after plugin is initialized.`);
         };
       });
     });
-  }
+  } //初始化插件集
 
   changePluginOption(id, newOpts) {
     assert(id, `id must supplied`);
@@ -1752,7 +1641,7 @@ ${getCodeFrame(e, { cwd: this.cwd })}
     if (plugin.onOptionChange) {
       plugin.onOptionChange(newOpts);
     } else {
-      this.restart(`plugin ${id}'s option changed`);
+      this.restart(`plugin ${id} 's option changed`);
     }
   }
 
@@ -1786,8 +1675,8 @@ ${getCodeFrame(e, { cwd: this.cwd })}
   }
 
   loadEnv() {
-    const basePath = join(this.cwd, '.env');
-    const localPath = `${basePath}.local`;
+    const basePath = join(this.cwd, '.env'); //基础配置路径
+    const localPath = `${basePath}.local`; //本地配置路径
 
     const load = path => {
       if (existsSync(path)) {
@@ -1801,9 +1690,9 @@ ${getCodeFrame(e, { cwd: this.cwd })}
       }
     };
 
-    load(basePath);
-    load(localPath);
-  }
+    load(basePath); //加载基础配置
+    load(localPath); //加载本地配置，覆盖基础配置
+  } //加载环境
 
   writeTmpFile(file, content) {
     const { paths } = this;
@@ -1813,13 +1702,13 @@ ${getCodeFrame(e, { cwd: this.cwd })}
   }
 
   init() {
-    // load env
+    // 加载环境
     this.loadEnv();
 
-    // init plugins
+    // 初始化插件
     this.initPlugins();
 
-    // reload user config
+    // 加载用户配置
     const userConfig = new UserConfig(this);
     const config = userConfig.getConfig({ force: true });
     mergeConfig(this.config, config);
@@ -1838,7 +1727,7 @@ ${getCodeFrame(e, { cwd: this.cwd })}
     }
     debug('got paths');
     debug(this.paths);
-  }
+  } //初始化
 
   registerCommand(name, opts, fn) {
     if (typeof opts === 'function') {
@@ -1848,12 +1737,12 @@ ${getCodeFrame(e, { cwd: this.cwd })}
     opts = opts || {};
     assert(!(name in this.commands), `Command ${name} exists, please select another one.`);
     this.commands[name] = { fn, opts };
-  }
+  } //注册命令，在PluginAPI中调用
 
   run(name = 'help', args) {
     this.init(); //初始化
     return this.runCommand(name, args); //运行help命令
-  }
+  } //启动servers
 
   runCommand(rawName, rawArgs) {
     debug(`raw command name: ${rawName}, args: ${JSON.stringify(rawArgs)}`);
@@ -1878,7 +1767,7 @@ ${getCodeFrame(e, { cwd: this.cwd })}
     }
 
     return fn(args);
-  }
+  } //运行命令
 }
 
 function mergeConfig(oldConfig, newConfig) {
@@ -1889,10 +1778,10 @@ function mergeConfig(oldConfig, newConfig) {
   });
   assign(oldConfig, newConfig);
   return oldConfig;
-}
+} //合并配置项
 ```
 
-##### packages/umi-build-dev/src/registerBabel
+#### packages/umi-build-dev/src/registerBabel
 
 ```js
 import { join, isAbsolute } from 'path'; //引入拼接路径模块和判断是否为绝对路劲模块
@@ -1951,7 +1840,7 @@ export default function({ cwd }) {
 }
 ```
 
-##### packages/umi-build-dev/src/UserConfig
+#### packages/umi-build-dev/src/UserConfig
 
 ```js
 import { join } from 'path';
@@ -2141,12 +2030,12 @@ class UserConfig {
 export default UserConfig;
 ```
 
-##### packages/umi-build-dev/src/getPaths
+#### packages/umi-build-dev/src/getPaths
 
 ```js
 ```
 
-##### packages/umi-build-dev/src/getPlugins
+#### packages/umi-build-dev/src/getPlugins
 
 ```js
 //实现节点require.resolve() 算法 ，以便您可以require.resolve()异步和同步代表文件
@@ -2308,32 +2197,7 @@ function makesureLastSlash(path) {
 }
 ```
 
-##### packages/umi-build-dev/src/isEqual
-
-```js
-```
-
-##### packages/umi-build-dev/src/PluginAPI
-
-```js
-```
-
-##### packages/umi-build-dev/src/BasicGenerator
-
-```js
-```
-
-##### packages/umi-build-dev/src/getConfig/watch
-
-```js
-```
-
-##### packages/umi-build-dev/src/utils/getCodeFrame
-
-```js
-```
-
-##### packages/umi-build-dev/src/utils/deprecate
+#### packages/umi-build-dev/src/utils/deprecate
 
 用于终端上提示方法被弃用,传入(方法名，...想要提示的其他信息),调用方法终端输出提示信息。
 
@@ -2370,31 +2234,4 @@ export default function deprecate(methodName, ...args) {
   stream.write(EOL);
   stream.write(EOL);
 }
-```
-
-#### src 其他
-
-##### packages/umi-build-dev/src/constants
-
-```js
-```
-
-##### packages/umi-build-dev/src/FilesGenerator
-
-```js
-```
-
-##### packages/umi-build-dev/src/fork
-
-```js
-```
-
-##### packages/umi-build-dev/src/getWebpackConfig
-
-```js
-```
-
-##### packages/umi-build-dev/src/importsToStr
-
-```js
 ```
