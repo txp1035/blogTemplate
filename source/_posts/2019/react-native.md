@@ -16,6 +16,10 @@ date: 2019-4-8
 必须安装的依赖有：Node、Watchman 和 React Native 命令行工具以及 JDK 和 Android Studio。
 其中大部分安装在 [flutter](../flutter) 已有。
 
+## 创建项目
+
+运行`react-native init [项目名]`在当前目录创建项目
+
 # 运行调试
 
 在项目根目录运行`react-native run-android`启动项目
@@ -89,7 +93,10 @@ cd android
 
 # 开发时的问题
 
-问题一：不能写 css 文件，需要在 js 中以对象的形式来描述 css，但是没有代码提示。
+## 问题一
+
+不能写 css 文件，需要在 js 中以对象的形式来描述 css，但是没有代码提示。
+
 解决方案：添加一个中间文件来处理。
 
 ```js
@@ -114,8 +121,16 @@ const styles = StyleSheet.create({
 });
 ```
 
-问题二：把组件放入目录中引入会报错`The development server returned response error code: 500`。
+## 问题二
+
+把组件放入目录中引入会报错`The development server returned response error code: 500`。
+
 解决方案：组件放在根目录（感觉只是临时解决）。
+
+## 问题三
+
+重新创建 react native 项目后，gradle 可能更新，下载很慢。
+解决方案：1、科学上网。2、安装你原来能够运行的 react native 版本。`react-native init demo --verbose --version 0.59.4`
 
 # 参考资料
 
