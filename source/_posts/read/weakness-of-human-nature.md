@@ -1,7 +1,7 @@
 ---
 title: '人性的弱点'
-category: 技术
-tags: [笔记, 前端]
+category: 兴趣
+tags: [阅读笔记]
 date: 2019-6-25
 ---
 
