@@ -1,7 +1,7 @@
 ---
 title: '《学习 JavaScript 数据结构与算法》读书笔记'
-category: 技术
-tags: [笔记, 前端]
+category: 兴趣
+tags: [阅读笔记]
 date: 2019-1-17
 ---
 
