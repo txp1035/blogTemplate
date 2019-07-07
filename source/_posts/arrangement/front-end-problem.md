@@ -1,6 +1,6 @@
 ---
 title: '前端问题'
-category444: 技术
+category: 技术
 tags: [整理, 前端]
 date: 2017-09-22
 ---
