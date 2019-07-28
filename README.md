@@ -1,6 +1,6 @@
 # 个人博客
 
-喜欢请点 star，订阅请点 watch，不要 fork。
+喜欢请点 star（不要 fork），订阅请点 watch。
 
 > 一些经验之谈和积累。
 
