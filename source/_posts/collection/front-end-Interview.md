@@ -9,9 +9,9 @@ date: 2018-10-05
 
 <!-- more -->
 
-# 前端工作面试问题
+## 前端工作面试问题
 
-## 常见问题：
+### 常见问题
 
 - 你在昨天/本周学到了什么？
   <!-- 建议每周写一篇博文. -->
@@ -37,7 +37,7 @@ date: 2018-10-05
 - 请解释 CSS 动画和 JavaScript 动画的优缺点。
 - 什么是跨域资源共享 (CORS)？它用于解决什么问题？
 
-## HTML 相关问题：
+### HTML 相关问题
 
 - `doctype`(文档类型) 的作用是什么？
 - 浏览器标准模式 (standards mode) 、几乎标准模式（almost standards mode）和怪异模式 (quirks mode) 之间的区别是什么？
@@ -53,7 +53,7 @@ date: 2018-10-05
 - 什么是渐进式渲染 (progressive rendering)？
 - 你用过哪些不同的 HTML 模板语言？
 
-## CSS 相关问题：
+### CSS 相关问题
 
 - CSS 中类 (classes) 和 ID 的区别。
 - 请问 "resetting" 和 "normalizing" CSS 之间的区别？你会如何选择，为什么？
@@ -89,7 +89,7 @@ date: 2018-10-05
 - 你有兼容 retina 屏幕的经历吗？如果有，在什么地方使用了何种技术？
 - 请问为何要使用 `translate()` 而非 _absolute positioning_，或反之的理由？为什么？
 
-## JS 相关问题：
+### JS 相关问题
 
 - 请解释事件代理 (event delegation)。
 - 请解释 JavaScript 中 `this` 是如何工作的。
@@ -146,20 +146,20 @@ date: 2018-10-05
   - 请问调用栈 (call stack) 和任务队列 (task queue) 的区别是什么？
 - 解释 `function foo() {}` 与 `var foo = function() {}` 用法的区别
 
-## 测试相关问题：
+### 测试相关问题
 
 - 对代码进行测试的有什么优缺点？
 - 你会用什么工具测试你的代码功能？
 - 单元测试与功能/集成测试的区别是什么？
 - 代码风格 linting 工具的作用是什么？
 
-## 效能相关问题：
+### 效能相关问题
 
 - 你会用什么工具来查找代码中的性能问题？
 - 你会用什么方式来增强网站的页面滚动效能？
 - 请解释 layout、painting 和 compositing 的区别。
 
-## 网络相关问题：
+### 网络相关问题
 
 - 为什么传统上利用多个域名来提供网站资源会更有效？
 - 请尽可能完整得描述从输入 URL 到整个网页加载完毕及显示在屏幕上的整个流程。
@@ -174,7 +174,7 @@ date: 2018-10-05
 - 什么是 HTTP method？请罗列出你所知道的所有 HTTP method，并给出解释。
 - 请解释 HTTP status 301 与 302 的区别？
 
-## 代码相关的问题：
+### 代码相关的问题
 
 _问题：`foo`的值是什么？_
 
@@ -241,7 +241,7 @@ setTimeout(function() {
 console.log('three');
 ```
 
-## 趣味问题：
+### 趣味问题
 
 - 你最近写过什么的很酷的项目吗？
 - 在你使用的开发工具中，最喜欢哪些方面？
@@ -250,6 +250,6 @@ console.log('three');
 - 你最爱的 IE 特性是什么？
 - 你对咖啡有没有什么喜好？
 
-## 原文链接
+### 原文链接
 
 [原文链接](https://github.com/h5bp/Front-end-Developer-Interview-Questions/tree/master/Translations/Chinese)

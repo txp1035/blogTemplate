@@ -3,14 +3,13 @@ title: 'VSCode'
 category: 技术
 tags: [工具]
 date: 2018-08-12
-
 ---
 
 工欲善其事必先利其器...
 
 <!-- more -->
 
-# 常用插件
+## 常用插件
 
 Add jsdoc comments(快速添加 jsdoc 插件)
 Atom One Dark Theme(Atom 颜色主题)
@@ -35,9 +34,9 @@ Sublime Text Keymap and Settings Importer(sublime 键位设置)
 Vetur(vue 提示扩展)
 vscode-icons(图标主题)
 
-# 用户设置
+## 用户设置
 
-## Commonly Used(常用)
+### Commonly Used(常用)
 
 ```json
 "editor.fontSize": 13, //以像素为单位控制字号
@@ -56,7 +55,7 @@ vscode-icons(图标主题)
 }, //配置语言的文件关联(如: "*.extension": "html")。这些关联的优先级高于已安装语言的默认关联。
 ```
 
-## 整个配置
+### 整个配置
 
 ```json
 {
@@ -234,7 +233,7 @@ vscode-icons(图标主题)
 }
 ```
 
-# 快捷键
+## 快捷键
 
 ```js
 // 将按键绑定配置放入此文件中即可覆盖默认值
@@ -321,7 +320,7 @@ vscode-icons(图标主题)
 ];
 ```
 
-# 代码片段
+## 代码片段
 
 ```json
 {

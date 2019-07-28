@@ -9,13 +9,13 @@ date: 2019-3-14
 
 <!-- more -->
 
-# 需要解决的功能
+## 需要解决的功能
 
 1. 通过编辑器快速打开项目
 
-# 软件安装
+## 软件安装
 
-## zip 类型软件（双击解压，将程序拖到应用程序即可）：
+### zip 类型软件（双击解压，将程序拖到应用程序即可）
 
 [vscode](https://code.visualstudio.com/)：编辑器
 [item2](https://www.iterm2.com/)：终端
@@ -25,7 +25,7 @@ date: 2019-3-14
 [f.lux](https://justgetflux.com/)：调节显示器色温，护眼，尤其是早上起来屏幕实在是刺眼
 [AppCleaner](http://freemacsoft.net/appcleaner/)：卸载软件
 
-## dmg 类型软件（双击安装）：
+### dmg 类型软件（双击安装）
 
 [Android Studio 官网|科学上网](https://developer.android.google.cn/studio/)：安卓开发
 [Lantern](https://github.com/getlantern/download/wiki)：科学上网
@@ -35,27 +35,27 @@ date: 2019-3-14
 [IINA](https://iina.io/)：视频播放器
 Parallels Desktop：Windows 虚拟机
 CleanMyMac X：系统管理
-[QQ](https://im.qq.com/download/)、[微信](https://mac.weixin.qq.com/?t=mac&lang=zh_CN)、[钉钉](https://tms.dingtalk.com/markets/dingtalk/download?spm=a3140.8196062.2231602.8.65f85c3d5uaOTy&source=1001&lwfrom=2017120202091367000000111)、[网易云音乐](https://music.163.com/#/download)、[谷歌浏览器|科学上网](https://www.google.cn/intl/zh-CN/chrome/)、[番茄土豆](https://mac.pomotodo.com/)、[百度网盘](https://pan.baidu.com/download#pan)、[迅雷](https://www.xunlei.com/)、[WPS](http://mac.wps.cn/)
+[QQ](https://im.qq.com/download/)、[微信](https://mac.weixin.qq.com/?t=mac&lang=zh_CN)、[钉钉](https://tms.dingtalk.com/markets/dingtalk/download?spm=a3140.8196062.###31602.8.65f85c3d5uaOTy&source=1001&lwfrom=2017120202091367000000111)、[网易云音乐](https://music.163.com/##/download)、[谷歌浏览器|科学上网](https://www.google.cn/intl/zh-CN/chrome/)、[番茄土豆](https://mac.pomotodo.com/)、[百度网盘](https://pan.baidu.com/download##pan)、[迅雷](https://www.xunlei.com/)、[WPS](http://mac.wps.cn/)
 
 Ps：科学上网下载速度慢可以复制下载链接到迅雷下载
 
-## 应用商店：
+### 应用商店
 
 Xcode：mac 开发
 Thor：一键直达
 Alfred：应用启动
 RunCat：菜单栏显示奔跑的小猫，CPU 占用率越高跑地越快
 
-## 命令行软件
+### 命令行软件
 
 homebrew：包管理工具
 git：版本管理
 nvm：node 版本管理工具
 node：前端开发
 
-# Homebrew
+## Homebrew
 
-## 常用命令
+### 常用命令
 
 查看帮助信息：`brew help`。
 查看版本：`brew -v`。

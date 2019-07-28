@@ -9,8 +9,6 @@ typescript 学习记...
 
 <!-- more -->
 
-# typescript
-
 ## 基础类型
 
 通过冒号+类型来定义变量的类型。
@@ -392,7 +390,7 @@ abstract class Animal {
 
 ## 函数
 
-### 函数类型
+### 函数的函数类型
 
 ```ts
 function add(x: number, y: number): number {

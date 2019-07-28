@@ -9,15 +9,15 @@ vue-cli 环境搭建。
 
 <!-- more -->
 
-# 安装 node
+## 安装 node
 
 因为需要 npm 来装 vue-cli，所以需要先装 node，没有装的同学移步[node](../node)进行安装。
 
-# 安装 vue
+## 安装 vue
 
 打开命令行输入`npm install -g vue-cli`
 
-# 搭建 vue-cli 脚手架
+## 搭建 vue-cli 脚手架
 
 打开命令行输入`vue init webpack vue-test`
 vue-cli 的配置信息：

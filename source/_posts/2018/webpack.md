@@ -3,14 +3,13 @@ title: 'webpack总结'
 category: 技术
 tags: [前端]
 date: 2018-08-01
-
 ---
 
-# 版本：4.16.3
+## 版本：4.16.3
 
 使用 webpack 所需要的包：webpack、webpack-cli（此工具用于在命令行中运行 webpack），webpack4 之后将 webpack-cli 从 webpack 中分离的出来。
 
-## webpack 基本配置
+### webpack 基本配置
 
 webpack.config.js
 
@@ -75,7 +74,7 @@ npx webpack --config webpack.config.js
 在 package.js 中 script 设置，"build":“webpack --config webpack.config.js”
 PS：--config webpack.config.js 用于设置运行文件名，不设置默认运行 webpack.config.js
 
-## source map
+### source map
 
 webpack.config.js
 
@@ -100,9 +99,9 @@ module.exports = {
 };
 ```
 
-## 模块热替换
+### 模块热替换
 
-### webpack 设置方法
+#### webpack 设置方法
 
 webpack.config.js
 
@@ -139,7 +138,7 @@ npx webpack-dev-server --open --config webpack.config.js
 在 package.js 中 script 设置，"start":“webpack-dev-server --open --config webpack.config.js”
 PS：--config webpack.config.js 用于设置运行文件名，不设置默认运行 webpack.config.js
 
-### node 设置方法
+#### node 设置方法
 
 dev-server.js
 

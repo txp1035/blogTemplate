@@ -11,7 +11,7 @@ jekyll 使用总结...
 
 第二次搭建 jekyll 了，结果还是出错了些，不过也比第一次快了很多，还是记录一下吧。
 
-# 安装
+## 安装
 
 1、下载 ruby(本次用的[rubyinstaller-2.4.1-2-x64](https://rubyinstaller.org/downloads/ 'ruby下载链接'));
 2、安装 ruby 会有三个选项：
@@ -22,7 +22,7 @@ jekyll 使用总结...
 
 都选上钩，接着下一步完成安装，打开命令行窗口输入`ruby -v`若看到`ruby 2.4.1p111 (2017-03-22 revision 58053) [x64-mingw32]`则表示安装成功。
 
-# 搭建
+## 搭建
 
 1、打开命令行窗口，输入`gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/`把国外镜像换成国内镜像，这样做可以使安装软件速度加快。
 2、打开命令行窗口，输入`gem install bundler`安装依赖包 bundler，然后输入`gem install jekyll`安装 jekyll。

@@ -3,14 +3,11 @@ title: 'flutter折腾记'
 category: 技术
 tags: [笔记, 前端]
 date: 2019-2-14
-
 ---
 
 期望 flutter 统一 JS 开发桌面客户端和 APP...
 
 <!-- more -->
-
-# 学习笔记
 
 ## 环境配置
 

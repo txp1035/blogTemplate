@@ -41,7 +41,7 @@ date: 2019-5-9
 6、解决 tab 路由问题
 7、解决 ui 组件和逻辑分离问题
 
-## 流程：
+## 流程
 
 1、搭项目：基于 umi，使用 eslint、stylelint、tslint 检查，pretter 格式化，使用 ts 开发，支持 mock 数据
 

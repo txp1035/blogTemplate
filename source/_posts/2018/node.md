@@ -3,10 +3,9 @@ title: 'Node.js'
 category: 技术
 tags: [前端]
 date: 2018-01-24
-
 ---
 
-# 安装（Windows）
+## 安装（Windows）
 
 先到[官网](https://nodejs.org/en/)下载 msi 安装包,建议下载 LTS（长期支持）版本。如图 1：
 ![图1](../../img/2018/1-25-1.png)
