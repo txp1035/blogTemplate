@@ -7,4 +7,5 @@
 目录
 
 - 学习笔记
-  - [学习 react-native](https://github.com/ShawDanon/blog/issues/1)
+  - [学习 react-native](https://github.com/ShawDanon/blog/issues/2)
+  - [学习 UMI](https://github.com/ShawDanon/blog/issues/3)
