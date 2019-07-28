@@ -1,10 +1,10 @@
 # 个人博客
 
-喜欢的话请点 star，想订阅点 watch
+喜欢请点 star，订阅请点 watch，不要 fork。
 
 > 一些经验之谈和积累。
 
 目录
 
-- 分类
-  - [文章名](1)
+- 学习笔记
+  - [学习 react-native](https://github.com/ShawDanon/blog/issues/1)
