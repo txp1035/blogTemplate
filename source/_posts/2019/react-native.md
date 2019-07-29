@@ -91,19 +91,60 @@ cd android
 
 生成的 APK 文件位于 android/app/build/outputs/apk/release/app-release.apk，它已经可以用来发布了。
 
+## 路由
+
+目前为止已经能够在手机上安装并运行自己开发的 APP 了，但是只有一个页面啊。虽然可以在一个页面里写多个组件然后条件判断渲染出多个页面的效果，但总归不是长久之计。于是就是开始学习路由啦。
+
+1、通过命令 `npm i react-navigation`、`npm i react-native-gesture-handler`安装包。
+2、通过命令`react-native link react-native-gesture-handler`链接依赖。
+3、在根目录创建路由文件夹`navigators`，并在里面创建路由文件`AppNavigators.js`如下。
+
+```js
+import { createStackNavigator } from 'react-navigation';
+// import React, { Component } from 'react';
+// import { Text, View, Image } from 'react-native';
+import HomePage from '../views/HomePage';
+import Calculation from '../views/Calculation';
+import Settlement from '../views/Settlement';
+// import Page3 from '../views/Page3';
+// import Page4 from '../views/Page4';
+// import Page5 from '../views/Page5';
+export const AppStackNavigator = createStackNavigator({
+  HomePage: {
+    screen: HomePage
+  },
+  Calculation: {
+    screen: Calculation
+  },
+  Settlement: {
+    screen: Settlement
+  }
+  // Page2: {
+  //   screen: Page2,
+  //   navigationOptions: {
+  //     title: `这是一个页面2`
+  //   }
+  // },
+  // Page3: {
+  //   screen: Page3,
+  //   navigationOptions: ({ props }) => {
+  //     const { navigation } = props;
+  //     const { state, setParams } = navigation;
+  //     const { params } = state;
+  //     return { title: params.title ? params.title : 'this is page3', headerRight: <Text>123 </Text> };
+  //   }
+  // }
+});
+```
+
 ## 开发时的问题
 
-### 问题一
-
-不能写 css 文件，需要在 js 中以对象的形式来描述 css，但是没有代码提示。
-
+1、不能写 css 文件，需要在 js 中以对象的形式来描述 css，但是没有代码提示。
 解决方案：添加一个中间文件来处理。
 
 ```js
 import { StyleSheet as RnStyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native';
-
 type StyleProps = Partial<ViewStyle | TextStyle | ImageStyle>;
-
 export const StyleSheet = {
   create(styles: { [className: string]: StyleProps }) {
     return RnStyleSheet.create(styles);
@@ -115,22 +156,19 @@ export const StyleSheet = {
 
 ```js
 import { StyleSheet } from './utils/utils.js';
-
 const styles = StyleSheet.create({
     ...
 });
 ```
 
-### 问题二
-
-把组件放入目录中引入会报错`The development server returned response error code: 500`。
-
+2、 把组件放入目录中引入会报错`The development server returned response error code: 500`。
 解决方案：组件放在根目录（感觉只是临时解决）。
 
-### 问题三
-
-重新创建 react native 项目后，gradle 可能更新，下载很慢。
+3、重新创建 react native 项目后，gradle 可能更新，下载很慢。
 解决方案：1、科学上网。2、安装你原来能够运行的 react native 版本。`react-native init demo --verbose --version 0.59.4`
+
+4、更换图标后安装程序，手机桌面图标修改成功，打开后台程序图标还是之前的没有变。
+解决方案：因为缓存问题，重新下手机就好了。
 
 ## 参考资料
 
