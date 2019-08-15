@@ -69,24 +69,34 @@ console.log(book.edition); //2
 
 ## 创建对象
 
+```js
+var Person = {
+  name: 'name',
+  sayName: function() {
+    alert(this.name);
+  }
+};
+```
+
+创建这个对象需要 6 行代码，如果需要创建 100 个对象就需要些 600 行代码。
 虽然 Object 构造函数或对象字面量都可以用来创建单个对象，但这些方式有个明显的缺点:使用同一个接口创建很多对象，会产生大量的重复代码。
 
 ### 工厂模式
 
 ```js
-function createPerson(name, age, job) {
+function createPerson(name) {
   var o = new Object();
   o.name = name;
-  o.age = age;
-  o.job = job;
   o.sayName = function() {
     alert(this.name);
   };
   return o;
 }
-var person1 = createPerson('Nicholas', 29, 'Software Engineer');
-var person2 = createPerson('Greg', 27, 'Doctor');
+var person1 = createPerson('Nicholas');
+var person2 = createPerson('Greg');
 ```
+
+遇到需要复制粘贴东西，先想到的就是封装，于是有了工厂模式。这样再创建 100 个对象只需要 8+100=108 行代码，比直接创建节省了近 500 行代码量。但是创建的对象和 createPerson 没有关联性。
 
 优点：抽象了创建具体对象的过程,解决了创建多个相似对象的问题。
 缺点：没有解决对象识别的问题(即怎样知道一个对象的类型)。
@@ -94,20 +104,17 @@ var person2 = createPerson('Greg', 27, 'Doctor');
 ### 构造函数模式
 
 ```js
-function Person(name, age, job) {
+function Person(name) {
   this.name = name;
-  this.age = age;
-  this.job = job;
   this.sayName = function() {
     alert(this.name);
   };
 }
-//person1.__proto__.constructor === Person
-//person1.__proto__ === Person.prototype
-//实例用__proto__访问原型链上层，构造函数用prototype访问原型，原型用constructor访问构造函数
-var person1 = new Person('Nicholas', 29, 'Software Engineer');
-var person2 = new Person('Greg', 27, 'Doctor');
+var person1 = new Person('Nicholas');
+var person2 = new Person('Greg');
 ```
+
+通过构造函数来创建实例对象，实例对象的`__proto__`等于构造函数 Person 的原型对象。通过这个方法构造函数和实例产生了关联。具体关联如下图：
 
 优点：解决了对象识别的问题。
 缺点：每个方法都要在每个实例上重新创建一遍，创建两个完成同样任务的 Function 实例的确没有必要。
@@ -117,8 +124,6 @@ var person2 = new Person('Greg', 27, 'Doctor');
 ```js
 function Person() {}
 Person.prototype.name = 'Nicholas';
-Person.prototype.age = 29;
-Person.prototype.job = 'Software Engineer';
 Person.prototype.sayName = function() {
   alert(this.name);
 };
@@ -130,8 +135,8 @@ alert(person1.sayName == person2.sayName); //true
 ```
 
 因为实例 person1 不存在 sayName 方法，按照原型链规则通过`__proto__`向上查找，在 `Person.prototype` 里面找到了 sayName 方法
-优点：让所有对象实例共享它所包含的属性和方法。
-缺点：它省略了为构造函数传递初始化参数这一环节，结果所有实例在默认情况下都将取得相同的属性值。虽然这会在某种程度上带来一些不方便，但还不是原型的最大问题。原型模式的最大问题是由其共享的本性所导致的。
+优点：解决了构造函数的方法重复实例问题。
+缺点：1、和构造函数模式相比，省略了初始化参数这一步，这让所有实例默认都为相同的属性值。2、所有值都是共享的，如果原型上的值为引用类型，一个实例修改后其他实例同样会被修改。
 
 原型中所有属性是被很多实例共享的，这种共享对于函数非常合适。对于那些包含基本值的属性倒 也说得过去，毕竟(如前面的例子所示)，通过在实例上添加一个同名属性，可以隐藏原型中的对应属 性。然而，对于包含引用类型值的属性来说，问题就比较突出了。来看下面的例子。
 
