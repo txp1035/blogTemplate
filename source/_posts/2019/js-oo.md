@@ -162,7 +162,7 @@ var person = new Person('name');
 ```
 
 优点：构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。结果，每个实例都会有自己的一份实例属性的副本，但同时又共享着对方法的引用，最大限度地节省了内存。另外，这种混成模式还支持向构造函数传递参数;可谓是集两种模式之长。
-缺点：有其他 OO（面向对象） 语言经验的开发人员在看到独立的构造函数和原型时，很可能会感到非常困惑。
+缺点：有其他 OO（面向对象）语言经验的开发人员在看到独立的构造函数和原型时，很可能会感到非常困惑。
 
 ### 动态原型模式
 
@@ -181,23 +181,28 @@ var friend = new Person('name');
 friend.sayName();
 ```
 
+只有在第一次创建实例的时候初始化方法。为了更像其他语言的面向对象语法。
 优点：所有信息都封装在了构造函数中，而通过在构造函数中初始化原型(仅在必要的情况下)，又保持了同时使用构造函数和原型的优点。
-缺点：
 
 ### 寄生构造函数模式
 
 ```js
-function Person(name) {
-  var o = new Object();
-  o.name = name;
-  o.sayName = function() {
-    alert(this.name);
+function SpecialArray() {
+  //创建数组
+  var values = new Array();
+  values.push.apply(values, arguments);
+  //添加方法
+  values.toPipedString = function() {
+    return this.join('|');
   };
-  return o;
+  //返回数组
+  return values;
 }
-var friend = new Person('name');
-friend.sayName();
+var colors = new SpecialArray('red', 'blue', 'green');
+alert(colors.toPipedString()); //"red|blue|green"
 ```
+
+我们想创建一个具有额外方法的特殊数组。由于不能直接修改 Array 构造函数。
 
 ### 稳妥构造函数模式
 
@@ -206,8 +211,10 @@ function Person(name) {
   //创建要返回的对象
   var o = new Object();
   //可以在这里定义私有变量和函数
+  var a = '私有变量';
   //添加方法
   o.sayName = function() {
+    console.log(a);
     alert(name);
   };
   //返回对象
@@ -217,6 +224,8 @@ var friend = Person('name');
 friend.sayName();
 ```
 
+防止外部访问
+
 ## 继承
 
 许多 OO 语言都支持两种继承方式:接口继承和实现继承。接口继承只继承方法签名，而实现继承则继承实际的方法。如前所述，由于函数没有签名， 在 ECMAScript 中无法实现接口继承。ECMAScript 只支持实现继承，而且其实现继承主要是依靠原型链来实现的。
@@ -225,27 +234,23 @@ friend.sayName();
 
 ```js
 function SuperType() {
-  this.property = true;
+  this.name = '父类属性';
 }
 SuperType.prototype.getSuperValue = function() {
-  return this.property;
+  return this.name;
 };
 function SubType() {
-  this.subproperty = false;
+  this.subname = '子类属性';
 }
 //继承了 SuperType
 SubType.prototype = new SuperType();
-SubType.prototype.getSubValue = function() {
-  return this.subproperty;
-};
 var instance = new SubType();
-alert(instance.getSuperValue()); //true
+instance.name; //父类属性
 ```
 
-缺点：
+通过子构造函数的原型指向父构造函数的实例，实现了子构造函数的实例和父构造函数的实例与原型在同一原型链上，这样子构造函数的实例就可以访问父构造的属性（父构造函数的实例访问）和方法（父构造函数的原型上访问）了。
 
-1. 共享父类实例，修改值影响其他子实例。
-2. 在创建子类型的实例时，不能向超类型的构造函数中传递参数。实际上，应该说是没有办法在不影响所有对象实例的情况下，给超类型的构造函数传递参数。
+缺点：1、共享父类实例，修改值影响其他子实例。2、在创建子类型的实例时，不能向超类型的构造函数中传递参数。实际上，应该说是没有办法在不影响所有对象实例的情况下，给超类型的构造函数传递参数。
 
 ### 借用构造函数
 
@@ -264,6 +269,7 @@ alert(instance.name); //"Nicholas";
 alert(instance.age); //29
 ```
 
+通过 call 调用父构造函数，将父构造函数的属性赋值给子构造函数的属性实现继承。
 优点：可以在子类型构造函数中向超类型构造函数传递参数。
 缺点：方法都在构造函数中定义，因此函数复用就无从谈起了。
 
@@ -285,55 +291,59 @@ function SubType(name, age) {
 //继承方法
 SubType.prototype = new SuperType(); //第一次调用SuperType()
 SubType.prototype.constructor = SubType;
-SubType.prototype.sayAge = function() {
-  alert(this.age);
-};
-var instance1 = new SubType('Nicholas', 29);
-instance1.colors.push('black');
-alert(instance1.colors); //"red,blue,green,black"
-instance1.sayName(); //"Nicholas";
-instance1.sayAge(); //29
-var instance2 = new SubType('Greg', 27);
-alert(instance2.colors); //"red,blue,green"
-instance2.sayName(); //"Greg";
-instance2.sayAge(); //27
 ```
+
+结合原型链和借用构造函数模式，由于借用构造函数模式在子构造函数复制了父构造函数属性，所以子构造函数的实例会优先访问自己的属性而不会访问父构造函数实例的属性。缺点是会调用两次父构造函数造成资源浪费。
 
 ### 原型式继承
 
 ```js
+function object(o) {
+  function F() {}
+  F.prototype = o;
+  return new F();
+}
+
 var person = {
   name: 'Nicholas',
   friends: ['Shelby', 'Court', 'Van']
 };
 var anotherPerson = object(person);
-anotherPerson.name = 'Greg';
-anotherPerson.friends.push('Rob');
-var yetAnotherPerson = object(person);
-yetAnotherPerson.name = 'Linda';
-yetAnotherPerson.friends.push('Barbie');
-alert(person.friends); //"Shelby,Court,Van,Rob,Barbie"
 ```
+
+省掉了原型链继承的父构造函数，直接继承一个实例对象
+缺点:属性共享，引用类型值被修改会影响其他对象。
 
 ### 寄生式继承
 
 ```js
+function object(o) {
+  function F() {}
+  F.prototype = o;
+  return new F();
+}
 function createAnother(original) {
-  varclone = object(original); //通过调用函数创建一个新对象
+  var clone = object(original); //通过调用函数创建一个新对象
+  //以某种方式来增强这个对象
   clone.sayHi = function() {
     alert('hi');
   };
-  return clone;
-  //以某种方式来增强这个对象
   //返回这个对象
+  return clone;
 }
 ```
 
 ### 寄生组合式继承（最有效）
 
 所谓寄生组合式继承，即通过借用构造函数来继承属性，通过原型链的混成形式来继承方法。
+寄生+借用构造函数模式
 
 ```js
+function object(o) {
+  function F() {}
+  F.prototype = o;
+  return new F();
+}
 function inheritPrototype(subType, superType) {
   var prototype = object(superType.prototype);
   prototype.constructor = subType;
@@ -341,6 +351,7 @@ function inheritPrototype(subType, superType) {
 }
 ```
 
+通过寄生模式让子构造函数的原型指向父构造函数的原型实现方法继承，通过借用构造函数模式在子构造函数实例中实现属性继承。
 优点：这个例子的高效率体现在它只调用了一次 SuperType 构造函数，并且因此避免了在 SubType. prototype 上面创建不必要的、多余的属性。
 
 ## 参考
