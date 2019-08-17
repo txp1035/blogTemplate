@@ -92,8 +92,7 @@ function createPerson(name) {
   };
   return o;
 }
-var person1 = createPerson('Nicholas');
-var person2 = createPerson('Greg');
+var person = createPerson('name');
 ```
 
 遇到需要复制粘贴东西，先想到的就是封装，于是有了工厂模式。这样再创建 100 个对象只需要 8+100=108 行代码，比直接创建节省了近 500 行代码量。但是创建的对象和 createPerson 没有关联性。
@@ -110,11 +109,14 @@ function Person(name) {
     alert(this.name);
   };
 }
-var person1 = new Person('Nicholas');
-var person2 = new Person('Greg');
+var person = new Person('name');
 ```
 
 通过构造函数来创建实例对象，实例对象的`__proto__`等于构造函数 Person 的原型对象。通过这个方法构造函数和实例产生了关联。具体关联如下图：
+
+![图片](https://github.com/ShawDanon/blog/blob/master/source/img/2019/8-16-1.jpg)
+
+但是每个实例的方法(sayName)做的是同一件事情，只使用构造函数模式，每次在实例对象时都会创建它(sayName)，一个属性等于在堆内存中多占用了资源，如果创建很多实例对象，耗费的资源就更多了。
 
 优点：解决了对象识别的问题。
 缺点：每个方法都要在每个实例上重新创建一遍，创建两个完成同样任务的 Function 实例的确没有必要。
@@ -123,53 +125,32 @@ var person2 = new Person('Greg');
 
 ```js
 function Person() {}
-Person.prototype.name = 'Nicholas';
+Person.prototype.name = 'name';
 Person.prototype.sayName = function() {
   alert(this.name);
 };
+var person = new Person();
+//缺点示例
+Person.prototype.goods = ['mac pro', 'mac mini'];
 var person1 = new Person();
-person1.sayName(); //"Nicholas"
+person1.goods; //['mac pro', 'mac mini']
 var person2 = new Person();
-person2.sayName(); //"Nicholas"
-alert(person1.sayName == person2.sayName); //true
+person2.goods.push('phone'); //['mac pro', 'mac mini', 'phone']
+person1.goods.push('phone'); //['mac pro', 'mac mini', 'phone']
 ```
 
-因为实例 person1 不存在 sayName 方法，按照原型链规则通过`__proto__`向上查找，在 `Person.prototype` 里面找到了 sayName 方法
+通过上面的关系图可以得知，我们在构造函数的原型上创建值可以共享给构造函数的所有实例（其实就是实例在本身找不到属性的时候会通过`__proto__`向上查找属性，直到查找到`Object.prototype`）。这样就解决了构造函数浪费资源的问题。但是这个模式就不能设置实例属性了，重要的是构造函数的原型属性为引用类型的时候，实例可以对它进行修改。
+
 优点：解决了构造函数的方法重复实例问题。
 缺点：1、和构造函数模式相比，省略了初始化参数这一步，这让所有实例默认都为相同的属性值。2、所有值都是共享的，如果原型上的值为引用类型，一个实例修改后其他实例同样会被修改。
-
-原型中所有属性是被很多实例共享的，这种共享对于函数非常合适。对于那些包含基本值的属性倒 也说得过去，毕竟(如前面的例子所示)，通过在实例上添加一个同名属性，可以隐藏原型中的对应属 性。然而，对于包含引用类型值的属性来说，问题就比较突出了。来看下面的例子。
-
-```js
-function Person() {}
-Person.prototype = {
-  constructor: Person,
-  name: 'Nicholas',
-  age: 29,
-  job: 'Software Engineer',
-  friends: ['Shelby', 'Court'],
-  sayName: function() {
-    alert(this.name);
-  }
-};
-var person1 = new Person();
-var person2 = new Person();
-person1.friends.push('Van');
-alert(person1.friends); //"Shelby,Court,Van"
-alert(person2.friends); //"Shelby,Court,Van"
-alert(person1.friends === person2.friends); //true
-```
 
 ### 组合使用构造函数模式和原型模式（常用）
 
 创建自定义类型的最常见方式，就是组合使用构造函数模式与原型模式。
 
 ```js
-function Person(name, age, job) {
+function Person(name) {
   this.name = name;
-  this.age = age;
-  this.job = job;
-  this.friends = ['Shelby', 'Court'];
 }
 Person.prototype = {
   constructor: Person,
@@ -177,27 +158,18 @@ Person.prototype = {
     alert(this.name);
   }
 };
-var person1 = new Person('Nicholas', 29, 'Software Engineer');
-var person2 = new Person('Greg', 27, 'Doctor');
-
-person1.friends.push('Van');
-alert(person1.friends); //"Shelby,Count,Van"
-alert(person2.friends); //"Shelby,Count"
-alert(person1.friends === person2.friends); //false
-alert(person1.sayName === person2.sayName); //true
+var person = new Person('name');
 ```
 
 优点：构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。结果，每个实例都会有自己的一份实例属性的副本，但同时又共享着对方法的引用，最大限度地节省了内存。另外，这种混成模式还支持向构造函数传递参数;可谓是集两种模式之长。
-缺点：有其他 OO 语言经验的开发人员在看到独立的构造函数和原型时，很可能会感到非常困惑。
+缺点：有其他 OO（面向对象） 语言经验的开发人员在看到独立的构造函数和原型时，很可能会感到非常困惑。
 
 ### 动态原型模式
 
 ```js
-function Person(name, age, job) {
+function Person(name) {
   //属性
   this.name = name;
-  this.age = age;
-  this.job = job;
   //方法
   if (typeof this.sayName != 'function') {
     Person.prototype.sayName = function() {
@@ -205,34 +177,32 @@ function Person(name, age, job) {
     };
   }
 }
-var friend = new Person('Nicholas', 29, 'Software Engineer');
+var friend = new Person('name');
 friend.sayName();
 ```
 
-优点：所有信息都封装在了构造函数中，而通过在构造函数 中初始化原型(仅在必要的情况下)，又保持了同时使用构造函数和原型的优点。
+优点：所有信息都封装在了构造函数中，而通过在构造函数中初始化原型(仅在必要的情况下)，又保持了同时使用构造函数和原型的优点。
 缺点：
 
 ### 寄生构造函数模式
 
 ```js
-function Person(name, age, job) {
+function Person(name) {
   var o = new Object();
   o.name = name;
-  o.age = age;
-  o.job = job;
   o.sayName = function() {
     alert(this.name);
   };
   return o;
 }
-var friend = new Person('Nicholas', 29, 'Software Engineer');
-friend.sayName(); //"Nicholas"
+var friend = new Person('name');
+friend.sayName();
 ```
 
 ### 稳妥构造函数模式
 
 ```js
-function Person(name, age, job) {
+function Person(name) {
   //创建要返回的对象
   var o = new Object();
   //可以在这里定义私有变量和函数
@@ -243,8 +213,8 @@ function Person(name, age, job) {
   //返回对象
   return o;
 }
-var friend = Person('Nicholas', 29, 'Software Engineer');
-friend.sayName(); //"Nicholas"
+var friend = Person('name');
+friend.sayName();
 ```
 
 ## 继承
