@@ -37,7 +37,7 @@ date: 2018-08-12
 
 Add jsdoc comments(快速添加 jsdoc 插件)
 Atom One Dark Theme(Atom 颜色主题)
-cssrem(px 转 rem)
+cssrem(px 转 rem，开发手机端常用)
 Debugger for Chrome(在编辑器里面 debug)
 Easy LESS(less 文件转 css)
 ES7 React/Redux/GraphQL/React-Native snippets（react 常用代码片段）
@@ -218,93 +218,6 @@ TSLint(代码检查工具)
   "prettier.singleQuote": true
   /* 外部扩展 end */
 }
-```
-
-## 快捷键
-
-```js
-// 将按键绑定配置放入此文件中即可覆盖默认值
-[
-  {
-    key: 'ctrl+f1',
-    command: 'extension.openInBrowser'
-  },
-  {
-    key: 'alt+b',
-    command: '-extension.openInBrowser'
-  },
-  {
-    key: 'alt+t',
-    command: 'toggleFindInSelection',
-    when: 'editorFocus'
-  },
-  {
-    key: 'alt+l',
-    command: '-toggleFindInSelection',
-    when: 'editorFocus'
-  },
-  /*方向键和选择提示键位*/
-  {
-    key: 'alt+j',
-    command: 'cursorLeft',
-    when: 'textInputFocus'
-  },
-  {
-    key: 'left',
-    command: '-cursorLeft',
-    when: 'textInputFocus'
-  },
-  {
-    key: 'alt+i',
-    command: 'cursorUp',
-    when: 'textInputFocus'
-  },
-  {
-    key: 'up',
-    command: '-cursorUp',
-    when: 'textInputFocus'
-  },
-  {
-    key: 'alt+k',
-    command: 'cursorDown',
-    when: 'textInputFocus'
-  },
-  {
-    key: 'down',
-    command: '-cursorDown',
-    when: 'textInputFocus'
-  },
-  {
-    key: 'alt+l',
-    command: 'cursorRight',
-    when: 'textInputFocus'
-  },
-  {
-    key: 'right',
-    command: '-cursorRight',
-    when: 'textInputFocus'
-  },
-  {
-    key: 'alt+i',
-    command: 'selectPrevSuggestion',
-    when: 'suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus'
-  },
-  {
-    key: 'up',
-    command: '-selectPrevSuggestion',
-    when: 'suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus'
-  },
-  {
-    key: 'alt+k',
-    command: 'selectNextSuggestion',
-    when: 'suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus'
-  },
-  {
-    key: 'down',
-    command: '-selectNextSuggestion',
-    when: 'suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus'
-  }
-];
 ```
 
 ## 代码片段

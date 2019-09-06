@@ -33,6 +33,9 @@ date: 2019-3-14
 [qBittorrent](https://www.qbittorrent.org/)：下载工具，下 magnet
 [Folx 5|科学上网](https://mac.eltima.com/download-manager.html)：下载工具，下 http
 [IINA](https://iina.io/)：视频播放器
+[keka](https://www.keka.io/en/)：解压、压缩软件
+[欧路词典](https://www.eudic.net/v4/en/app/eudic)：单词查询
+[itsycal](https://www.mowglii.com/itsycal/)：日历软件
 Parallels Desktop：Windows 虚拟机
 CleanMyMac X：系统管理
 [QQ](https://im.qq.com/download/)、[微信](https://mac.weixin.qq.com/?t=mac&lang=zh_CN)、[钉钉](https://tms.dingtalk.com/markets/dingtalk/download?spm=a3140.8196062.###31602.8.65f85c3d5uaOTy&source=1001&lwfrom=2017120202091367000000111)、[网易云音乐](https://music.163.com/##/download)、[谷歌浏览器|科学上网](https://www.google.cn/intl/zh-CN/chrome/)、[番茄土豆](https://mac.pomotodo.com/)、[百度网盘](https://pan.baidu.com/download##pan)、[迅雷](https://www.xunlei.com/)、[WPS](http://mac.wps.cn/)
