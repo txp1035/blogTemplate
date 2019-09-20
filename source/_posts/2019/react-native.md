@@ -101,39 +101,103 @@ cd android
 
 ```js
 import { createStackNavigator } from 'react-navigation';
-// import React, { Component } from 'react';
-// import { Text, View, Image } from 'react-native';
 import HomePage from '../views/HomePage';
-import Calculation from '../views/Calculation';
-import Settlement from '../views/Settlement';
-// import Page3 from '../views/Page3';
-// import Page4 from '../views/Page4';
-// import Page5 from '../views/Page5';
+import Debug from '../views/Debug';
+
 export const AppStackNavigator = createStackNavigator({
   HomePage: {
     screen: HomePage
-  },
-  Calculation: {
-    screen: Calculation
-  },
-  Settlement: {
-    screen: Settlement
-  }
-  // Page2: {
-  //   screen: Page2,
-  //   navigationOptions: {
-  //     title: `这是一个页面2`
-  //   }
-  // },
-  // Page3: {
-  //   screen: Page3,
-  //   navigationOptions: ({ props }) => {
-  //     const { navigation } = props;
-  //     const { state, setParams } = navigation;
-  //     const { params } = state;
-  //     return { title: params.title ? params.title : 'this is page3', headerRight: <Text>123 </Text> };
-  //   }
-  // }
+  },//定义HomePage为首页路由
+  Debug: {
+    screen: Debug
+  },//定义Debug为Debug页路由
+});
+
+});
+```
+
+4、 创建好路由文件，需要把入口改用路由文件。把根目录的 index 文件修改下。
+原本的 index 文件：
+
+```js
+import { AppRegistry } from 'react-native';
+import App from './App';
+import { name as appName } from './app.json';
+
+AppRegistry.registerComponent(appName, () => App); //把APP组件注册到APP
+```
+
+修改后的 index 文件：
+
+```js
+import { AppRegistry } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { AppStackNavigator } from './navigators/AppNavigators';
+import { name as appName } from './app.json';
+const AppStackNavigatorContainer = createAppContainer(AppStackNavigator); //用路由文件创建APP控制器
+AppRegistry.registerComponent(appName, () => AppStackNavigatorContainer); //把路由控制器注册到APP
+```
+
+5、这样在组件里就能够使用路由进行跳转了。
+
+```js
+//通过props获取navication
+const { navigation } = this.props;
+//跳转的Debug组件页面
+navigation.navigate('Debug');
+//跳转页面并传值
+navigation.navigate('Debug', { value: '测试传值' });
+```
+
+```js
+//拿到其他页面传来的值
+const { value } = this.props.navigation.state.params;
+console.log(value); //测试传值
+```
+
+## 持久化存储
+
+由于希望做一个历史记录页面，所以想存一些数据在本地，像 web 的 storage 一样。
+
+### AsyncStorage
+
+AsyncStorage 是 react native 提供的轻量级数据持久化方案，类似于 web 端的 storage。
+由于 api 过于复杂一般需要封装，这里使用常用封装好的第三方库`react-native-storage`。
+1、安装包`react-native-storage`
+2、在首页组件引入包->设置 storage 默认值->将它赋值给全局方面使用。
+
+```js
+import Storage from 'react-native-storage';
+var storage = new Storage({
+  size: 1000, //最大容量，默认值1000条数据循环存储
+  storageBackend: AsyncStorage, //存储引擎：RN使用AsyncStorage，如果不指定则数据只会保存在内存中，重启后即丢失
+  defaultExpires: null, //数据过期时间，默认一整天（1000 * 3600 * 24 毫秒），设为null则永不过期
+  enableCache: true //读写时在内存中缓存数据，默认开启
+});
+global.storage = storage; //将storage保存到全局，方便各个组件里面使用
+```
+
+3、使用 storage
+
+```js
+//存值，因为在全局保存了storage，所以直接调用storage.save()以键值对存储数据，data可以是任意类型值
+global.storage.save({
+  key: 'testKey', // 注意:请不要在key中使用_下划线符号!
+  data: '测试存值'
+});
+//获取数据，这里获取值是异步的。
+global.storage.getAllDataForKey('testKey').then(data => {
+  console.log(data); //测试存值
+});
+//存储一个数组
+global.storage.save({
+  key: 'testKeyArr', // 注意:请不要在key中使用_下划线符号!
+  id: '1', // 注意:请不要在id中使用_下划线符号!
+  data: '测试存值'
+});
+//读取值
+global.storage.getAllDataForKey('testKeyArr').then(data => {
+  console.log(data); //['测试存值']
 });
 ```
 
