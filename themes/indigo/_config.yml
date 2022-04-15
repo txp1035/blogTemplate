@@ -28,7 +28,7 @@ menu:
     text: 倒计时
     url: /time
   github:
-    url: https://github.com/ShawDanon
+    url: https://github.com/txp1035
     target: _blank
 
 # 你的头像url
@@ -41,10 +41,10 @@ brand: /img/brand.jpg
 favicon: /img/favicon.ico
 
 # email
-email: me@imtxp.cn
+email: txp1035@gmail.com
 
 # 设置 Android L Chrome 浏览器状态栏颜色
-color: '#3F51B5'
+color: "#3F51B5"
 
 # 页面标题
 tags_title: 标签
