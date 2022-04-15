@@ -4,12 +4,12 @@
 
 # Site
 title: 道源的博客
-subtitle: 个人博客
+subtitle: 技术为道，事业为源，愿以道化源。
 description: 道源的博客,个人博客
 author: 道源
 language: zh-CN
 #timezone:
-email: me@imtxp.cn
+email: txp1035@gmail.com
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -108,5 +108,5 @@ theme: indigo
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/ShawDanon/shawdanon.github.io.git
+  repo: git@github.com:txp1035/txp1035.github.io.git
   branch: master
