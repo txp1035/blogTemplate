@@ -13,7 +13,7 @@ email: me@imtxp.cn
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://shawdanon.github.io
+url: https://txp1035.github.io
 root: /
 permalink: :title/
 permalink_defaults:
