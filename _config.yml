@@ -103,7 +103,7 @@ Plugins:
   - hexo-generator-feed
   - hexo-generator-sitemap
 ## Themes: https://hexo.io/themes/
-theme: indigo
+theme: newNext
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
