@@ -566,6 +566,7 @@ comments:
       text: Disqus
       order: -1
     valine:
+      text: 匿名评论
       order: -2
 
 # Disqus
