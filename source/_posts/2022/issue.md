@@ -9,6 +9,18 @@ date: 2020-7-14
 
 <!-- more -->
 
+### js 怎么写一个链式调用的方法
+
+### antd 日期组件不兼容 dayjs
+
+### npm 包里面命令和全局命令冲突
+
+npx 调用项目内的命令,直接命令是调用全局
+
+### Omit 有什么用
+
+### formatMessage 为什么不能直接用
+
 ### 科学上网后，git push 443
 
 我的情况是使用 ssh 进行提交，各种方法试了一遍都是时好时坏，remote 缓存 https 后再也没出过问题
@@ -17,7 +29,7 @@ date: 2020-7-14
 git config --global http.proxy socks5://127.0.0.1:7890
 git config --global https.proxy socks5://127.0.0.1:7890~~
 
-## @babel/generator 生成字符串特殊字符被转义
+### @babel/generator 生成字符串特殊字符被转义
 
 增加选项{ jsescOption: { minimal: true }
 
@@ -25,7 +37,7 @@ git config --global https.proxy socks5://127.0.0.1:7890~~
 generate(ast, { jsescOption: { minimal: true } });
 ```
 
-## Node.js 中读取文件后用 Json.parse 方法报错
+### Node.js 中读取文件后用 Json.parse 方法报错
 
 **问题详细描述：**
 文件 a
@@ -41,10 +53,10 @@ export default JSON.parse(json);
 **解法：**
 文件读取后本身是字符串，加上截取的首位引号产生报错，去除首位引号即可
 
-## git 查看提交数量
+### git 查看提交数量
 
 `git log | grep "^Author: " | awk '{print $2}' | sort | uniq -c | sort -k1,1nr`
 
-## node 中如果导入 ts 文件
+### node 中如果导入 ts 文件
 
 pirates+esbuild 实现动态编译，对导入的 ts 编译后再导入
